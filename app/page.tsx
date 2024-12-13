@@ -1,67 +1,77 @@
+"use client"
 import Link from "next/link";
+import { useState } from "react";
 import { FaDiscord, FaLinkedinIn } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { ImCheckboxChecked } from "react-icons/im";
+import WaitlistForm from "./WaitlistForm";
 
 export default function Home() {
+    const [openWaitlistForm, setOpenWaitlistForm] = useState(false);
+
     return (
         <>
-            <header className="py-[44px] text-center monument">
-                <h3 className="text-[20.89px] leading-[25.07px] text-white">
+            <header className="monument sm:py-[44px] py-[30px] max-md:px-[50px] max-sm:px-5 md:text-center">
+                <h3 className="sm:text-[21px] text-[17px] sm:leading-[25px] leading-[20px] text-white">
                     dev<span className="text-primary">/asign</span>
                 </h3>
             </header>
-            <div 
-                className="flex flex-col justify-between pt-[107px] pb-[70px]"
-                style={{ height: "calc(100svh - 133px)" }}
-            >
-                <main className="text-center mx-auto text-white">
-                    <div className="h-2.5 w-[110px] rounded-[20px] bg-primary opacity-50 mx-auto" />
-                    <h1 className="monument pt-[30px] pb-[15px] tracking-[-0.25px] text-[40px] leading-[64px]">
-                        Powering open-source collaboration 
-                        <br />
-                        with blockchain payments
-                    </h1>
-                    <div className="pptelegraf mb-10 space-y-[15px]">
-                        <div className="w-fit flex lg:items-center gap-3 mx-auto">
-                            <ImCheckboxChecked className="text-primary" />
-                            <p>Project owners gets an integrated platform that manages tasks and payments for contributors.</p>
+            <main className="md:text-center md:mx-auto text-white sm:pt-[107px] pt-[50px] max-md:px-[50px] max-sm:px-5">
+                <div className="sm:h-2.5 h-1.5 sm:w-[110px] w-[90px] rounded-[20px] bg-primary opacity-50 md:mx-auto" />
+                <h1 className="monument pt-[30px] pb-[15px] tracking-[-0.25px] sm:text-[40px] text-2xl sm:leading-[64px] leading-10">
+                    Powering open-source collaboration 
+                    <br className="max-lg:hidden" />
+                    {" "}with blockchain payments
+                </h1>
+                <div className="pptelegraf mb-10 space-y-[15px] max-sm:text-sm leading-normal">
+                    <div className="sm:w-fit flex md:items-center gap-3 md:mx-auto">
+                        <div>
+                            <ImCheckboxChecked className="text-primary max-md:mt-0.5" />
                         </div>
-                        <div className="w-fit flex lg:items-center gap-3 mx-auto">
-                            <ImCheckboxChecked className="text-primary" />
-                            <p>Software developers receive immediate compensation for open-source contributions.</p>
+                        <p>Project owners gets an integrated platform that manages tasks and payments for contributors.</p>
+                    </div>
+                    <div className="sm:w-fit flex md:items-center gap-3 md:mx-auto">
+                        <div>
+                            <ImCheckboxChecked className="text-primary max-md:mt-0.5" />
                         </div>
+                        <p>Software developers receive immediate compensation for open-source contributions.</p>
                     </div>
-                    <div className="w-fit flex gap-5 mx-auto pptelegraf font-extrabold text-xl leading-[24px]">
-                        <button
-                            className="py-[15px] px-[30px] bg-primary text-black"
-                            // onClick={() => {}}
-                        >
-                            Join Waitlist
-                        </button>
-                        <Link 
-                            href=""
-                            className="py-[15px] pl-[25px] pr-[30px] border border-primary text-primary flex items-center gap-2.5"
-                        >
-                            <div className="h-6 w-6 bg-primary rounded flex items-center justify-center">
-                                <FaDiscord className="text-black" />
-                            </div>
-                            <span>Community</span>
-                        </Link>
-                    </div>
-                </main>
-                <footer>
-                    <div className="w-fit flex items-center gap-[15px] mx-auto text-white text-[22.5px]">
-                        <Link href="https://www.linkedin.com/company/devasign/">
-                            <FaLinkedinIn />
-                        </Link>
-                        <Link href="https://x.com/devasign">
-                            <FaXTwitter />
-                        </Link>
-                    </div>
-                    <p className="text-center text-[#F7F7F7] pptelegraf mt-[30px]">© 2024 DevAsign</p>
-                </footer>
-            </div>
+                </div>
+                <div className="sm:w-fit w-full flex max-sm:flex-col gap-5 md:mx-auto pptelegraf font-extrabold sm:text-xl text-base leading-[24px]">
+                    <button
+                        className="py-[15px] px-[30px] bg-primary text-black max-sm:w-full text-center"
+                        onClick={() => setOpenWaitlistForm(true)}
+                    >
+                        Join Waitlist
+                    </button>
+                    <Link 
+                        href=""
+                        target="_blank"
+                        className="py-[15px] pl-[25px] pr-[30px] border border-primary text-primary flex items-center justify-center gap-2.5"
+                    >
+                        <div className="h-6 w-6 bg-primary rounded flex items-center justify-center">
+                            <FaDiscord className="text-black" />
+                        </div>
+                        <span>Community</span>
+                    </Link>
+                </div>
+            </main>
+            <footer className="fixed sm:bottom-[70px] bottom-10 w-full">
+                <div className="w-fit flex items-center gap-[15px] mx-auto text-white text-[22.5px]">
+                    <Link href="https://www.linkedin.com/company/devasign/" target="_blank">
+                        <FaLinkedinIn />
+                    </Link>
+                    <Link href="https://x.com/devasign" target="_blank">
+                        <FaXTwitter />
+                    </Link>
+                </div>
+                <p className="text-center text-[#F7F7F7] pptelegraf mt-[30px] max-sm:text-sm">© 2024 DevAsign</p>
+            </footer>
+            {openWaitlistForm && (
+                <WaitlistForm
+                    toggleWaitlistForm={() => setOpenWaitlistForm(false)}
+                />
+            )}
         </>
     );
 }
