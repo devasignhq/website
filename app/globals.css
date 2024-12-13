@@ -55,3 +55,8 @@
 body {
   @apply bg-black leading-normal
 }
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
