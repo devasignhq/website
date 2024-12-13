@@ -12,7 +12,7 @@
 @font-face {
   font-family: 'MonumentExtended';
   src: url(/monument_extended_font/MonumentExtended-Ultrabold.otf);
-  font-weight: 900;
+  font-weight: 800;
   font-display: swap;
   font-style: normal;
 }
@@ -33,17 +33,25 @@
 @font-face {
   font-family: 'PPTelegraf';
   src: url(/pptelegraf_font/PPTelegraf-UltraBold.otf);
-  font-weight: 900;
+  font-weight: 800;
   font-display: swap;
   font-style: normal;
 }
 
-.monument-extended {
+.monument {
   font-family: 'MonumentExtended', Arial, sans-serif;
 }
 .pptelegraf {
   font-family: 'PPTelegraf', sans-serif, Arial;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all 0.1s linear;
+}
+
 body {
+  @apply bg-black leading-normal
 }
