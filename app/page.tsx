@@ -22,14 +22,14 @@ export default function Home() {
                 alt="" 
                 className="fixed bottom-0 lg:right-0 2xl:min-w-[1850px] xl:min-w-[1600px] lg:min-w-[1300px] max-md:min-w-[1200px]"
             />
-            <main className="md:text-center md:mx-auto text-white sm:pt-[107px] pt-[50px] max-md:px-[50px] max-sm:px-5 relative z-[99]">
+            <main className="md:text-center md:mx-auto text-white sm:pt-[107px] pt-[30px] max-md:px-[50px] max-sm:px-5 relative z-[99]">
                 <div className="sm:h-2.5 h-1.5 sm:w-[110px] w-[90px] rounded-[20px] bg-primary opacity-50 md:mx-auto" />
-                <h1 className="monument pt-[30px] pb-[15px] tracking-[-0.25px] sm:text-[40px] text-2xl sm:leading-[64px] leading-10">
+                <h1 className="monument sm:pt-[30px] pt-5 pb-[15px] tracking-[-0.25px] sm:text-[40px] text-2xl sm:leading-[64px] leading-10">
                     Powering open-source collaboration 
                     <br className="max-lg:hidden" />
                     {" "}with blockchain payments
                 </h1>
-                <div className="pptelegraf mb-10 space-y-[15px] max-sm:text-sm leading-normal">
+                <div className="pptelegraf sm:mb-10 mb-[30px] space-y-[15px] max-sm:text-sm leading-normal">
                     <div className="sm:w-fit flex md:items-center gap-3 md:mx-auto">
                         <div>
                             <ImCheckboxChecked className="text-primary max-md:mt-0.5" />
@@ -62,7 +62,7 @@ export default function Home() {
                     </Link>
                 </div>
             </main>
-            <footer className="fixed sm:bottom-[70px] bottom-10 w-full">
+            <footer className="fixed sm:bottom-[70px] bottom-[30px] w-full">
                 <div className="w-fit flex items-center gap-[15px] mx-auto text-white text-[22.5px]">
                     <Link href="https://www.linkedin.com/company/devasign/" target="_blank">
                         <FaLinkedinIn />
@@ -71,7 +71,7 @@ export default function Home() {
                         <FaXTwitter />
                     </Link>
                 </div>
-                <p className="text-center text-[#F7F7F7] pptelegraf mt-[30px] max-sm:text-sm">© 2024 DevAsign</p>
+                <p className="text-center text-[#F7F7F7] pptelegraf sm:mt-[30px] mt-[25px] max-sm:text-sm">© 2024 DevAsign</p>
             </footer>
             {openWaitlistForm && (
                 <WaitlistForm
