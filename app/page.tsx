@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"
 import Link from "next/link";
 import { useState } from "react";
@@ -16,7 +17,12 @@ export default function Home() {
                     dev<span className="text-primary">/asign</span>
                 </h3>
             </header>
-            <main className="md:text-center md:mx-auto text-white sm:pt-[107px] pt-[50px] max-md:px-[50px] max-sm:px-5">
+            <img 
+                src="/bg_vector.svg" 
+                alt="" 
+                className="fixed bottom-0 lg:right-0 2xl:min-w-[1850px] xl:min-w-[1600px] lg:min-w-[1300px] max-md:min-w-[1200px]"
+            />
+            <main className="md:text-center md:mx-auto text-white sm:pt-[107px] pt-[50px] max-md:px-[50px] max-sm:px-5 relative z-[99]">
                 <div className="sm:h-2.5 h-1.5 sm:w-[110px] w-[90px] rounded-[20px] bg-primary opacity-50 md:mx-auto" />
                 <h1 className="monument pt-[30px] pb-[15px] tracking-[-0.25px] sm:text-[40px] text-2xl sm:leading-[64px] leading-10">
                     Powering open-source collaboration 
