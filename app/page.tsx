@@ -62,7 +62,7 @@ export default function Home() {
                     </Link>
                 </div>
             </main>
-            <footer className="sm:fixed sm:bottom-[70px] max-sm:mt-[170px] max-sm:mb-10 w-full">
+            <footer className="sm:fixed sm:bottom-[70px] max-sm:mt-[100px] max-sm:pb-10 w-full">
                 <div className="w-fit flex items-center gap-[15px] mx-auto text-white text-[22.5px]">
                     <Link href="https://www.linkedin.com/company/devasign/" target="_blank">
                         <FaLinkedinIn />
