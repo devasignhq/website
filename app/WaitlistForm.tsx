@@ -23,6 +23,7 @@ export default function WaitlistForm({ toggleWaitlistForm }: WaitlistFormProps) 
         email_address: yup.string().trim()
             .email("Invalid email format")
             .required("Email address is required"),
+        role: yup.string().trim().required("Role is required"),
     });
     
     const formik = useFormik({
@@ -30,6 +31,7 @@ export default function WaitlistForm({ toggleWaitlistForm }: WaitlistFormProps) 
             first_name: "",
             last_name: "",
             email_address: "",
+            role: "",
         },
         validationSchema: validatorSchema,
         onSubmit: async (values) => {
@@ -120,7 +122,7 @@ export default function WaitlistForm({ toggleWaitlistForm }: WaitlistFormProps) 
                                     )}
                                 </div>
                             </div>
-                            <div className="mt-[15px] mb-10 flex flex-col">
+                            <div className="mt-[15px] flex flex-col">
                                 <label htmlFor="email_address" className="text-sm tracking-[0.1px] pb-[5px]">
                                     Email Address
                                 </label>
@@ -135,6 +137,26 @@ export default function WaitlistForm({ toggleWaitlistForm }: WaitlistFormProps) 
                                 />
                                 {formik.touched.email_address && formik.errors.email_address && (
                                     <p className="text-[#D3453E] text-[11px] leading-snug mt-[2px]">{formik.errors.email_address}</p>
+                                )}
+                            </div>
+                            <div className="mt-[15px] mb-10 flex flex-col">
+                                <label htmlFor="role" className="text-sm tracking-[0.1px] pb-[5px]">
+                                    Role
+                                </label>
+                                <select 
+                                    id="role"
+                                    name="role"
+                                    className="py-[17px] sm:px-5 px-4 bg-black text-sm tracking-[0.25px] border border-white focus:border-primary outline:none"
+                                    value={formik.values.role}
+                                    onChange={formik.handleChange}
+                                >
+                                    <option value="">Select Role</option>
+                                    <option value="Software Developer">Software Developer</option>
+                                    <option value="Project Maintainer">Project Maintainer</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                {formik.touched.role && formik.errors.role && (
+                                    <p className="text-[#D3453E] text-[11px] leading-snug mt-[2px]">{formik.errors.role}</p>
                                 )}
                             </div>
                             <button
