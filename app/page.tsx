@@ -2,7 +2,7 @@
 "use client"
 import Link from "next/link";
 import { useState } from "react";
-import { FaDiscord, FaLinkedinIn } from "react-icons/fa";
+import { FaLinkedinIn } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { ImCheckboxChecked } from "react-icons/im";
 import WaitlistForm from "./WaitlistForm";
@@ -50,7 +50,7 @@ export default function Home() {
                     >
                         Join Waitlist
                     </button>
-                    <Link 
+                    {/* <Link 
                         href=""
                         target="_blank"
                         className="py-[15px] pl-[25px] pr-[30px] border border-primary text-primary flex items-center justify-center gap-2.5"
@@ -59,7 +59,7 @@ export default function Home() {
                             <FaDiscord className="text-black" />
                         </div>
                         <span>Community</span>
-                    </Link>
+                    </Link> */}
                 </div>
             </main>
             <footer className="sm:fixed sm:bottom-[70px] max-sm:mt-[100px] max-sm:pb-10 w-full">
