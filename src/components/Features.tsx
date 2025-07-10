@@ -3,7 +3,9 @@ import {
   Brain, 
   GitPullRequest, 
   MessageSquare, 
-  ShieldCheck
+  ShieldCheck,
+  BadgeDollarSign,
+  Award
 } from 'lucide-react';
 
 type FeatureProps = {
@@ -45,6 +47,16 @@ export const Features: React.FC = () => {
       title: "Custom Workflows",
       description: "Configure project-specific rules and thresholds for automated decisions.",
       icon: <Brain />
+    },
+    {
+      title: "Bounty Payouts",
+      description: "Pay bounties to contributors once code passes test and PR merged.",
+      icon: <BadgeDollarSign />
+    },
+    {
+      title: "Contributor Reward",
+      description: "Automatically calculate and distribute rewards based on contribution quality and complexity.",
+      icon: <Award />
     }
   ];
 
