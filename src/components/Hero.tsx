@@ -177,12 +177,12 @@ export const Hero: React.FC = () => {
         </div>
         
           <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gray-100 to-gray-300 max-w-5xl mx-auto">
-            Automate contributor payments and<br />PR merges with AI
+            Automate bounty payments and<br />PR merges with AI
         </h1>
         
-          <p className="text-base sm:text-lg md:text-xl text-gray-400 mb-6 sm:mb-8 max-w-2xl mx-auto">
-          DevAsign streamlines open-source project management by automating contributor payments 
-          and intelligently handling pull requests with advanced AI review.
+        <p className="text-base sm:text-lg md:text-xl text-gray-400 mb-6 sm:mb-8 max-w-2xl mx-auto">
+          DevAsign streamlines open-source workflows with advanced PR review, 
+          intelligent contributor feedback, and automatic bounty payouts.
         </p>
         
           <div className="flex flex-col items-center">
