@@ -1,4 +1,4 @@
-limport { useState } from 'react';
+import { useState } from 'react';
 import svgPaths from "./imports/svg-mzil336qsi";
 import imgBgImage from "./assets/c8f0d3f13ac7dd476288c0403bdca511610a696b.png";
 import imgHeroImage from "./assets/013a8d1f9bfd97354677e6e611c314b3d894e9ce.png";
