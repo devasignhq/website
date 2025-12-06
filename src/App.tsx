@@ -99,7 +99,7 @@ function JoinWaitlistModal({ open, onOpenChange }: { open: boolean; onOpenChange
             Be among the first to try new DevAsign features and updates, and get dedicated onboarding and priority support.
           </DialogDescription>
         </DialogHeader>
-        
+
         <form onSubmit={handleSubmit} className="space-y-6 mt-6">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
@@ -127,7 +127,7 @@ function JoinWaitlistModal({ open, onOpenChange }: { open: boolean; onOpenChange
               />
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <label htmlFor="email" className="block text-white text-sm font-geist-medium">
               Email Address
@@ -140,7 +140,7 @@ function JoinWaitlistModal({ open, onOpenChange }: { open: boolean; onOpenChange
               className="bg-[#1a1a1a] border-[#2a2a2a] text-[#aaaaaa] placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
             />
           </div>
-          
+
           <div className="space-y-2">
             <label htmlFor="project" className="block text-white text-sm font-geist-medium">
               Open-source Project
@@ -154,7 +154,7 @@ function JoinWaitlistModal({ open, onOpenChange }: { open: boolean; onOpenChange
               className="bg-[#1a1a1a] border-[#2a2a2a] text-[#aaaaaa] placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
             />
           </div>
-          
+
           <button
             type="submit"
             className="join-waitlist-btn bg-[#fe891f] text-[#090603] px-7 py-3.5 font-geist-extrabold text-[15px] tracking-[-0.3px] transition-colors w-full md:w-auto"
@@ -241,7 +241,7 @@ function HeroSection({ onJoinWaitlistClick }: { onJoinWaitlistClick: () => void 
             </svg>
           </div>
         </div>
-        
+
       </div>
 
       {/* Bottom Overlay */}

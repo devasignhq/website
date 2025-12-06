@@ -812,7 +812,7 @@
   }
 
   .pt-20 {
-    padding-top: calc(var(--spacing) * 20);
+    padding-top: calc(var(--spacing) * 40);
   }
 
   .pb-4 {
