@@ -231,6 +231,16 @@ function HeroSection({ onJoinWaitlistClick }: { onJoinWaitlistClick: () => void 
             </div>
           </div>
         </div>
+
+        {/* Backed By - Absolutely positioned */}
+        <div className="flex items-center justify-center mt-8 md:mt-12 relative z-50 gap-4">
+          <p className="font-['Geist_Mono:Regular',sans-serif] text-white text-sm opacity-90">Backed by</p>
+          <div className="h-[40px] w-[123.125px]">
+            <svg className="block size-full" fill="none" viewBox="0 0 124 40">
+              <path clipRule="evenodd" d={svgPaths.p1c7e5480} fill="#F0F0EE" fillRule="evenodd" />
+            </svg>
+          </div>
+        </div>
         
       </div>
 
