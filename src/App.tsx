@@ -43,7 +43,7 @@ function Logo() {
           <path clipRule="evenodd" d={svgPaths.pffa9c00} fill="#FE891F" fillRule="evenodd" />
         </svg>
       </div>
-      <p className="font-geist-ultrablack leading-normal text-[25.363px] text-white tracking-[-1.6909px] whitespace-pre">DevAsign</p>
+      <p className="font-geist-ultrablack leading-normal text-2xl md:text-3xl text-white tracking-[-1.6909px] whitespace-pre">DevAsign</p>
     </div>
   );
 }
@@ -55,7 +55,7 @@ function Navigation({ onJoinWaitlistClick }: { onJoinWaitlistClick: () => void }
       <div className="flex items-center justify-between">
         <Logo />
         <div className="flex gap-3 md:gap-5 items-center">
-          <div className="hidden md:flex gap-[5px] items-center">
+          <div className="flex gap-[5px] items-center">
             <div className="size-[20px]">
               <svg className="block size-full" fill="none" viewBox="0 0 20 20">
                 <path d={svgPaths.p48b43e0} stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
@@ -63,7 +63,7 @@ function Navigation({ onJoinWaitlistClick }: { onJoinWaitlistClick: () => void }
             </div>
             <span className="font-geist-light text-[15px] text-white">25</span>
           </div>
-          <button onClick={onJoinWaitlistClick} className="join-waitlist-btn bg-[#fe891f] px-5 md:px-7 py-2.5 md:py-3 font-geist-extrabold text-[#090603] text-sm md:text-[15px] tracking-[-0.3px] whitespace-nowrap transition-colors">
+          <button onClick={onJoinWaitlistClick} className="join-waitlist-btn hidden md:block bg-[#fe891f] px-5 md:px-7 py-2.5 md:py-3 font-geist-extrabold text-[#090603] text-sm md:text-[15px] tracking-[-0.3px] whitespace-nowrap transition-colors">
             Join Waitlist
           </button>
         </div>
