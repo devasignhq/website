@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap');
+
+/* Ensure html and body fill viewport with dark background */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #090603;
+    overflow-x: hidden;
+}
+
+#root {
+    min-height: 100vh;
+    width: 100%;
+    background-color: #090603;
+}
+
+/* Apply Geist Mono globally */
+* {
+    font-family: 'Geist Mono', monospace !important;
+}
+
+/* Geist Mono Font Weight Utilities */
+.font-geist-light {
+    font-weight: 300;
+}
+
+.font-geist-regular {
+    font-weight: 400;
+}
+
+.font-geist-medium {
+    font-weight: 500;
+}
+
+.font-geist-extrabold {
+    font-weight: 800;
+}
+
+.font-geist-ultrablack {
+    font-weight: 900;
+}
+
+/* Hover effect for Join Waitlist buttons */
+.join-waitlist-btn:hover {
+    background-color: white !important;
+}
+
+/* Dialog overlay styling - ensure it's visible when open */
+[data-slot="dialog-overlay"] {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+    z-index: 99 !important;
+}
+
+/* Dialog content styling - ensure it's visible when open */
+[data-slot="dialog-content"] {
+    z-index: 100 !important;
+}
+
+/* Dialog close button styling */
+[data-slot="dialog-content"] > button {
+    color: white !important;
+    opacity: 1 !important;
+}
+
+[data-slot="dialog-content"] > button:hover {
+    opacity: 0.8 !important;
+}
