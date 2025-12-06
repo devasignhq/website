@@ -1,4 +1,4 @@
-import { useState } from 'react';
+limport { useState } from 'react';
 import svgPaths from "./imports/svg-mzil336qsi";
 import imgBgImage from "./assets/c8f0d3f13ac7dd476288c0403bdca511610a696b.png";
 import imgHeroImage from "./assets/013a8d1f9bfd97354677e6e611c314b3d894e9ce.png";
@@ -55,14 +55,14 @@ function Navigation({ onJoinWaitlistClick }: { onJoinWaitlistClick: () => void }
       <div className="flex items-center justify-between">
         <Logo />
         <div className="flex gap-3 md:gap-5 items-center">
-          <div className="flex gap-[5px] items-center">
+          <a href="https://github.com/devasignhq/devasign-api" target="_blank" rel="noopener noreferrer" className="flex gap-[5px] items-center hover:opacity-80 transition-opacity">
             <div className="size-[20px]">
               <svg className="block size-full" fill="none" viewBox="0 0 20 20">
                 <path d={svgPaths.p48b43e0} stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
               </svg>
             </div>
             <span className="font-geist-light text-[15px] text-white">25</span>
-          </div>
+          </a>
           <button onClick={onJoinWaitlistClick} className="join-waitlist-btn hidden md:block bg-[#fe891f] px-5 md:px-7 py-2.5 md:py-3 font-geist-extrabold text-[#090603] text-sm md:text-[15px] tracking-[-0.3px] whitespace-nowrap transition-colors">
             Join Waitlist
           </button>
@@ -90,9 +90,9 @@ function JoinWaitlistModal({ open, onOpenChange }: { open: boolean; onOpenChange
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-[#090603] border-[#2a2a2a] text-white max-w-[600px] p-8 [&>button]:text-white [&>button]:hover:text-white [&>button]:opacity-100">
+      <DialogContent className="bg-[#090603] z-50 border-[#2a2a2a] text-white max-w-[600px] p-8 [&>button]:text-white [&>button]:hover:text-white [&>button]:opacity-100">
         <DialogHeader className="space-y-4">
-          <DialogTitle className="text-white text-2xl font-geist-extrabold tracking-[-0.4px]">
+          <DialogTitle className="text-white text-lg md:text-2xl font-geist-extrabold tracking-[-0.4px]">
             Join Waitlist
           </DialogTitle>
           <DialogDescription className="text-white text-base font-geist-regular opacity-90 leading-relaxed">
@@ -304,10 +304,10 @@ function HowItWorksSection() {
 
               {/* Content */}
               <div className="space-y-4">
-                <h3 className="font-geist-regular text-amber-100 text-xl tracking-[-0.4px]">
+                <h3 className="font-geist-regular text-amber-100 text-lg md:text-xl tracking-[-0.4px]">
                   {step.title}
                 </h3>
-                <p className="font-geist-regular text-[#aaaaaa] text-base tracking-[-0.32px] leading-[25px]">
+                <p className="font-geist-regular text-[#aaaaaa] text-sm md:text-base tracking-[-0.32px] leading-[25px]">
                   {step.description}
                 </p>
               </div>
@@ -338,7 +338,7 @@ function AccordionItem({ title, content, isOpen, onClick }: { title: string; con
       </button>
       {isOpen && (
         <div className="pb-5">
-          <p className="font-geist-regular text-[#aaaaaa] text-base tracking-[-0.32px] leading-[25px]">
+          <p className="font-geist-regular text-[#aaaaaa] text-sm md:text-base tracking-[-0.32px] leading-[25px]">
             {content}
           </p>
         </div>
@@ -428,7 +428,7 @@ function BenefitsSection({ onJoinWaitlistClick }: { onJoinWaitlistClick: () => v
           </div>
 
           {/* Right: Visual Element */}
-          <div className="hidden lg:flex items-center justify-center">
+          <div className="flex items-center justify-center">
             <img alt="DevAsign Vector" className="w-full max-w-[600px] h-auto object-contain" src={imgDevasignVector} />
           </div>
         </div>
@@ -437,13 +437,13 @@ function BenefitsSection({ onJoinWaitlistClick }: { onJoinWaitlistClick: () => v
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-16">
           {additionalBenefits.map((benefit, index) => (
             <div key={index} className="space-y-4 md:space-y-5">
-              <div className="size-[30px]">
+              <div className="size-[24px]">
                 {benefit.icon}
               </div>
-              <h3 className="font-geist-regular text-white text-xl opacity-90 tracking-[-0.4px]">
+              <h3 className="font-geist-regular text-white text-lg md:text-xl opacity-90 tracking-[-0.4px]">
                 {benefit.title}
               </h3>
-              <p className="font-geist-regular text-[#aaaaaa] text-base tracking-[-0.32px] leading-[25px]">
+              <p className="font-geist-regular text-[#aaaaaa] text-sm md:text-base tracking-[-0.32px] leading-[25px]">
                 {benefit.description}
               </p>
             </div>
@@ -470,19 +470,19 @@ function Footer() {
       <div className="absolute top-[-210px] left-[-10%] right-[-10%] h-[330px] bg-[#090603] blur-[35px] filter" />
 
       {/* Content */}
-      <div className="relative max-w-[1220px] mx-auto px-4 md:px-8 py-16 md:py-32">
+      <div className="relative max-w-[1260px] mx-auto px-4 md:px-8 py-16 md:py-32">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {/* Company Info */}
           <div className="space-y-5">
             <Logo />
-            <p className="font-geist-regular text-[#c4c4c4] text-base">
+            <p className="font-geist-regular text-[#c4c4c4] text-sm md:text-base">
               © 2025 DevAsign, Inc.
             </p>
           </div>
 
           {/* Social Links */}
           <div className="space-y-5">
-            <h3 className="font-geist-extrabold text-white text-xl opacity-90 tracking-[-0.4px]">
+            <h3 className="font-geist-extrabold text-white text-lg md:text-xl opacity-90 tracking-[-0.4px]">
               Social
             </h3>
             <div className="space-y-4">
@@ -492,7 +492,7 @@ function Footer() {
                 { name: 'Discord', url: 'https://discord.gg/dpRKcSTY' },
                 { name: 'LinkedIn', url: 'https://www.linkedin.com/company/devasign/' }
               ].map((link) => (
-                <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="block font-geist-medium text-[#aaaaaa] text-lg tracking-[-0.36px] hover:text-white transition-colors">
+                <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="block font-geist-medium text-[#aaaaaa] text-sm md:text-xl tracking-[-0.36px] hover:text-white transition-colors">
                   {link.name}
                 </a>
               ))}
@@ -501,7 +501,7 @@ function Footer() {
 
           {/* Company Links */}
           <div className="space-y-5">
-            <h3 className="font-geist-extrabold text-white text-xl opacity-90 tracking-[-0.4px]">
+            <h3 className="font-geist-extrabold text-white text-lg md:text-xl opacity-90 tracking-[-0.4px]">
               Company
             </h3>
             <div className="space-y-4">
@@ -509,7 +509,7 @@ function Footer() {
                 { name: 'Contact Us', url: 'https://cal.com/devasign/15min' },
                 { name: 'Security', url: 'mailto:security@devasign.com' }
               ].map((link) => (
-                <a key={link.name} href={link.url} target={link.url.startsWith('mailto:') ? undefined : '_blank'} rel={link.url.startsWith('mailto:') ? undefined : 'noopener noreferrer'} className="block font-geist-medium text-[#aaaaaa] text-lg tracking-[-0.36px] hover:text-white transition-colors">
+                <a key={link.name} href={link.url} target={link.url.startsWith('mailto:') ? undefined : '_blank'} rel={link.url.startsWith('mailto:') ? undefined : 'noopener noreferrer'} className="block font-geist-medium text-[#aaaaaa] text-sm md:text-xl tracking-[-0.36px] hover:text-white transition-colors">
                   {link.name}
                 </a>
               ))}
