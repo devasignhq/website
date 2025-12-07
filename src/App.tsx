@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import svgPaths from "./imports/svg-mzil336qsi";
 import imgBgImage from "./assets/c8f0d3f13ac7dd476288c0403bdca511610a696b.png";
 import imgHeroImage from "./assets/013a8d1f9bfd97354677e6e611c314b3d894e9ce.png";
@@ -6,14 +7,14 @@ import imgHeroImage1 from "./assets/787f6fe36329cedaf5da3b0f31092bec8f8c3da0.png
 import imgHeroImage2 from "./assets/3b4654b781f5656cf586bf63df0ec8d0e553e20b.png";
 import imgBgImage1 from "./assets/466f75350a19b899ab2540393026dad8f7fe0bf9.png";
 import imgDevasignVector from "./assets/6a4be5d08487314716e9608ba30d92fb98e728f8.png";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "./components/ui/dialog";
 import { Input } from "./components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./components/ui/select";
 
 // Star Icon Component
 function StarIcon() {
@@ -49,11 +50,13 @@ function Logo() {
 }
 
 // Navigation Component
-function Navigation({ onJoinWaitlistClick }: { onJoinWaitlistClick: () => void }) {
+function Navigation() {
   return (
     <nav className="absolute top-0 left-0 right-0 z-50 w-full max-w-[1260px] mx-auto px-4 md:px-8 py-6 md:py-10">
       <div className="flex items-center justify-between">
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
         <div className="flex gap-3 md:gap-5 items-center">
           <a href="https://github.com/devasignhq/devasign-api" target="_blank" rel="noopener noreferrer" className="flex gap-[5px] items-center hover:opacity-80 transition-opacity">
             <div className="size-[20px]">
@@ -63,116 +66,131 @@ function Navigation({ onJoinWaitlistClick }: { onJoinWaitlistClick: () => void }
             </div>
             <span className="font-geist-light text-[15px] text-white">25</span>
           </a>
-          <button onClick={onJoinWaitlistClick} className="join-waitlist-btn hidden md:block bg-[#fe891f] px-5 md:px-7 py-2.5 md:py-3 font-geist-extrabold text-[#090603] text-sm md:text-[15px] tracking-[-0.3px] whitespace-nowrap transition-colors">
+          <Link to="/waitlist" className="join-waitlist-btn hidden md:block bg-[#fe891f] px-5 md:px-7 py-2.5 md:py-3 font-geist-extrabold text-[#090603] text-sm md:text-[15px] tracking-[-0.3px] whitespace-nowrap transition-colors">
             Join Waitlist
-          </button>
+          </Link>
         </div>
       </div>
     </nav>
   );
 }
 
-// Join Waitlist Modal Component
-function JoinWaitlistModal({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+// Waitlist Form Component
+function WaitlistForm() {
   const [formData, setFormData] = useState({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john@example.com',
+    firstName: '',
+    lastName: '',
+    email: '',
+    role: '',
     project: ''
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
     console.log('Form submitted:', formData);
-    onOpenChange(false);
+    // You handle submission logic here (e.g., call API, show success message)
+    alert("Thanks for joining!");
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-[#090603] z-50 border-[#2a2a2a] text-white max-w-[600px] p-8 [&>button]:text-white [&>button]:hover:text-white [&>button]:opacity-100">
-        <DialogHeader className="space-y-4">
-          <DialogTitle className="text-white text-lg md:text-2xl font-geist-extrabold tracking-[-0.4px]">
-            Join Waitlist
-          </DialogTitle>
-          <DialogDescription className="text-white text-base font-geist-regular opacity-90 leading-relaxed">
-            Be among the first to try new DevAsign features and updates, and get dedicated onboarding and priority support.
-          </DialogDescription>
-        </DialogHeader>
+    <div className="w-full max-w-[500px] bg-[#090603] border border-[#2a2a2a] p-8 md:p-10 rounded-xl shadow-2xl">
+      <div className="space-y-4 mb-8 text-center">
+        <h2 className="text-white text-2xl font-geist-extrabold tracking-[-0.4px]">
+          Join Waitlist
+        </h2>
+        <p className="text-white text-base font-geist-regular opacity-90 leading-relaxed">
+          Be among the first to try new DevAsign features and updates.
+        </p>
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6 mt-6">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <label htmlFor="firstName" className="block text-white text-sm font-geist-medium">
-                First Name
-              </label>
-              <Input
-                id="firstName"
-                type="text"
-                value={formData.firstName}
-                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                className="bg-[#1a1a1a] border-[#2a2a2a] text-[#aaaaaa] placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
-              />
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="lastName" className="block text-white text-sm font-geist-medium">
-                Last Name
-              </label>
-              <Input
-                id="lastName"
-                type="text"
-                value={formData.lastName}
-                onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                className="bg-[#1a1a1a] border-[#2a2a2a] text-[#aaaaaa] placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
-              />
-            </div>
-          </div>
-
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <label htmlFor="email" className="block text-white text-sm font-geist-medium">
-              Email Address
+            <label htmlFor="firstName" className="block text-white text-sm font-geist-medium text-left">
+              First Name
             </label>
             <Input
-              id="email"
-              type="email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="bg-[#1a1a1a] border-[#2a2a2a] text-[#aaaaaa] placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="project" className="block text-white text-sm font-geist-medium">
-              Open-source Project
-            </label>
-            <Input
-              id="project"
+              id="firstName"
               type="text"
-              value={formData.project}
-              onChange={(e) => setFormData({ ...formData, project: e.target.value })}
-              placeholder="Project name or URL"
+              value={formData.firstName}
+              onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
               className="bg-[#1a1a1a] border-[#2a2a2a] text-[#aaaaaa] placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
             />
           </div>
+          <div className="space-y-2">
+            <label htmlFor="lastName" className="block text-white text-sm font-geist-medium text-left">
+              Last Name
+            </label>
+            <Input
+              id="lastName"
+              type="text"
+              value={formData.lastName}
+              onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+              className="bg-[#1a1a1a] border-[#2a2a2a] text-[#aaaaaa] placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
+            />
+          </div>
+        </div>
 
-          <button
-            type="submit"
-            className="join-waitlist-btn bg-[#fe891f] text-[#090603] px-7 py-3.5 font-geist-extrabold text-[15px] tracking-[-0.3px] transition-colors w-full md:w-auto"
-          >
-            Submit
-          </button>
-        </form>
-      </DialogContent>
-    </Dialog>
+        <div className="space-y-2">
+          <label htmlFor="email" className="block text-white text-sm font-geist-medium text-left">
+            Email Address
+          </label>
+          <Input
+            id="email"
+            type="email"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            className="bg-[#1a1a1a] border-[#2a2a2a] text-[#aaaaaa] placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-white text-sm font-geist-medium text-left">
+            Role
+          </label>
+          <Select onValueChange={(value: string) => setFormData({ ...formData, role: value })}>
+            <SelectTrigger className="bg-[#1a1a1a] border-[#2a2a2a] text-[#aaaaaa] focus:ring-[#fe891f]/20">
+              <SelectValue placeholder="Select your role" />
+            </SelectTrigger>
+            <SelectContent className="bg-[#1a1a1a] border-[#2a2a2a] text-[#aaaaaa]">
+              <SelectItem value="software-engineer">Software Engineer</SelectItem>
+              <SelectItem value="oss-maintainer">OSS Maintainer</SelectItem>
+              <SelectItem value="engineering-lead">Engineering Lead</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <label htmlFor="project" className="block text-white text-sm font-geist-medium text-left">
+            Open-source Project
+          </label>
+          <Input
+            id="project"
+            type="text"
+            value={formData.project}
+            onChange={(e) => setFormData({ ...formData, project: e.target.value })}
+            placeholder="Project name or URL"
+            className="bg-[#1a1a1a] border-[#2a2a2a] text-[#aaaaaa] placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="join-waitlist-btn bg-[#fe891f] text-[#090603] px-7 py-3.5 font-geist-extrabold text-[15px] tracking-[-0.3px] transition-colors w-full"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
   );
 }
 
-// Hero Section Component
-function HeroSection({ onJoinWaitlistClick }: { onJoinWaitlistClick: () => void }) {
+// Hero Section Component (Wrapper)
+function HeroSection({ children }: { children: React.ReactNode }) {
   return (
-    <section className="relative w-full overflow-hidden">
+    <section className="relative w-full overflow-hidden flex flex-col min-h-screen md:min-h-0">
       {/* Navigation Overlay */}
-      <Navigation onJoinWaitlistClick={onJoinWaitlistClick} />
+      <Navigation />
 
       {/* Background Image */}
       <div className="absolute inset-0 pointer-events-none">
@@ -183,70 +201,77 @@ function HeroSection({ onJoinWaitlistClick }: { onJoinWaitlistClick: () => void 
       <div className="absolute inset-0 bg-[#090603] opacity-55" />
 
       {/* Content */}
-      <div className="relative max-w-[1260px] mx-auto px-4 md:px-8 pt-20 md:pt-32 lg:pt-40 pb-12 md:pb-20">
-        {/* Hero Content */}
-        <div className="flex flex-col items-center gap-6 md:gap-8 mb-8 md:mb-12">
-          {/* Coming Soon Badge */}
-          <div className="flex gap-2.5 items-center">
-            <StarIcon />
-            <p className="font-geist-medium text-[#aaaaaa] text-sm">Coming soon • Join the waitlist</p>
-          </div>
-
-          {/* Title */}
-          <h1 className="font-geist-regular text-white text-center text-3xl md:text-5xl lg:text-[64px] tracking-[-3.2px] max-w-[950px] leading-tight md:leading-normal">
-            Review code and automate bounty payouts with AI
-          </h1>
-
-          {/* Description */}
-          <p className="font-geist-medium text-white text-center text-sm md:text-base tracking-[-0.32px] opacity-75 max-w-[758px] leading-relaxed">
-            DevAsign helps open-source project maintainers review contributors code, give detailed feedback & automate bounty payout when needed.
-          </p>
-
-          {/* CTA Button */}
-          <button onClick={onJoinWaitlistClick} className="join-waitlist-btn bg-[#fe891f] px-7 py-3.5 font-geist-extrabold text-[#090603] text-[15px] tracking-[-0.3px] transition-colors">
-            Join Waitlist
-          </button>
-        </div>
-
-        {/* Hero Images - Responsive */}
-        <div className="flex items-center justify-center gap-0 md:gap-4 overflow-x-auto md:overflow-visible pb-4 md:pb-0 min-h-[300px] md:min-h-[600px]">
-          {/* Image 1 */}
-          <div className="hidden md:block flex-shrink-0 transform rotate-[8deg] skew-x-[7.923deg]">
-            <div className="w-[200px] lg:w-[397px] h-[280px] lg:h-[560px] relative">
-              <img alt="" className="absolute h-full w-[93.95%] left-[3.02%]" src={imgHeroImage} />
-            </div>
-          </div>
-
-          {/* Image 2 - Main */}
-          <div className="flex-shrink-0 transform rotate-[8deg] skew-x-[7.923deg]">
-            <div className="w-[280px] md:w-[300px] lg:w-[418px] h-[400px] md:h-[450px] lg:h-[560px] relative">
-              <img alt="" className="absolute h-full w-[89.65%] left-[5.18%]" src={imgHeroImage1} />
-            </div>
-          </div>
-
-          {/* Image 3 */}
-          <div className="hidden md:block flex-shrink-0 transform rotate-[8deg] skew-x-[7.923deg]">
-            <div className="w-[200px] lg:w-[397px] h-[280px] lg:h-[560px] relative">
-              <img alt="" className="absolute h-full w-[93.95%] left-[3.02%]" src={imgHeroImage2} />
-            </div>
-          </div>
-        </div>
-
-        {/* Backed By - Absolutely positioned */}
-        <div className="flex items-center justify-center mt-8 md:mt-12 relative z-50 gap-4">
-          <p className="font-['Geist_Mono:Regular',sans-serif] text-white text-sm opacity-90">Backed by</p>
-          <div className="h-[40px] w-[123.125px]">
-            <svg className="block size-full" fill="none" viewBox="0 0 124 40">
-              <path clipRule="evenodd" d={svgPaths.p1c7e5480} fill="#F0F0EE" fillRule="evenodd" />
-            </svg>
-          </div>
-        </div>
-
+      <div className="relative z-10 w-full max-w-[1260px] mx-auto px-4 md:px-8 pt-24 md:pt-32 lg:pt-40 pb-12 md:pb-20 flex-grow flex flex-col justify-center">
+        {children}
       </div>
 
-      {/* Bottom Overlay */}
+      {/* Bottom Overlay - Only show if enough height, or strictly mainly for visual blend */}
       <div className="absolute bottom-[-80px] left-0 right-0 h-[300px] bg-[#090603] blur-[15px] filter -z-10" />
     </section>
+  );
+}
+
+// Home Hero Content
+function HomeHeroContent() {
+  return (
+    <>
+      <div className="flex flex-col items-center gap-6 md:gap-8 mb-8 md:mb-12">
+        {/* Coming Soon Badge */}
+        <div className="flex gap-2.5 items-center">
+          <StarIcon />
+          <p className="font-geist-medium text-[#aaaaaa] text-sm">Coming soon • Join the waitlist</p>
+        </div>
+
+        {/* Title */}
+        <h1 className="font-geist-regular text-white text-center text-3xl md:text-5xl lg:text-[64px] tracking-[-3.2px] max-w-[950px] leading-tight md:leading-normal">
+          Review code and automate bounty payouts with AI
+        </h1>
+
+        {/* Description */}
+        <p className="font-geist-medium text-white text-center text-sm md:text-base tracking-[-0.32px] opacity-75 max-w-[758px] leading-relaxed">
+          DevAsign helps open-source project maintainers review contributors code, give detailed feedback & automate bounty payout when needed.
+        </p>
+
+        {/* CTA Button */}
+        <Link to="/waitlist" className="join-waitlist-btn bg-[#fe891f] px-7 py-3.5 font-geist-extrabold text-[#090603] text-[15px] tracking-[-0.3px] transition-colors">
+          Join Waitlist
+        </Link>
+      </div>
+
+      {/* Hero Images - Responsive */}
+      <div className="flex items-center justify-center gap-0 md:gap-4 overflow-x-auto md:overflow-visible pb-4 md:pb-0 min-h-[300px] md:min-h-[600px]">
+        {/* Image 1 */}
+        <div className="hidden md:block flex-shrink-0 transform rotate-[8deg] skew-x-[7.923deg]">
+          <div className="w-[200px] lg:w-[397px] h-[280px] lg:h-[560px] relative">
+            <img alt="" className="absolute h-full w-[93.95%] left-[3.02%]" src={imgHeroImage} />
+          </div>
+        </div>
+
+        {/* Image 2 - Main */}
+        <div className="flex-shrink-0 transform rotate-[8deg] skew-x-[7.923deg]">
+          <div className="w-[280px] md:w-[300px] lg:w-[418px] h-[400px] md:h-[450px] lg:h-[560px] relative">
+            <img alt="" className="absolute h-full w-[89.65%] left-[5.18%]" src={imgHeroImage1} />
+          </div>
+        </div>
+
+        {/* Image 3 */}
+        <div className="hidden md:block flex-shrink-0 transform rotate-[8deg] skew-x-[7.923deg]">
+          <div className="w-[200px] lg:w-[397px] h-[280px] lg:h-[560px] relative">
+            <img alt="" className="absolute h-full w-[93.95%] left-[3.02%]" src={imgHeroImage2} />
+          </div>
+        </div>
+      </div>
+
+      {/* Backed By - Absolutely positioned */}
+      <div className="flex items-center justify-center mt-8 md:mt-12 relative z-50 gap-4">
+        <p className="font-['Geist_Mono:Regular',sans-serif] text-white text-sm opacity-90">Backed by</p>
+        <div className="h-[40px] w-[123.125px]">
+          <svg className="block size-full" fill="none" viewBox="0 0 124 40">
+            <path clipRule="evenodd" d={svgPaths.p1c7e5480} fill="#F0F0EE" fillRule="evenodd" />
+          </svg>
+        </div>
+      </div>
+    </>
   );
 }
 
@@ -348,7 +373,7 @@ function AccordionItem({ title, content, isOpen, onClick }: { title: string; con
 }
 
 // Benefits Section
-function BenefitsSection({ onJoinWaitlistClick }: { onJoinWaitlistClick: () => void }) {
+function BenefitsSection() {
   const [openAccordion, setOpenAccordion] = useState(0);
 
   const accordionItems = [
@@ -422,9 +447,9 @@ function BenefitsSection({ onJoinWaitlistClick }: { onJoinWaitlistClick: () => v
               ))}
             </div>
 
-            <button onClick={onJoinWaitlistClick} className="join-waitlist-btn bg-amber-100 px-7 py-3.5 font-geist-extrabold text-[#090603] text-[15px] tracking-[-0.3px] transition-colors">
+            <Link to="/waitlist" className="join-waitlist-btn bg-amber-100 px-7 py-3.5 font-geist-extrabold text-[#090603] text-[15px] tracking-[-0.3px] transition-colors inline-block">
               Join Waitlist
-            </button>
+            </Link>
           </div>
 
           {/* Right: Visual Element */}
@@ -474,7 +499,9 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {/* Company Info */}
           <div className="space-y-5">
-            <Logo />
+            <Link to="/">
+              <Logo />
+            </Link>
             <p className="font-geist-regular text-[#c4c4c4] text-sm md:text-base">
               © 2025 DevAsign, Inc.
             </p>
@@ -521,27 +548,54 @@ function Footer() {
   );
 }
 
-// Main App Component
-export default function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
+// Page Components
+function LandingPage() {
   return (
     <div className="bg-[#090603] min-h-screen w-full flex flex-col">
       <div className="flex-shrink-0">
-        <HeroSection onJoinWaitlistClick={handleOpenModal} />
+        <HeroSection>
+          <HomeHeroContent />
+        </HeroSection>
       </div>
       <div className="flex-grow">
         <HowItWorksSection />
-        <BenefitsSection onJoinWaitlistClick={handleOpenModal} />
+        <BenefitsSection />
       </div>
       <div className="flex-shrink-0">
         <Footer />
       </div>
-      <JoinWaitlistModal open={isModalOpen} onOpenChange={setIsModalOpen} />
     </div>
+  );
+}
+
+function WaitlistPage() {
+  return (
+    <div className="bg-[#090603] min-h-screen w-full flex flex-col">
+      <div className="flex-shrink-0">
+        <HeroSection>
+          <div className="w-full flex justify-center items-center">
+            <WaitlistForm />
+          </div>
+        </HeroSection>
+      </div>
+      <div className="flex-grow">
+        {/* You could add content here if needed, but for now just the form in hero */}
+      </div>
+      <div className="flex-shrink-0">
+        <Footer />
+      </div>
+    </div>
+  );
+}
+
+// Main App Component & Routing
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/waitlist" element={<WaitlistPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
