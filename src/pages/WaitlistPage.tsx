@@ -10,7 +10,7 @@ import {
 } from "../components/ui/select";
 import { Footer } from '../components/layout/Footer';
 import { HeroSection } from '../components/layout/HeroSection';
-import imgHeroImage from "../assets/013a8d1f9bfd97354677e6e611c314b3d894e9ce.png"; 
+import imgHeroImage from "../assets/013a8d1f9bfd97354677e6e611c314b3d894e9ce.png";
 import imgHeroImage1 from "../assets/787f6fe36329cedaf5da3b0f31092bec8f8c3da0.png";
 import imgHeroImage2 from "../assets/3b4654b781f5656cf586bf63df0ec8d0e553e20b.png";
 
@@ -34,7 +34,7 @@ function WaitlistHeroContent() {
     return (
         <>
             <div className="flex flex-col items-center gap-6 md:gap-8 mb-8 md:mb-12">
-                
+
                 {/* Title */}
                 <h1 className="font-geist-regular text-white text-center text-3xl md:text-5xl lg:text-[64px] tracking-[-3.2px] max-w-[950px] leading-tight md:leading-normal">
                     Join the Waitlist
@@ -46,21 +46,21 @@ function WaitlistHeroContent() {
                 </p>
 
                 {/* Form */}
-                <div className="w-full shadow-2xl pt-12">
+                <div className="w-full max-w-[600px] shadow-2xl pt-12">
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="space-y-2">
-                                <label htmlFor="firstName" className="block text-[#FEF3C7] text-tiny font-geist-medium text-left">
-                                    First Name
-                                </label>
-                                <Input
-                                    id="firstName"
-                                    type="text"
-                                    value={formData.firstName}
-                                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                                    placeholder="First Name"
-                                    className="h-[46px] pl-4 pr-4 bg-input border-[#2a2a2a] text-white placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
-                                />
-                            </div>
+                            <label htmlFor="firstName" className="block text-[#FEF3C7] text-tiny font-geist-medium text-left">
+                                First Name
+                            </label>
+                            <Input
+                                id="firstName"
+                                type="text"
+                                value={formData.firstName}
+                                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                                placeholder="First Name"
+                                className="h-[46px] pl-4 pr-4 bg-input border-[#2a2a2a] text-white placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
+                            />
+                        </div>
 
                         <div className="space-y-2">
                             <label htmlFor="email" className="block text-[#FEF3C7] text-tiny font-geist-medium text-left">
@@ -123,14 +123,14 @@ function WaitlistHeroContent() {
                             <img alt="" className="absolute h-full w-[93.95%] left-[3.02%]" src={imgHeroImage} />
                         </div>
                     </div>
-    
+
                     {/* Image 2 - Main */}
                     <div className="flex-shrink-0 transform rotate-[8deg] skew-x-[7.923deg]">
                         <div className="w-[280px] md:w-[300px] lg:w-[418px] h-[400px] md:h-[450px] lg:h-[420px] relative">
                             <img alt="" className="absolute h-full w-[89.65%] left-[5.18%]" src={imgHeroImage1} />
                         </div>
                     </div>
-    
+
                     {/* Image 3 */}
                     <div className="hidden md:block flex-shrink-0 transform rotate-[8deg] skew-x-[7.923deg]">
                         <div className="w-[280px] md:w-[300px] lg:w-[418px] h-[400px] md:h-[450px] lg:h-[420px] relative">
