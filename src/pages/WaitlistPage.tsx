@@ -222,9 +222,9 @@ export function WaitlistPage() {
             <div className="flex-grow">
                 {/* You could add content here if needed, but for now just the form in hero */}
             </div>
-            <div className="flex-shrink-0">
+            {/* <div className="flex-shrink-0">
                 <Footer />
-            </div>
+            </div> */}
         </div>
     );
 }
