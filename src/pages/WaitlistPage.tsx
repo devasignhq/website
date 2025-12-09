@@ -15,20 +15,44 @@ import imgHeroImage1 from "../assets/787f6fe36329cedaf5da3b0f31092bec8f8c3da0.pn
 import imgHeroImage2 from "../assets/3b4654b781f5656cf586bf63df0ec8d0e553e20b.png";
 
 
+import { useNavigate } from 'react-router-dom';
+import { Button } from "../components/ui/button";
+
 function WaitlistHeroContent() {
+    const navigate = useNavigate();
+    const [isSubmitted, setIsSubmitted] = useState(false);
     const [formData, setFormData] = useState({
         firstName: '',
-        lastName: '',
         email: '',
         role: '',
         project: ''
     });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
-        // You handle submission logic here (e.g., call API, show success message)
-        alert("Thanks for joining!");
+
+        const payload = {
+            name: formData.firstName,
+            email: formData.email,
+            role: formData.role,
+            project: formData.project,
+            created_at: new Date().toISOString()
+        };
+
+        console.log("Submitting payload to Google Sheets:", payload);
+
+        try {
+            await fetch('https://script.google.com/macros/s/AKfycbyOCi0v-srWBTkxyNunvZBo3YtOUL-32WM_RyL0a8RDqaJ73q8GFbq7xhWmVpqyc50J/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(payload)
+            });
+            console.log("Form submission request sent.");
+        } catch (error) {
+            console.error('Error submitting form', error);
+        }
+
+        setIsSubmitted(true);
     };
 
     return (
@@ -45,77 +69,100 @@ function WaitlistHeroContent() {
                     Get early access by signing up for the beta and get dedicated onboarding and priority support.
                 </p>
 
-                {/* Form */}
-                <div className="w-full max-w-[600px] shadow-2xl pt-12">
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        <div className="space-y-2">
-                            <label htmlFor="firstName" className="block text-[#FEF3C7] text-tiny font-geist-medium text-left">
-                                First Name
-                            </label>
-                            <Input
-                                required
-                                id="firstName"
-                                type="text"
-                                value={formData.firstName}
-                                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                                placeholder="First Name"
-                                className="h-[46px] pl-4 pr-4 bg-input border-[#2a2a2a] text-white placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
-                            />
+                {/* Form or Success Message */}
+                <div className="w-full max-w-[600px] shadow-2xl pt-12 pb-12 bg-[#131313] rounded-xl px-8">
+                    {isSubmitted ? (
+                        <div className="flex flex-col items-center text-center space-y-6 animate-in fade-in zoom-in duration-300">
+                            <div className="space-y-2">
+                                <h3 className="text-xl font-geist-medium text-white">You're now on the list!</h3>
+                            </div>
+                            <div className="flex flex-row gap-3 w-full justify-center pt-4">
+                                <Button
+                                    variant="outline"
+                                    onClick={() => navigate('/')}
+                                    className="border-white text-white hover:bg-white hover:text-black px-7 py-3.5 h-auto font-geist-medium text-[15px] tracking-[-0.3px] transition-colors"
+                                >
+                                    Go to Homepage
+                                </Button>
+                                <Button
+                                    onClick={() => window.open('https://cal.com/devasign/15min', '_blank')}
+                                    className="join-waitlist-btn bg-[#fe891f] text-[#090603] px-7 py-3.5 h-auto font-geist-extrabold text-[15px] tracking-[-0.3px] transition-colors"
+                                >
+                                    Call Founder
+                                </Button>
+                            </div>
                         </div>
+                    ) : (
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div className="space-y-2">
+                                <label htmlFor="firstName" className="block text-[#FEF3C7] text-tiny font-geist-medium text-left">
+                                    First Name
+                                </label>
+                                <Input
+                                    required
+                                    id="firstName"
+                                    type="text"
+                                    value={formData.firstName}
+                                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                                    placeholder="First Name"
+                                    className="h-[46px] pl-4 pr-4 bg-input border-[#2a2a2a] text-white placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
+                                />
+                            </div>
 
-                        <div className="space-y-2">
-                            <label htmlFor="email" className="block text-[#FEF3C7] text-tiny font-geist-medium text-left">
-                                Email Address
-                            </label>
-                            <Input
-                                required
-                                id="email"
-                                type="email"
-                                value={formData.email}
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                placeholder="Email Address"
-                                className="h-[46px] pl-4 pr-4 bg-input border-[#2a2a2a] text-white placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
-                            />
-                        </div>
+                            <div className="space-y-2">
+                                <label htmlFor="email" className="block text-[#FEF3C7] text-tiny font-geist-medium text-left">
+                                    Email Address
+                                </label>
+                                <Input
+                                    required
+                                    id="email"
+                                    type="email"
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                    placeholder="Email Address"
+                                    className="h-[46px] pl-4 pr-4 bg-input border-[#2a2a2a] text-white placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
+                                />
+                            </div>
 
-                        <div className="space-y-2">
-                            <label className="block text-[#FEF3C7] text-tiny font-geist-medium text-left">
-                                Role
-                            </label>
-                            <Select required onValueChange={(value: string) => setFormData({ ...formData, role: value })}>
-                                <SelectTrigger className="h-[46px] pl-4 pr-4 bg-input border-[#2a2a2a] text-white focus:ring-[#fe891f]/20">
-                                    <SelectValue placeholder="Select your role" />
-                                </SelectTrigger>
-                                <SelectContent position="popper" className="w-[var(--radix-select-trigger-width)] min-w-[var(--radix-select-trigger-width)] pl-4 pr-4 pt-4 pb-4 bg-input border-[#2a2a2a] text-[#aaaaaa]">
-                                    <SelectItem value="software-engineer" className="py-3 my-1 cursor-pointer">Software Engineer</SelectItem>
-                                    <SelectItem value="oss-maintainer" className="py-3 my-1 cursor-pointer">OSS Maintainer</SelectItem>
-                                    <SelectItem value="engineering-lead" className="py-3 my-1 cursor-pointer">Engineering Lead</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
+                            <div className="space-y-2">
+                                <label className="block text-[#FEF3C7] text-tiny font-geist-medium text-left">
+                                    Role
+                                </label>
+                                <Select required onValueChange={(value: string) => setFormData({ ...formData, role: value })}>
+                                    <SelectTrigger className="h-[46px] pl-4 pr-4 bg-input border-[#2a2a2a] text-white focus:ring-[#fe891f]/20">
+                                        <SelectValue placeholder="Select your role" />
+                                    </SelectTrigger>
+                                    <SelectContent position="popper" className="w-[var(--radix-select-trigger-width)] min-w-[var(--radix-select-trigger-width)] pl-4 pr-4 pt-4 pb-4 bg-input border-[#2a2a2a] text-[#aaaaaa]">
+                                        <SelectItem value="software-engineer" className="py-3 my-1 cursor-pointer">Software Engineer</SelectItem>
+                                        <SelectItem value="oss-maintainer" className="py-3 my-1 cursor-pointer">OSS Maintainer</SelectItem>
+                                        <SelectItem value="engineering-lead" className="py-3 my-1 cursor-pointer">Engineering Lead</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
 
-                        <div className="space-y-2">
-                            <label htmlFor="project" className="block text-[#FEF3C7] text-tiny font-geist-medium text-left">
-                                Open-source Project
-                            </label>
-                            <Input
-                                required
-                                id="project"
-                                type="text"
-                                value={formData.project}
-                                onChange={(e) => setFormData({ ...formData, project: e.target.value })}
-                                placeholder="Project name or URL"
-                                className="h-[46px] pl-4 pr-4 bg-input border-[#2a2a2a] text-white placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
-                            />
-                        </div>
+                            <div className="space-y-2">
+                                <label htmlFor="project" className="block text-[#FEF3C7] text-tiny font-geist-medium text-left">
+                                    Open-source Project
+                                </label>
+                                <Input
+                                    required
+                                    id="project"
+                                    type="text"
+                                    value={formData.project}
+                                    onChange={(e) => setFormData({ ...formData, project: e.target.value })}
+                                    placeholder="Project name or URL"
+                                    className="h-[46px] pl-4 pr-4 bg-input border-[#2a2a2a] text-white placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
+                                />
+                            </div>
 
-                        <button
-                            type="submit"
-                            className="join-waitlist-btn bg-[#fe891f] text-[#090603] px-7 py-3.5 font-geist-extrabold text-[15px] tracking-[-0.3px] transition-colors w-full"
-                        >
-                            Submit
-                        </button>
-                    </form>
+                            <button
+                                type="submit"
+                                className="join-waitlist-btn bg-[#fe891f] text-[#090603] px-7 py-3.5 font-geist-extrabold text-[15px] tracking-[-0.3px] transition-colors w-full rounded-md"
+                            >
+                                Submit
+                            </button>
+                        </form>
+                    )}
                 </div>
 
                 {/* Hero Images - Responsive */}

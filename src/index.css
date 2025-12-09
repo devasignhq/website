@@ -771,6 +771,10 @@
     border-color: #ffffff1a;
   }
 
+  .border-white {
+    border-color: #ffffff;
+  }
+
   .bg-\[\#070b15\] {
     background-color: #070b15;
   }
