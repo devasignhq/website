@@ -21,6 +21,7 @@ import { Button } from "../components/ui/button";
 function WaitlistHeroContent() {
     const navigate = useNavigate();
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState({
         firstName: '',
         email: '',
@@ -39,6 +40,7 @@ function WaitlistHeroContent() {
             created_at: new Date().toISOString()
         };
 
+        setIsSubmitting(true);
         console.log("Submitting payload to Google Sheets:", payload);
 
         try {
@@ -50,6 +52,8 @@ function WaitlistHeroContent() {
             console.log("Form submission request sent.");
         } catch (error) {
             console.error('Error submitting form', error);
+        } finally {
+            setIsSubmitting(false);
         }
 
         setIsSubmitted(true);
@@ -157,9 +161,10 @@ function WaitlistHeroContent() {
 
                             <button
                                 type="submit"
-                                className="join-waitlist-btn bg-[#fe891f] text-[#090603] px-7 py-3.5 font-geist-extrabold text-[15px] tracking-[-0.3px] transition-colors w-full rounded-md"
+                                disabled={isSubmitting}
+                                className="join-waitlist-btn bg-[#fe891f] text-[#090603] px-7 py-3.5 font-geist-extrabold text-[15px] tracking-[-0.3px] transition-colors w-full rounded-md cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
                             >
-                                Submit
+                                {isSubmitting ? 'Submitting...' : 'Submit'}
                             </button>
                         </form>
                     )}
