@@ -37,7 +37,7 @@ function HomeHeroContent() {
             </div>
 
             {/* Hero Images - Responsive */}
-            <div className="flex items-center justify-center gap-0 md:gap-4 pt-12 overflow-x-auto md:overflow-visible pb-4 md:pb-0 min-h-[300px] md:min-h-[400px]">
+            <div className="flex items-center justify-center gap-0 md:gap-4 pt-12 overflow-visible pb-4 md:pb-0 min-h-[300px] md:min-h-[400px]">
                 {/* Image 1 */}
                 <div className="hidden md:block flex-shrink-0 transform rotate-[8deg] skew-x-[7.923deg]">
                     <div className="w-[280px] md:w-[300px] lg:w-[418px] h-[400px] md:h-[450px] lg:h-[420px] relative">

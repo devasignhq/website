@@ -22,7 +22,7 @@ export function Navigation() {
             }
 
             const repos = await response.json();
-            const total = repos.reduce((sum, repo) => sum + repo.stargazers_count, 0);
+            const total = repos.reduce((sum: any, repo: any) => sum + repo.stargazers_count, 0);
             
             setTotalStars(total);
             setIsLoading(false);

@@ -9,7 +9,7 @@ export function Logo() {
                     <path clipRule="evenodd" d={svgPaths.pffa9c00} fill="#FE891F" fillRule="evenodd" />
                 </svg>
             </div>
-            <p className="font-geist-ultrablack leading-normal text-2xl md:text-3xl text-white tracking-[-1.6909px] whitespace-pre">DevAsign</p>
+            <p className="font-geist-ultrablack leading-normal text-xl md:text-3xl text-white tracking-[-0.5px] md:tracking-[-1.6909px] whitespace-pre">DevAsign</p>
         </div>
     );
 }
