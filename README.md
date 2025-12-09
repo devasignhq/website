@@ -1,8 +1,8 @@
-# DevAsign Web - React Website
+# DevAsign Website
 
 A modern, responsive React website built with Vite, TypeScript, and Tailwind CSS.
 
-## 🚀 Tech Stack
+## Tech Stack
 
 - **React 18.3.1** - UI library
 - **TypeScript** - Type safety
@@ -11,13 +11,13 @@ A modern, responsive React website built with Vite, TypeScript, and Tailwind CSS
 - **Radix UI** - Accessible component primitives
 - **Lucide React** - Icon library
 
-## 📋 Prerequisites
+## Prerequisites
 
 Before you begin, ensure you have the following installed:
 - **Node.js** (v18 or higher) - Currently using v25.2.1
 - **npm** (v8 or higher) - Currently using v11.6.2
 
-## 🛠️ Setup Instructions
+## Setup Instructions
 
 ### 1. Install Dependencies
 
@@ -49,7 +49,7 @@ npm run build
 
 This creates an optimized production build in the `build` directory.
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 devasignweb/
@@ -69,7 +69,7 @@ devasignweb/
 └── README.md           # This file
 ```
 
-## 🎨 Features
+## Features
 
 - **Responsive Design** - Works seamlessly on desktop, tablet, and mobile
 - **Modern UI Components** - Built with Radix UI primitives
@@ -82,7 +82,7 @@ devasignweb/
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 
-## 🌐 Development Server
+## Development Server
 
 The dev server runs on port 3000 by default and includes:
 - Hot Module Replacement (HMR)
@@ -90,13 +90,13 @@ The dev server runs on port 3000 by default and includes:
 - Automatic browser opening
 - Error overlay
 
-## 📝 Notes
+## Notes
 
 - The project uses custom font families (Geist Mono) - ensure these are loaded properly
 - Image assets are aliased in `vite.config.ts` for easy imports
 - Path alias `@/` is configured to point to the `src` directory
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Port Already in Use
 If port 3000 is already in use, you can change it in `vite.config.ts`:
@@ -120,10 +120,4 @@ Ensure all type definitions are installed:
 npm install --save-dev @types/react @types/react-dom @types/node
 ```
 
-## 📄 License
-
 © 2025 DevAsign, Inc.
-
----
-
-**Happy Coding! 🚀**
