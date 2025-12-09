@@ -53,6 +53,7 @@ function WaitlistHeroContent() {
                                 First Name
                             </label>
                             <Input
+                                required
                                 id="firstName"
                                 type="text"
                                 value={formData.firstName}
@@ -67,6 +68,7 @@ function WaitlistHeroContent() {
                                 Email Address
                             </label>
                             <Input
+                                required
                                 id="email"
                                 type="email"
                                 value={formData.email}
@@ -80,14 +82,14 @@ function WaitlistHeroContent() {
                             <label className="block text-[#FEF3C7] text-tiny font-geist-medium text-left">
                                 Role
                             </label>
-                            <Select onValueChange={(value: string) => setFormData({ ...formData, role: value })}>
+                            <Select required onValueChange={(value: string) => setFormData({ ...formData, role: value })}>
                                 <SelectTrigger className="h-[46px] pl-4 pr-4 bg-input border-[#2a2a2a] text-white focus:ring-[#fe891f]/20">
                                     <SelectValue placeholder="Select your role" />
                                 </SelectTrigger>
-                                <SelectContent className="pl-4 pr-4 pt-4 pb-4 bg-input border-[#2a2a2a] text-[#aaaaaa]">
-                                    <SelectItem value="software-engineer">Software Engineer</SelectItem>
-                                    <SelectItem value="oss-maintainer">OSS Maintainer</SelectItem>
-                                    <SelectItem value="engineering-lead">Engineering Lead</SelectItem>
+                                <SelectContent position="popper" className="w-[var(--radix-select-trigger-width)] min-w-[var(--radix-select-trigger-width)] pl-4 pr-4 pt-4 pb-4 bg-input border-[#2a2a2a] text-[#aaaaaa]">
+                                    <SelectItem value="software-engineer" className="py-3 my-1 cursor-pointer">Software Engineer</SelectItem>
+                                    <SelectItem value="oss-maintainer" className="py-3 my-1 cursor-pointer">OSS Maintainer</SelectItem>
+                                    <SelectItem value="engineering-lead" className="py-3 my-1 cursor-pointer">Engineering Lead</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
@@ -97,6 +99,7 @@ function WaitlistHeroContent() {
                                 Open-source Project
                             </label>
                             <Input
+                                required
                                 id="project"
                                 type="text"
                                 value={formData.project}
@@ -140,127 +143,19 @@ function WaitlistHeroContent() {
                 </div>
 
                 {/* Backed By - Absolutely positioned */}
-                <div className="flex items-center justify-center mt-8 md:mt-12 relative z-50 gap-4">
+                {/* <div className="flex items-center justify-center mt-8 md:mt-12 relative z-50 gap-4">
                     <p className="font-['Geist_Mono:Regular',sans-serif] text-white text-sm opacity-90">Backed by</p>
                     <div className="h-[40px] w-[123.125px]">
                         <svg className="block size-full" fill="none" viewBox="0 0 124 40">
                             <path clipRule="evenodd" d={svgPaths.p1c7e5480} fill="#F0F0EE" fillRule="evenodd" />
                         </svg>
                     </div>
-                </div>
+                </div> */}
             </div>
         </>
     );
 }
 
-// function WaitlistForm() {
-//     const [formData, setFormData] = useState({
-//         firstName: '',
-//         lastName: '',
-//         email: '',
-//         role: '',
-//         project: ''
-//     });
-
-//     const handleSubmit = (e: React.FormEvent) => {
-//         e.preventDefault();
-//         console.log('Form submitted:', formData);
-//         // You handle submission logic here (e.g., call API, show success message)
-//         alert("Thanks for joining!");
-//     };
-
-//     return (
-//         <div className="w-full max-w-[500px] bg-[#090603] border border-[#2a2a2a] p-8 md:p-10 rounded-xl shadow-2xl">
-//             <div className="space-y-4 mb-8 text-center">
-//                 <h2 className="text-white text-2xl font-geist-extrabold tracking-[-0.4px]">
-//                     Join Waitlist
-//                 </h2>
-//                 <p className="text-white text-base font-geist-regular opacity-90 leading-relaxed">
-//                     Be among the first to try new DevAsign features and updates.
-//                 </p>
-//             </div>
-
-//             <form onSubmit={handleSubmit} className="space-y-6">
-//                 <div className="grid grid-cols-2 gap-4">
-//                     <div className="space-y-2">
-//                         <label htmlFor="firstName" className="block text-white text-sm font-geist-medium text-left">
-//                             First Name
-//                         </label>
-//                         <Input
-//                             id="firstName"
-//                             type="text"
-//                             value={formData.firstName}
-//                             onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-//                             className="bg-[#1a1a1a] border-[#2a2a2a] text-[#aaaaaa] placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
-//                         />
-//                     </div>
-//                     <div className="space-y-2">
-//                         <label htmlFor="lastName" className="block text-white text-sm font-geist-medium text-left">
-//                             Last Name
-//                         </label>
-//                         <Input
-//                             id="lastName"
-//                             type="text"
-//                             value={formData.lastName}
-//                             onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-//                             className="bg-[#1a1a1a] border-[#2a2a2a] text-[#aaaaaa] placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
-//                         />
-//                     </div>
-//                 </div>
-
-//                 <div className="space-y-2">
-//                     <label htmlFor="email" className="block text-white text-sm font-geist-medium text-left">
-//                         Email Address
-//                     </label>
-//                     <Input
-//                         id="email"
-//                         type="email"
-//                         value={formData.email}
-//                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-//                         className="bg-[#1a1a1a] border-[#2a2a2a] text-[#aaaaaa] placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
-//                     />
-//                 </div>
-
-//                 <div className="space-y-2">
-//                     <label className="block text-white text-sm font-geist-medium text-left">
-//                         Role
-//                     </label>
-//                     <Select onValueChange={(value: string) => setFormData({ ...formData, role: value })}>
-//                         <SelectTrigger className="bg-[#1a1a1a] border-[#2a2a2a] text-[#aaaaaa] focus:ring-[#fe891f]/20">
-//                             <SelectValue placeholder="Select your role" />
-//                         </SelectTrigger>
-//                         <SelectContent className="bg-[#1a1a1a] border-[#2a2a2a] text-[#aaaaaa]">
-//                             <SelectItem value="software-engineer">Software Engineer</SelectItem>
-//                             <SelectItem value="oss-maintainer">OSS Maintainer</SelectItem>
-//                             <SelectItem value="engineering-lead">Engineering Lead</SelectItem>
-//                         </SelectContent>
-//                     </Select>
-//                 </div>
-
-//                 <div className="space-y-2">
-//                     <label htmlFor="project" className="block text-white text-sm font-geist-medium text-left">
-//                         Open-source Project
-//                     </label>
-//                     <Input
-//                         id="project"
-//                         type="text"
-//                         value={formData.project}
-//                         onChange={(e) => setFormData({ ...formData, project: e.target.value })}
-//                         placeholder="Project name or URL"
-//                         className="bg-[#1a1a1a] border-[#2a2a2a] text-[#aaaaaa] placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
-//                     />
-//                 </div>
-
-//                 <button
-//                     type="submit"
-//                     className="join-waitlist-btn bg-[#fe891f] text-[#090603] px-7 py-3.5 font-geist-extrabold text-[15px] tracking-[-0.3px] transition-colors w-full"
-//                 >
-//                     Submit
-//                 </button>
-//             </form>
-//         </div>
-//     );
-// }
 
 export function WaitlistPage() {
     return (
