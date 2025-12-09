@@ -114,10 +114,4 @@ rm -rf node_modules package-lock.json
 npm install
 ```
 
-### TypeScript Errors
-Ensure all type definitions are installed:
-```bash
-npm install --save-dev @types/react @types/react-dom @types/node
-```
-
 © 2025 DevAsign, Inc.
