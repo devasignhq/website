@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Input } from "../components/ui/input";
-import svgPaths from "../imports/svg-mzil336qsi";
 import {
     Select,
     SelectContent,
@@ -8,7 +7,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../components/ui/select";
-import { Footer } from '../components/layout/Footer';
 import { HeroSection } from '../components/layout/HeroSection';
 import imgHeroImage from "../assets/013a8d1f9bfd97354677e6e611c314b3d894e9ce.png";
 import imgHeroImage1 from "../assets/787f6fe36329cedaf5da3b0f31092bec8f8c3da0.png";
@@ -99,7 +97,11 @@ function WaitlistHeroContent() {
                     ) : (
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="space-y-2">
-                                <label htmlFor="firstName" className="block text-[#FEF3C7] text-tiny font-geist-medium text-left">
+                                <label 
+                                    htmlFor="firstName" 
+                                    style={{ paddingBottom: "5px" }} 
+                                    className="block text-[#FEF3C7] text-tiny font-geist-medium text-left"
+                                >
                                     First Name
                                 </label>
                                 <Input
@@ -114,7 +116,11 @@ function WaitlistHeroContent() {
                             </div>
 
                             <div className="space-y-2">
-                                <label htmlFor="email" className="block text-[#FEF3C7] text-tiny font-geist-medium text-left">
+                                <label 
+                                    htmlFor="email" 
+                                    style={{ paddingBottom: "5px" }} 
+                                    className="block text-[#FEF3C7] text-tiny font-geist-medium text-left"
+                                >
                                     Email Address
                                 </label>
                                 <Input
@@ -129,7 +135,11 @@ function WaitlistHeroContent() {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="block text-[#FEF3C7] text-tiny font-geist-medium text-left">
+                                <label 
+                                    htmlFor="role" 
+                                    style={{ paddingBottom: "5px" }} 
+                                    className="block text-[#FEF3C7] text-tiny font-geist-medium text-left"
+                                >
                                     Role
                                 </label>
                                 <Select required onValueChange={(value: string) => setFormData({ ...formData, role: value })}>
@@ -145,7 +155,11 @@ function WaitlistHeroContent() {
                             </div>
 
                             <div className="space-y-2">
-                                <label htmlFor="project" className="block text-[#FEF3C7] text-tiny font-geist-medium text-left">
+                                <label 
+                                    htmlFor="project" 
+                                    style={{ paddingBottom: "5px" }} 
+                                    className="block text-[#FEF3C7] text-tiny font-geist-medium text-left"
+                                >
                                     Open-source Project
                                 </label>
                                 <Input
@@ -162,7 +176,8 @@ function WaitlistHeroContent() {
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="join-waitlist-btn bg-[#fe891f] text-[#090603] px-7 py-3.5 font-geist-extrabold text-[15px] tracking-[-0.3px] transition-colors w-full rounded-md cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+                                style={{ cursor: "pointer" }}
+                                className="join-waitlist-btn bg-[#fe891f] text-[#090603] px-7 py-3.5 font-geist-extrabold text-[15px] tracking-[-0.3px] transition-colors w-full rounded-md disabled:opacity-70 disabled:cursor-not-allowed"
                             >
                                 {isSubmitting ? 'Submitting...' : 'Submit'}
                             </button>
