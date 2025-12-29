@@ -24,6 +24,7 @@ export const SEO = ({
             {/* Standard Metadata */}
             <title>{title}</title>
             <meta name="description" content={description} />
+            <meta name="keywords" content="DevAsign, bounty payouts, AI code review, open source, code review, issue bounty, open source bounty, bounty platform" />
             <link rel="canonical" href={fullCanonical} />
 
             {/* Open Graph / Facebook */}
