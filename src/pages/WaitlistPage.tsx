@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { SEO } from '../components/SEO';
 import { Input } from "../components/ui/input";
 import {
     Select,
@@ -97,9 +98,9 @@ function WaitlistHeroContent() {
                     ) : (
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="space-y-2">
-                                <label 
-                                    htmlFor="firstName" 
-                                    style={{ paddingBottom: "5px" }} 
+                                <label
+                                    htmlFor="firstName"
+                                    style={{ paddingBottom: "5px" }}
                                     className="block text-[#FEF3C7] text-tiny font-geist-medium text-left"
                                 >
                                     First Name
@@ -116,9 +117,9 @@ function WaitlistHeroContent() {
                             </div>
 
                             <div className="space-y-2">
-                                <label 
-                                    htmlFor="email" 
-                                    style={{ paddingBottom: "5px" }} 
+                                <label
+                                    htmlFor="email"
+                                    style={{ paddingBottom: "5px" }}
                                     className="block text-[#FEF3C7] text-tiny font-geist-medium text-left"
                                 >
                                     Email Address
@@ -135,9 +136,9 @@ function WaitlistHeroContent() {
                             </div>
 
                             <div className="space-y-2">
-                                <label 
-                                    htmlFor="role" 
-                                    style={{ paddingBottom: "5px" }} 
+                                <label
+                                    htmlFor="role"
+                                    style={{ paddingBottom: "5px" }}
                                     className="block text-[#FEF3C7] text-tiny font-geist-medium text-left"
                                 >
                                     Role
@@ -155,9 +156,9 @@ function WaitlistHeroContent() {
                             </div>
 
                             <div className="space-y-2">
-                                <label 
-                                    htmlFor="project" 
-                                    style={{ paddingBottom: "5px" }} 
+                                <label
+                                    htmlFor="project"
+                                    style={{ paddingBottom: "5px" }}
                                     className="block text-[#FEF3C7] text-tiny font-geist-medium text-left"
                                 >
                                     Open-source Project
@@ -226,20 +227,27 @@ function WaitlistHeroContent() {
 
 export function WaitlistPage() {
     return (
-        <div className="bg-[#090603] min-h-screen w-full flex flex-col">
-            <div className="flex-shrink-0">
-                <HeroSection>
-                    <div className="w-full flex justify-center items-center">
-                        <WaitlistHeroContent />
-                    </div>
-                </HeroSection>
-            </div>
-            <div className="flex-grow">
-                {/* You could add content here if needed, but for now just the form in hero */}
-            </div>
-            {/* <div className="flex-shrink-0">
+        <>
+            <SEO
+                title="Join the Waitlist - DevAsign"
+                description="Sign up for early access to DevAsign. Automate bounty payouts and review code with AI."
+                canonical="/waitlist"
+            />
+            <div className="bg-[#090603] min-h-screen w-full flex flex-col">
+                <div className="flex-shrink-0">
+                    <HeroSection>
+                        <div className="w-full flex justify-center items-center">
+                            <WaitlistHeroContent />
+                        </div>
+                    </HeroSection>
+                </div>
+                <div className="flex-grow">
+                    {/* You could add content here if needed, but for now just the form in hero */}
+                </div>
+                {/* <div className="flex-shrink-0">
                 <Footer />
             </div> */}
-        </div>
+            </div>
+        </>
     );
 }

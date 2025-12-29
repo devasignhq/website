@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { SEO } from '../components/SEO';
 import { Link } from 'react-router-dom';
 import svgPaths from "../imports/svg-mzil336qsi";
 import imgHeroImage from "../assets/013a8d1f9bfd97354677e6e611c314b3d894e9ce.png";
@@ -279,19 +280,22 @@ function BenefitsSection() {
 
 export function LandingPage() {
     return (
-        <div className="bg-[#090603] min-h-screen w-full flex flex-col">
-            <div className="flex-shrink-0">
-                <HeroSection>
-                    <HomeHeroContent />
-                </HeroSection>
+        <>
+            <SEO />
+            <div className="bg-[#090603] min-h-screen w-full flex flex-col">
+                <div className="flex-shrink-0">
+                    <HeroSection>
+                        <HomeHeroContent />
+                    </HeroSection>
+                </div>
+                <div className="flex-grow">
+                    <HowItWorksSection />
+                    <BenefitsSection />
+                </div>
+                <div className="flex-shrink-0">
+                    <Footer />
+                </div>
             </div>
-            <div className="flex-grow">
-                <HowItWorksSection />
-                <BenefitsSection />
-            </div>
-            <div className="flex-shrink-0">
-                <Footer />
-            </div>
-        </div>
+        </>
     );
 }
