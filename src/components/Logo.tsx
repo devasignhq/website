@@ -6,9 +6,9 @@ export function Logo() {
             <img
                 src={iconBlack}
                 alt="DevAsign Icon"
-                className="h-[30px] w-[30px] object-cover"
+                className="h-[25px] md:h-[30px] w-[25px] md:w-[30px] object-cover"
             />
-            <p className="font-geist-ultrablack leading-normal text-xl md:text-3xl text-white tracking-[-0.5px] md:tracking-[-1.6909px] whitespace-pre">DevAsign</p>
+            <p className="font-geist-extrabold leading-normal text-lg md:text-xl text-white tracking-[-0.5px] whitespace-pre">DevAsign</p>
         </div>
     );
 }

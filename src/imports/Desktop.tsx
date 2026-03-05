@@ -101,7 +101,7 @@ function Container() {
     >
       <div className="flex flex-col font-['Geist_Mono:Medium',sans-serif] font-medium justify-center leading-[0] relative shrink-0 text-[#aaaaaa] text-[14px] text-nowrap">
         <p className="leading-[normal] whitespace-pre">
-          Coming soon • Join the waitlist
+          v1.0 live • Try our beta today.
         </p>
       </div>
     </div>

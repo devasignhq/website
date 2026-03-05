@@ -41,7 +41,7 @@ export function Footer() {
                                 { name: 'Discord', url: 'https://discord.gg/dpRKcSTY' },
                                 { name: 'LinkedIn', url: 'https://www.linkedin.com/company/devasign/' }
                             ].map((link) => (
-                                <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="block font-geist-medium text-[#aaaaaa] text-sm md:text-xl tracking-[-0.36px] hover:text-white transition-colors">
+                                <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="block font-geist-medium text-[#aaaaaa] text-sm md:text-base tracking-[-0.36px] hover:text-white transition-colors">
                                     {link.name}
                                 </a>
                             ))}
@@ -58,7 +58,7 @@ export function Footer() {
                                 { name: 'Contact Us', url: 'https://cal.com/devasign/15min' },
                                 { name: 'Security', url: 'mailto:security@devasign.com' }
                             ].map((link) => (
-                                <a key={link.name} href={link.url} target={link.url.startsWith('mailto:') ? undefined : '_blank'} rel={link.url.startsWith('mailto:') ? undefined : 'noopener noreferrer'} className="block font-geist-medium text-[#aaaaaa] text-sm md:text-xl tracking-[-0.36px] hover:text-white transition-colors">
+                                <a key={link.name} href={link.url} target={link.url.startsWith('mailto:') ? undefined : '_blank'} rel={link.url.startsWith('mailto:') ? undefined : 'noopener noreferrer'} className="block font-geist-medium text-[#aaaaaa] text-sm md:text-base tracking-[-0.36px] hover:text-white transition-colors">
                                     {link.name}
                                 </a>
                             ))}

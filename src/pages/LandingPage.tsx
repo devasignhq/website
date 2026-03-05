@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { SEO } from '../components/SEO';
-import { Link } from 'react-router-dom';
 import svgPaths from "../imports/svg-mzil336qsi";
 import imgHeroImage from "../assets/013a8d1f9bfd97354677e6e611c314b3d894e9ce.png";
 import imgHeroImage1 from "../assets/787f6fe36329cedaf5da3b0f31092bec8f8c3da0.png";
@@ -15,10 +14,10 @@ function HomeHeroContent() {
     return (
         <>
             <div className="flex flex-col items-center gap-6 md:gap-8 mb-8 md:mb-12">
-                {/* Coming Soon Badge */}
+                {/* Try our beta today */}
                 <div className="flex gap-2.5 items-center">
                     <StarIcon />
-                    <p className="font-geist-medium text-[#aaaaaa] text-sm">Coming soon • Join the waitlist</p>
+                    <p className="font-geist-medium text-[#aaaaaa] text-sm">v1.0 live • Try our beta today.</p>
                 </div>
 
                 {/* Title */}
@@ -32,39 +31,40 @@ function HomeHeroContent() {
                 </p>
 
                 {/* CTA Button */}
-                <Link to="/waitlist" className="join-waitlist-btn bg-[#fe891f] px-7 py-3.5 font-geist-extrabold text-[#090603] text-[15px] tracking-[-0.3px] transition-colors">
-                    Join Waitlist
-                </Link>
+                <a href="https://app.devasign.com/authenticate/account" className="signup-btn bg-[#fe891f] px-7 py-3.5 font-geist-extrabold text-[#090603] text-[15px] tracking-[-0.3px] transition-colors">
+                    Get Started. It's FREE!
+                </a>
             </div>
 
             {/* Hero Images - Responsive */}
-            <div className="flex items-center justify-center gap-0 md:gap-4 pt-12 overflow-visible pb-4 md:pb-0 min-h-[300px] md:min-h-[400px]">
+            <div className="flex items-center justify-center gap-0 md:gap-4 pt-12 overflow-visible pb-4 md:pb-0 min-h-[300px] md:min-h-[400px] relative z-10">
                 {/* Image 1 */}
-                <div className="hidden md:block flex-shrink-0 transform rotate-[8deg] skew-x-[7.923deg]">
+                <div className="hidden md:block flex-shrink-0" style={{ transform: 'skewY(8deg)' }}>
                     <div className="w-[280px] md:w-[300px] lg:w-[418px] h-[400px] md:h-[450px] lg:h-[420px] relative">
                         <img alt="" className="absolute h-full w-[93.95%] left-[3.02%]" src={imgHeroImage} />
                     </div>
                 </div>
 
                 {/* Image 2 - Main */}
-                <div className="flex-shrink-0 transform rotate-[8deg] skew-x-[7.923deg]">
+                <div className="flex-shrink-0" style={{ transform: 'skewY(8deg)' }}>
                     <div className="w-[280px] md:w-[300px] lg:w-[418px] h-[400px] md:h-[450px] lg:h-[420px] relative">
                         <img alt="" className="absolute h-full w-[89.65%] left-[5.18%]" src={imgHeroImage1} />
                     </div>
                 </div>
 
                 {/* Image 3 */}
-                <div className="hidden md:block flex-shrink-0 transform rotate-[8deg] skew-x-[7.923deg]">
+                <div className="hidden md:block flex-shrink-0" style={{ transform: 'skewY(8deg)' }}>
                     <div className="w-[280px] md:w-[300px] lg:w-[418px] h-[400px] md:h-[450px] lg:h-[420px] relative">
                         <img alt="" className="absolute h-full w-[93.95%] left-[3.02%]" src={imgHeroImage2} />
                     </div>
                 </div>
             </div>
 
+
             {/* Backed By - Absolutely positioned */}
-            <div className="flex items-center justify-center mt-8 md:mt-12 relative z-50 gap-4">
-                <p className="font-['Geist_Mono:Regular',sans-serif] text-white text-sm opacity-90">Backed by</p>
-                <div className="h-[40px] w-[123.125px]">
+            <div className="flex items-center justify-center mt-6 md:mt-8 relative z-[60] gap-4 mb-20 pointer-events-auto">
+                <p className="font-['Geist_Mono:Regular',sans-serif] text-white text-sm opacity-90 drop-shadow-lg">Backed by</p>
+                <div className="h-[40px] w-[123.125px] drop-shadow-lg">
                     <svg className="block size-full" fill="none" viewBox="0 0 124 40">
                         <path clipRule="evenodd" d={svgPaths.p1c7e5480} fill="#F0F0EE" fillRule="evenodd" />
                     </svg>
@@ -246,9 +246,9 @@ function BenefitsSection() {
                             ))}
                         </div>
 
-                        <Link to="/waitlist" className="join-waitlist-btn bg-amber-100 px-7 py-3.5 font-geist-extrabold text-[#090603] text-[15px] tracking-[-0.3px] transition-colors inline-block">
-                            Join Waitlist
-                        </Link>
+                        <a href="https://app.devasign.com/authenticate/account" className="bg-amber-100 px-7 py-3.5 font-geist-extrabold text-[#090603] text-[15px] tracking-[-0.3px] transition-colors inline-block">
+                            Get Started
+                        </a>
                     </div>
 
                     {/* Right: Visual Element */}
