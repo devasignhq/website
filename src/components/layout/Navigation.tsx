@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import svgPaths from "../../imports/svg-mzil336qsi";
 import { Logo } from "../Logo";
+import { URLS } from "../../config/constants";
 
 export function Navigation() {
     const location = useLocation();
@@ -79,13 +80,13 @@ export function Navigation() {
                         </span>
                     </a>
                     <a
-                        href={location.pathname === '/contributor' ? "https://contributor.devasign.com/" : "https://app.devasign.com/authenticate/account"}
+                        href={location.pathname === '/contributor' ? URLS.CONTRIBUTOR_APP : URLS.APP_AUTH}
                         className="login-btn hidden md:block px-5 py-2.5 font-geist-extrabold text-[#fe891f] text-sm md:text-[15px] tracking-[-0.3px] whitespace-nowrap transition-colors"
                     >
                         Login
                     </a>
                     <a
-                        href={location.pathname === '/contributor' ? "https://contributor.devasign.com/" : "https://app.devasign.com/authenticate/account"}
+                        href={location.pathname === '/contributor' ? URLS.CONTRIBUTOR_APP : URLS.APP_AUTH}
                         className="signup-btn hidden md:block bg-[#fe891f] px-5 py-2.5 font-geist-extrabold text-[#090603] text-sm md:text-[15px] tracking-[-0.3px] whitespace-nowrap transition-colors"
                     >
                         Sign Up
