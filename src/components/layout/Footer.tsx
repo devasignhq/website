@@ -38,7 +38,7 @@ export function Footer() {
                             {[
                                 { name: 'GitHub', url: 'https://github.com/devasignhq' },
                                 { name: 'X', url: 'https://x.com/devasign' },
-                                { name: 'Discord', url: 'https://discord.gg/dpRKcSTY' },
+                                { name: 'Discord', url: 'https://discord.gg/GtvqA4UPwT' },
                                 { name: 'LinkedIn', url: 'https://www.linkedin.com/company/devasign/' }
                             ].map((link) => (
                                 <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="block font-geist-medium text-[#aaaaaa] text-sm md:text-base tracking-[-0.36px] hover:text-white transition-colors">
