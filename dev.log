@@ -1,0 +1,15 @@
+
+> devasign@0.1.0 dev /Users/ram/Documents/startup-website
+> vite
+
+Port 3001 is in use, trying another one...
+Port 3002 is in use, trying another one...
+Port 3003 is in use, trying another one...
+
+  VITE v6.4.1  ready in 794 ms
+
+  ➜  Local:   http://localhost:3004/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+
+A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.

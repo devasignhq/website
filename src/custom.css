@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap');
 
 /* Ensure html and body fill viewport with dark background */
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -42,9 +43,21 @@ html, body {
     font-weight: 900;
 }
 
-/* Hover effect for Join Waitlist buttons */
-.join-waitlist-btn:hover {
+/* Hover effect for Sign Up buttons */
+.signup-btn:hover {
     background-color: white !important;
+}
+
+/* Login button outline styles */
+.login-btn {
+    border: 1px solid #fe891f;
+    color: #fe891f !important;
+}
+
+.login-btn:hover {
+    background-color: white !important;
+    color: black !important;
+    border-color: white !important;
 }
 
 /* Dialog overlay styling - ensure it's visible when open */
@@ -59,11 +72,28 @@ html, body {
 }
 
 /* Dialog close button styling */
-[data-slot="dialog-content"] > button {
+[data-slot="dialog-content"]>button {
     color: white !important;
     opacity: 1 !important;
 }
 
-[data-slot="dialog-content"] > button:hover {
+[data-slot="dialog-content"]>button:hover {
     opacity: 0.8 !important;
+}
+
+/* Custom Navigation Link Styles */
+.nav-link-custom {
+    color: white !important;
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+    transition: all 0.15s ease-in-out !important;
+}
+
+.nav-link-custom:hover {
+    color: #fe891f !important;
+    background-color: rgba(254, 137, 31, 0.15) !important;
+}
+
+.nav-link-custom.active {
+    color: #fe891f !important;
 }
