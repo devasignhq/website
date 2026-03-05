@@ -44,8 +44,8 @@ body {
 }
 
 /* Hover effect for Sign Up buttons */
-.signup-btn:hover {
-    background-color: white !important;
+nav .signup-btn:hover {
+    background-color: white;
 }
 
 /* Login button outline styles */
