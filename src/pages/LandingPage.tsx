@@ -33,7 +33,7 @@ function HomeHeroContent() {
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
                     <a href="https://app.devasign.com/authenticate/account" className="signup-btn bg-[#fe891f] px-7 py-3.5 font-geist-extrabold text-[#090603] text-[15px] tracking-[-0.3px] transition-colors">
-                        Get Started
+                        Get Started. It's FREE!
                     </a>
                     <button className="flex items-center justify-center gap-2 border border-white hover:bg-white/10 bg-transparent px-7 py-3.5 font-geist-extrabold text-white text-[15px] tracking-[-0.3px] transition-colors relative overflow-hidden group">
                         <span className="relative z-10 flex items-center gap-2 pointer-events-none">
