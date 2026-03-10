@@ -30,10 +30,21 @@ function HomeHeroContent() {
                     DevAsign helps open-source project maintainers review contributors code, give detailed feedback & automate bounty payout when needed.
                 </p>
 
-                {/* CTA Button */}
-                <a href="https://app.devasign.com/authenticate/account" className="signup-btn bg-[#fe891f] px-7 py-3.5 font-geist-extrabold text-[#090603] text-[15px] tracking-[-0.3px] transition-colors">
-                    Get Started. It's FREE!
-                </a>
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
+                    <a href="https://app.devasign.com/authenticate/account" className="signup-btn bg-[#fe891f] px-7 py-3.5 font-geist-extrabold text-[#090603] text-[15px] tracking-[-0.3px] transition-colors">
+                        Get Started. It's FREE!
+                    </a>
+                    <button className="flex items-center justify-center gap-2 border border-white hover:bg-white/10 bg-transparent px-7 py-3.5 font-geist-extrabold text-white text-[15px] tracking-[-0.3px] transition-colors relative overflow-hidden group">
+                        <span className="relative z-10 flex items-center gap-2 pointer-events-none">
+                            Watch Demo
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </span>
+                        <div className="absolute inset-0 opacity-0 cursor-pointer z-20 h-full w-full flex items-center justify-center [&>wistia-player]:min-h-[200px]" dangerouslySetInnerHTML={{ __html: `<wistia-player media-id="stxda2cwpp" wistia-popover="true" aspect="1.83206106870229"></wistia-player>` }} />
+                    </button>
+                </div>
             </div>
 
             {/* Hero Images - Responsive */}
