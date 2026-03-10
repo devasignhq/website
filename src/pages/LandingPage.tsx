@@ -42,7 +42,7 @@ function HomeHeroContent() {
                                 <path d="M8 5v14l11-7z" />
                             </svg>
                         </span>
-                        <div className="absolute inset-0 opacity-0 cursor-pointer z-20 h-full w-full flex items-center justify-center" dangerouslySetInnerHTML={{ __html: `<div class="wistia_responsive_padding" style="padding:54.58% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><span class="wistia_embed wistia_async_stxda2cwpp popover=true videoFoam=true" style="display:inline-block;height:100%;position:relative;width:100%">&nbsp;</span></div></div>` }} />
+                        <div className="absolute inset-0 opacity-0 cursor-pointer z-20 h-full w-full flex items-center justify-center" dangerouslySetInnerHTML={{ __html: `<wistia-player media-id="stxda2cwpp" wistia-popover="true" aspect="1.83206106870229" style="width: 300px;height: 164px;"></wistia-player>` }} />
                     </button>
                 </div>
             </div>
