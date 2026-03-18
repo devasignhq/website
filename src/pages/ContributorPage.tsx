@@ -13,6 +13,10 @@ export function ContributorPage() {
                 title="Contributors - DevAsign"
                 description="Apply for bounties and get paid in USDC. Automated escrow releases via smart contract triggered from GitHub."
                 canonical="/contributor"
+                breadcrumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Contributors', path: '/contributor' }
+                ]}
             />
             <div className="min-h-screen w-full flex flex-col">
                 <NetworkBackground /> 
