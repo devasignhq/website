@@ -6,6 +6,7 @@ interface SEOProps {
     canonical?: string;
     image?: string;
     type?: string;
+    breadcrumbs?: { name: string; path: string }[];
 }
 
 export const SEO = ({
@@ -13,11 +14,35 @@ export const SEO = ({
     description = "DevAsign helps you review code and automate bounty payouts with AI. Join the waitlist for early access.",
     canonical,
     image = "/stellar-community-fund.png", // Using existing image as default or fallback
-    type = "website"
+    type = "website",
+    breadcrumbs
 }: SEOProps) => {
     const siteUrl = "https://devasign.com"; // TODO: Update with actual domain
     const fullCanonical = canonical ? (canonical.startsWith('http') ? canonical : `${siteUrl}${canonical}`) : siteUrl;
     const fullImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
+
+    const schemaOrgData: any[] = [
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "DevAsign",
+            "url": siteUrl,
+            "description": description
+        }
+    ];
+
+    if (breadcrumbs && breadcrumbs.length > 0) {
+        schemaOrgData.push({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": breadcrumbs.map((crumb, index) => ({
+                "@type": "ListItem",
+                "position": index + 1,
+                "name": crumb.name,
+                "item": `${siteUrl}${crumb.path}`
+            }))
+        });
+    }
 
     return (
         <Helmet>
@@ -42,13 +67,7 @@ export const SEO = ({
             <meta property="twitter:image" content={fullImage} />
 
             <script type="application/ld+json">
-                {JSON.stringify({
-                    "@context": "https://schema.org",
-                    "@type": "WebSite",
-                    "name": "DevAsign",
-                    "url": siteUrl,
-                    "description": description
-                })}
+                {JSON.stringify(schemaOrgData.length === 1 ? schemaOrgData[0] : schemaOrgData)}
             </script>
         </Helmet>
     );
