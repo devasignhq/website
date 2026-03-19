@@ -13,7 +13,7 @@ export const SEO = ({
     title = "DevAsign - Review code and automate bounty payouts with AI",
     description = "DevAsign helps you review code and automate bounty payouts with AI. Join the waitlist for early access.",
     canonical,
-    image = "/stellar-community-fund.png", // Using existing image as default or fallback
+    image = "/link-preview.png", // Using existing image as default or fallback
     type = "website",
     breadcrumbs
 }: SEOProps) => {
