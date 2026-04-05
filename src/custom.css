@@ -97,3 +97,469 @@ nav .signup-btn:hover {
 .nav-link-custom.active {
     color: #fe891f !important;
 }
+
+/* ════════════════════════════════════════════════════════════
+   DOCUMENTATION PAGE STYLES
+   ════════════════════════════════════════════════════════════ */
+
+.docs-page {
+    background-color: #090603;
+    min-height: 100vh;
+    width: 100%;
+    color: #e0e0e0;
+}
+
+.docs-nav-bar {
+    position: relative;
+    height: 80px;
+    flex-shrink: 0;
+}
+
+/* ─── Layout ─── */
+.docs-layout {
+    display: flex;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 24px 24px 0;
+    gap: 0;
+}
+
+/* ─── Left Sidebar ─── */
+.docs-sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.docs-sidebar-inner {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    padding-bottom: 48px;
+    padding-right: 16px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
+}
+
+.docs-sidebar-inner::-webkit-scrollbar {
+    width: 4px;
+}
+
+.docs-sidebar-inner::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+}
+
+.docs-nav-group {
+    margin-bottom: 28px;
+}
+
+.docs-nav-category {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: #888;
+    margin-bottom: 10px;
+    padding-left: 12px;
+    text-transform: uppercase;
+}
+
+.docs-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.docs-nav-list li {
+    margin: 0;
+}
+
+.docs-nav-link {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13.5px;
+    font-weight: 400;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.15s ease, background-color 0.15s ease;
+    border: none;
+    background: none;
+    line-height: 1.5;
+}
+
+.docs-nav-link:hover {
+    color: #f0f0f0;
+}
+
+.docs-nav-link.active {
+    color: #fe891f;
+    background-color: rgba(254, 137, 31, 0.10);
+    font-weight: 500;
+}
+
+/* ─── Main Content ─── */
+.docs-content {
+    flex: 1;
+    min-width: 0;
+    max-width: 760px;
+    padding: 0 48px;
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.docs-section {
+    padding-top: 12px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    scroll-margin-top: 110px;
+}
+
+.docs-section:last-of-type {
+    border-bottom: none;
+}
+
+.docs-title {
+    font-size: 32px;
+    font-weight: 300;
+    letter-spacing: -1.5px;
+    color: #fff;
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.docs-heading {
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: -0.8px;
+    color: #fff;
+    margin-bottom: 16px;
+    line-height: 1.3;
+}
+
+.docs-subheading {
+    font-size: 17px;
+    font-weight: 600;
+    color: #e0e0e0;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.docs-paragraph {
+    font-size: 14px;
+    font-weight: 400;
+    color: #aaa;
+    line-height: 1.85;
+    margin-bottom: 14px;
+}
+
+.docs-paragraph strong {
+    color: #e0e0e0;
+    font-weight: 600;
+}
+
+.docs-paragraph a,
+.docs-link {
+    color: #fe891f;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(254, 137, 31, 0.3);
+    transition: border-color 0.15s ease;
+}
+
+.docs-paragraph a:hover,
+.docs-link:hover {
+    border-bottom-color: #fe891f;
+}
+
+/* ─── Code inline ─── */
+.docs-code {
+    display: inline;
+    font-family: 'Geist Mono', monospace;
+    font-size: 12.5px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #fe891f;
+    padding: 2px 7px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ─── Tables ─── */
+.docs-table-wrapper {
+    overflow-x: auto;
+    margin: 18px 0 22px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.docs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+}
+
+.docs-table thead th {
+    background: rgba(254, 137, 31, 0.12);
+    color: #fe891f;
+    font-weight: 600;
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(254, 137, 31, 0.18);
+    font-size: 13px;
+    letter-spacing: 0.2px;
+}
+
+.docs-table tbody td {
+    padding: 10px 16px;
+    color: #bbb;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    vertical-align: top;
+}
+
+.docs-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.docs-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* ─── Lists ─── */
+.docs-ordered-list {
+    padding-left: 24px;
+    margin: 12px 0 18px;
+    list-style: decimal;
+}
+
+.docs-ordered-list li {
+    font-size: 14px;
+    color: #aaa;
+    line-height: 1.85;
+    margin-bottom: 6px;
+    padding-left: 4px;
+}
+
+.docs-ordered-list li strong {
+    color: #e0e0e0;
+    font-weight: 600;
+}
+
+.docs-unordered-list {
+    padding-left: 24px;
+    margin: 12px 0 18px;
+    list-style: disc;
+}
+
+.docs-unordered-list li {
+    font-size: 14px;
+    color: #aaa;
+    line-height: 1.85;
+    margin-bottom: 6px;
+    padding-left: 4px;
+}
+
+.docs-unordered-list li strong {
+    color: #e0e0e0;
+    font-weight: 600;
+}
+
+/* ─── Callout boxes ─── */
+.docs-callout {
+    background: rgba(254, 137, 31, 0.06);
+    border: 1px solid rgba(254, 137, 31, 0.15);
+    border-left: 3px solid #fe891f;
+    padding: 14px 18px;
+    margin: 18px 0;
+    font-size: 13.5px;
+    color: #bbb;
+    line-height: 1.7;
+}
+
+.docs-callout strong {
+    color: #fe891f;
+    font-weight: 600;
+}
+
+/* ─── Escrow Contract Card ─── */
+.docs-escrow-contract-card {
+    position: relative;
+    margin: 24px 0;
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(254, 137, 31, 0.08) 0%, rgba(254, 137, 31, 0.03) 100%);
+    border: 1px solid rgba(254, 137, 31, 0.25);
+    box-shadow: 0 0 24px rgba(254, 137, 31, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+}
+
+.docs-escrow-contract-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #fe891f, transparent);
+    opacity: 0.6;
+}
+
+.docs-escrow-contract-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    color: #111;
+    background: linear-gradient(135deg, #fe891f, #ffb347);
+    padding: 4px 12px;
+    margin-bottom: 14px;
+    animation: badge-pulse 3s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+    0%, 100% { box-shadow: 0 0 8px rgba(254, 137, 31, 0.3); }
+    50% { box-shadow: 0 0 16px rgba(254, 137, 31, 0.5); }
+}
+
+.docs-escrow-contract-label {
+    display: inline;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+    margin-right: 8px;
+}
+
+.docs-escrow-contract-inline {
+    line-height: 1.8;
+}
+
+.docs-escrow-contract-address {
+    font-family: 'Geist Mono', monospace;
+    font-size: 12px;
+    color: #fe891f;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(254, 137, 31, 0.3);
+    word-break: break-all;
+    line-height: 1.6;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.docs-escrow-contract-address:hover {
+    color: #ffb347;
+    border-bottom-color: #ffb347;
+}
+
+/* ─── Right Utility Sidebar ─── */
+.docs-right-sidebar {
+    width: 180px;
+    flex-shrink: 0;
+}
+
+.docs-right-sidebar-inner {
+    position: sticky;
+    top: 100px;
+    padding-left: 24px;
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.docs-util-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #888;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.15s ease;
+    padding: 6px 0;
+}
+
+.docs-util-link:hover {
+    color: #fe891f;
+}
+
+.docs-util-link svg {
+    flex-shrink: 0;
+}
+
+/* ─── Mobile / Responsive ─── */
+@media (max-width: 1024px) {
+    .docs-right-sidebar {
+        display: none;
+    }
+
+    .docs-content {
+        padding: 0 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .docs-layout {
+        flex-direction: column;
+        padding: 12px 16px 0;
+    }
+
+    .docs-sidebar {
+        width: 100%;
+        position: relative;
+        margin-bottom: 24px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .docs-sidebar-inner {
+        position: relative;
+        top: 0;
+        max-height: none;
+        overflow: visible;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 0;
+        padding-right: 0;
+        padding-bottom: 0;
+    }
+
+    .docs-nav-group {
+        margin-bottom: 12px;
+        width: 50%;
+    }
+
+    .docs-nav-category {
+        font-size: 10px;
+        margin-bottom: 6px;
+    }
+
+    .docs-nav-link {
+        font-size: 12.5px;
+        padding: 4px 10px;
+    }
+
+    .docs-content {
+        padding: 0;
+        border-left: none;
+    }
+
+    .docs-title {
+        font-size: 26px;
+    }
+
+    .docs-heading {
+        font-size: 22px;
+    }
+
+    .docs-table {
+        font-size: 12px;
+    }
+
+    .docs-table thead th,
+    .docs-table tbody td {
+        padding: 8px 10px;
+    }
+}

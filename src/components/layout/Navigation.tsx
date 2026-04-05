@@ -49,6 +49,12 @@ export function Navigation() {
                         >
                             Contributor
                         </Link>
+                        <Link
+                            to="/docs"
+                            className={`nav-link-custom font-geist-regular text-sm md:text-[15px] tracking-[-0.3px] whitespace-nowrap ${location.pathname.startsWith('/docs') ? 'active' : ''}`}
+                        >
+                            Docs
+                        </Link>
                         {/* <Link
                             to="/ai-security"
                             className={`nav-link-custom font-geist-regular text-sm md:text-[15px] tracking-[-0.3px] whitespace-nowrap ${location.pathname === '/ai-security' ? 'active' : ''}`}
