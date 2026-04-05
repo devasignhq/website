@@ -77,14 +77,9 @@ export function DocsPage() {
         }
     }, []);
 
-    // Back to top
+    // Back to top — reuse scrollToSection so it scrolls the main content correctly
     const scrollToTop = () => {
-        isClickScrolling.current = true;
-        setActiveSection('overview');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        setTimeout(() => {
-            isClickScrolling.current = false;
-        }, 900);
+        scrollToSection('overview');
     };
 
     // IntersectionObserver for scrollspy
