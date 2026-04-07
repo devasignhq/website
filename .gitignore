@@ -36,6 +36,7 @@ dev.log
 *.njsproj
 *.sln
 *.sw?
+.env
 
 # Vite
 *.local
