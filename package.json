@@ -68,5 +68,8 @@
       "scripts": {
             "dev": "vite",
             "build": "vite build"
+      },
+      "overrides": {
+            "axios": "^1.15.0"
       }
 }
