@@ -121,7 +121,7 @@ export const AgentReviewPage = () => {
             if (error instanceof Error && error.message.includes("User declined")) {
                 toast.error("Transaction was cancelled.");
             } else {
-                toast.error("An error occurred during payment processing.");
+                toast.error("An error occurred while processing payment.");
             }
         } finally {
             setIsLoading(false);
@@ -336,7 +336,7 @@ export const AgentReviewPage = () => {
 
                                     {/* Description */}
                                     <p className="font-geist-regular text-[#aaaaaa] text-center text-sm md:text-base tracking-[-0.32px] max-w-[600px] leading-[25px]">
-                                        Paste any GitHub Pull Request. Pay $0.50 USDC via x402. Get an autonomous AI review in seconds — no account required.
+                                        Paste any GitHub Pull Request. Pay $0.50 USDC via x402. Get an autonomous AI review — no account required.
                                     </p>
 
                                     {/* Connection error display */}
