@@ -19,6 +19,8 @@ export const AgentReviewPage = () => {
     const [prUrl, setPrUrl] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [walletMenuOpen, setWalletMenuOpen] = useState(false);
+    const [successful, setSuccessful] = useState(false);
+    const [submittedPrUrl, setSubmittedPrUrl] = useState("");
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const walletMenuRef = useRef<HTMLDivElement>(null);
 
@@ -112,7 +114,9 @@ export const AgentReviewPage = () => {
 
             if (responseData.data.taskId) {
                 toast.success(`Payment successful! ${responseData.message}`);
+                setSubmittedPrUrl(prUrl);
                 setPrUrl("");
+                setSuccessful(true);
             } else {
                 toast.error(responseData.message || "Failed to submit PR for review");
             }
@@ -217,9 +221,9 @@ export const AgentReviewPage = () => {
                             )}
                         </div>
 
-                        <button 
-                          className="md:hidden flex items-center justify-center p-2 text-white" 
-                          onClick={() => setIsMobileMenuOpen(true)}
+                        <button
+                            className="md:hidden flex items-center justify-center p-2 text-white"
+                            onClick={() => setIsMobileMenuOpen(true)}
                         >
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -233,7 +237,7 @@ export const AgentReviewPage = () => {
                                 <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
                                     <Logo />
                                 </Link>
-                                <button 
+                                <button
                                     className="p-2 text-white"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
@@ -351,52 +355,98 @@ export const AgentReviewPage = () => {
                                     {/* Form / Content Box */}
                                     <div className="w-full max-w-[600px] shadow-2xl pt-12 pb-12 bg-[#131313] px-8 flex flex-col gap-6">
 
-                                        <div className="bg-[#1a1a1a] p-4 flex items-center justify-between">
-                                            <div className="flex items-center space-x-3">
-                                                <div className="p-2 bg-[#fe891f]/10">
-                                                    <svg className="w-6 h-6 text-[#fe891f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                        {!successful ? (
+                                            <>
+                                                <div className="bg-[#1a1a1a] p-4 flex items-center justify-between">
+                                                    <div className="flex items-center space-x-3">
+                                                        <div className="p-2 bg-[#fe891f]/10">
+                                                            <svg className="w-6 h-6 text-[#fe891f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                                            </svg>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-sm text-white">Fixed Price</p>
+                                                            <p className="text-xs text-[#aaaaaa]">Pay-per-use via Stellar Network</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="text-right">
+                                                        <p className="text-base font-bold text-amber-100">0.50 USDC</p>
+                                                    </div>
+                                                </div>
+
+                                                <form onSubmit={handleSubmit} className="space-y-6">
+                                                    <div className="space-y-2">
+                                                        <label className="block text-[#FEF3C7] text-tiny font-geist-medium text-left">
+                                                            GitHub Pull Request URL
+                                                        </label>
+                                                        <Input
+                                                            placeholder="https://github.com/owner/repo/pull/123"
+                                                            value={prUrl}
+                                                            onChange={(e) => setPrUrl(e.target.value)}
+                                                            disabled={isLoading}
+                                                            className="h-[46px] pl-4 pr-4 bg-input border-[#2a2a2a] text-white placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
+                                                            style={{ marginTop: "4px" }}
+                                                        />
+                                                    </div>
+
+                                                    <button
+                                                        type="submit"
+                                                        disabled={isLoading || !prUrl || !address || !signer}
+                                                        className="join-waitlist-btn bg-[#fe891f] text-[#090603] px-7 py-3.5 font-geist-extrabold text-[15px] tracking-[-0.3px] transition-colors w-full flex items-center justify-center gap-2"
+                                                        style={{
+                                                            opacity: (isLoading || !prUrl || !address || !signer) ? 0.7 : 1,
+                                                            cursor: (isLoading || !prUrl || !address || !signer) ? "not-allowed" : "pointer",
+                                                        }}
+                                                    >
+                                                        {isLoading ? (
+                                                            <>Processing payment...</>
+                                                        ) : !address ? "Connect Wallet to Continue" : "Submit for Review"}
+                                                    </button>
+                                                </form>
+                                            </>
+                                        ) : (
+                                            <div className="flex flex-col items-center justify-center gap-5">
+                                                {/* Success icon */}
+                                                <div className="w-14 h-14 rounded-full bg-green-500/15 flex items-center justify-center">
+                                                    <svg className="w-7 h-7 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                                                     </svg>
                                                 </div>
-                                                <div>
-                                                    <p className="text-sm text-white">Fixed Price</p>
-                                                    <p className="text-xs text-[#aaaaaa]">Pay-per-use via Stellar Network</p>
-                                                </div>
-                                            </div>
-                                            <div className="text-right">
-                                                <p className="text-base font-bold text-amber-100">0.50 USDC</p>
-                                            </div>
-                                        </div>
 
-                                        <form onSubmit={handleSubmit} className="space-y-6">
-                                            <div className="space-y-2">
-                                                <label className="block text-[#FEF3C7] text-tiny font-geist-medium text-left">
-                                                    GitHub Pull Request URL
-                                                </label>
-                                                <Input
-                                                    placeholder="https://github.com/owner/repo/pull/123"
-                                                    value={prUrl}
-                                                    onChange={(e) => setPrUrl(e.target.value)}
-                                                    disabled={isLoading}
-                                                    className="h-[46px] pl-4 pr-4 bg-input border-[#2a2a2a] text-white placeholder:text-[#aaaaaa] focus-visible:border-[#fe891f] focus-visible:ring-[#fe891f]/20"
-                                                    style={{ marginTop: "4px" }}
-                                                />
-                                            </div>
+                                                <h2 className="text-xl font-geist-extrabold text-white">Review Submitted!</h2>
 
-                                            <button
-                                                type="submit"
-                                                disabled={isLoading || !prUrl || !address || !signer}
-                                                className="join-waitlist-btn bg-[#fe891f] text-[#090603] px-7 py-3.5 font-geist-extrabold text-[15px] tracking-[-0.3px] transition-colors w-full flex items-center justify-center gap-2"
-                                                style={{
-                                                    opacity: (isLoading || !prUrl || !address || !signer) ? 0.7 : 1,
-                                                    cursor: (isLoading || !prUrl || !address || !signer) ? "not-allowed" : "pointer",
-                                                }}
-                                            >
-                                                {isLoading ? (
-                                                    <>Processing payment...</>
-                                                ) : !address ? "Connect Wallet to Continue" : "Submit for Review"}
-                                            </button>
-                                        </form>
+                                                <p className="text-sm text-[#aaaaaa] text-center leading-relaxed max-w-[420px]">
+                                                    Your pull request has been submitted for an AI-powered review. A comment will be posted directly on the PR.
+                                                </p>
+
+                                                {/* PR link */}
+                                                {submittedPrUrl && (
+                                                    <a
+                                                        href={submittedPrUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="flex items-center gap-2 text-sm text-[#fe891f] hover:text-[#FEF3C7] transition-colors break-all text-center"
+                                                    >
+                                                        <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                                        </svg>
+                                                        {submittedPrUrl}
+                                                    </a>
+                                                )}
+
+                                                {/* Reset button */}
+                                                <button
+                                                    onClick={() => {
+                                                        setSuccessful(false);
+                                                        setSubmittedPrUrl("");
+                                                    }}
+                                                    className="mt-2 join-waitlist-btn bg-[#fe891f] text-[#090603] px-7 py-3.5 font-geist-extrabold text-[15px] tracking-[-0.3px] transition-colors w-full flex items-center justify-center gap-2"
+                                                    style={{ cursor: "pointer" }}
+                                                >
+                                                    Submit Another PR
+                                                </button>
+                                            </div>
+                                        )}
 
                                     </div>
 
