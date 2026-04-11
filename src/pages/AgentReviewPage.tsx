@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { x402Client, x402HTTPClient } from "@x402/fetch";
+import { decodePaymentResponseHeader, x402Client, x402HTTPClient } from "@x402/fetch";
 import { ExactStellarScheme } from "@x402/stellar";
 import { toast } from "sonner";
 import { Input } from "../components/ui/input";
@@ -21,6 +21,7 @@ export const AgentReviewPage = () => {
     const [walletMenuOpen, setWalletMenuOpen] = useState(false);
     const [successful, setSuccessful] = useState(false);
     const [submittedPrUrl, setSubmittedPrUrl] = useState("");
+    const [submittedTxUrl, setSubmittedTxUrl] = useState("");
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const walletMenuRef = useRef<HTMLDivElement>(null);
 
@@ -110,11 +111,23 @@ export const AgentReviewPage = () => {
                 body: JSON.stringify({ prUrl }),
             });
 
+            // Extract transaction URL from the x402 payment response header
+            let txUrl = "";
+            try {
+                const paymentRequired = httpClient.getPaymentSettleResponse((name) =>
+                    response.headers.get(name),
+                );
+                txUrl = `https://stellar.expert/explorer/testnet/tx/${paymentRequired.transaction}`;
+            } catch (err) {
+                console.warn("Could not decode PAYMENT-RESPONSE header:", err);
+            }
+
             const responseData = await response.json();
 
             if (responseData.data.taskId) {
                 toast.success(`Payment successful! ${responseData.message}`);
                 setSubmittedPrUrl(prUrl);
+                setSubmittedTxUrl(txUrl);
                 setPrUrl("");
                 setSuccessful(true);
             } else {
@@ -434,11 +447,28 @@ export const AgentReviewPage = () => {
                                                     </a>
                                                 )}
 
+                                                {/* Transaction link */}
+                                                {submittedTxUrl && (
+                                                    <a
+                                                        href={submittedTxUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="flex items-center gap-2 text-sm text-green-400 hover:text-green-300 transition-colors break-all text-center"
+                                                    >
+                                                        <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101" />
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M10.172 13.828a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.102 1.101" />
+                                                        </svg>
+                                                        View Transaction on Stellar
+                                                    </a>
+                                                )}
+
                                                 {/* Reset button */}
                                                 <button
                                                     onClick={() => {
                                                         setSuccessful(false);
                                                         setSubmittedPrUrl("");
+                                                        setSubmittedTxUrl("");
                                                     }}
                                                     className="mt-2 join-waitlist-btn bg-[#fe891f] text-[#090603] px-7 py-3.5 font-geist-extrabold text-[15px] tracking-[-0.3px] transition-colors w-full flex items-center justify-center gap-2"
                                                     style={{ cursor: "pointer" }}
