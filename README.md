@@ -1,4 +1,4 @@
-# DevAsign Website
+# DevAsign Website + x402 Integration
 
 The marketing website and documentation portal for **DevAsign** — an AI-powered platform that reviews code and automates bounty payouts for open-source projects using the **Stellar** network.
 
