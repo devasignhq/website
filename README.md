@@ -1,22 +1,6 @@
 # DevAsign Website + x402 Integration
 
-The marketing website and documentation portal for **DevAsign** — an AI-powered platform that reviews code and automates bounty payouts for open-source projects using the **Stellar** network.
-
-Built with React, TypeScript, Vite, and Tailwind CSS. Deployed on **Vercel**.
-
-## Tech Stack
-
-| Category | Technology |
-|----------|-----------|
-| **UI Library** | React 18 |
-| **Language** | TypeScript 5 |
-| **Build Tool** | Vite 6 |
-| **Styling** | Tailwind CSS 3 |
-
-## Prerequisites
-
-- **Node.js** v18+ (currently using v25.2.1)
-- **npm** v8+ (currently using v11.6.2)
+This is the website and documentation portal for **DevAsign** — an AI-powered platform that reviews code and automates bounty payouts for open-source projects using the **Stellar** network.
 
 ## Setup
 
