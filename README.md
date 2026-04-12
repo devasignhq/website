@@ -53,9 +53,9 @@ The **Agent Review** page (`/agent-review`) demonstrates this integration end-to
 
 1. A user connects their Stellar wallet via [Stellar Wallets Kit](https://github.com/Creit-Tech/Stellar-Wallets-Kit).
 2. They paste a public GitHub Pull Request URL.
-3. The frontend sends a request to the backend, which responds with an HTTP `402 Payment Required` header containing payment instructions.
+3. The frontend sends a request to the [**server**](https://github.com/devasignhq/devasign-api), which responds with an HTTP `402 Payment Required` header containing payment instructions.
 4. The client constructs and signs a **0.50 USDC** payment payload via the connected wallet.
-5. The signed payment is sent back with the retry request. The backend verifies and settles the payment on-chain.
+5. The signed payment is sent back with the retry request. The [**server**](https://github.com/devasignhq/devasign-api) verifies and settles the payment on-chain.
 6. Once payment is confirmed, an autonomous AI agent reviews the PR and posts structured feedback as a GitHub comment.
 
 ## Available Scripts
