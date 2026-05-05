@@ -292,7 +292,10 @@ function BenefitsSection() {
 export function LandingPage() {
     return (
         <>
-            <SEO />
+            <SEO
+                ogTitle="Code review, against the goal — not just the diff."
+                ogDescription="Multimodal, goal-aware review for the era of AI-generated PRs."
+            />
             <div className="bg-[#090603] min-h-screen w-full flex flex-col">
                 <div className="flex-shrink-0">
                     <HeroSection>

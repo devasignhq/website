@@ -56,12 +56,6 @@ export function Navigation() {
                         >
                             Devs
                         </Link>
-                        <Link
-                            to="/agent-review"
-                            className={`nav-link-custom font-geist-regular text-sm md:text-[15px] tracking-[-0.3px] whitespace-nowrap ${location.pathname === '/agent-review' ? 'active' : ''}`}
-                        >
-                            x402
-                        </Link>
                         {/* <Link
                             to="/ai-security"
                             className={`nav-link-custom font-geist-regular text-sm md:text-[15px] tracking-[-0.3px] whitespace-nowrap ${location.pathname === '/ai-security' ? 'active' : ''}`}
@@ -147,13 +141,6 @@ export function Navigation() {
                                 className={`font-geist-regular text-2xl tracking-[-0.3px] text-white whitespace-nowrap transition-opacity ${location.pathname === '/contributor' ? 'opacity-100' : 'opacity-70'}`}
                             >
                                 Devs
-                            </Link>
-                            <Link
-                                to="/agent-review"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className={`font-geist-regular text-2xl tracking-[-0.3px] text-white whitespace-nowrap transition-opacity ${location.pathname === '/agent-review' ? 'opacity-100' : 'opacity-70'}`}
-                            >
-                                x402
                             </Link>
                         </div>
 

@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 interface SEOProps {
     title?: string;
     description?: string;
+    ogTitle?: string;
+    ogDescription?: string;
     canonical?: string;
     image?: string;
     type?: string;
@@ -10,13 +12,17 @@ interface SEOProps {
 }
 
 export const SEO = ({
-    title = "DevAsign - Review code and automate bounty payouts with AI",
-    description = "DevAsign helps you review code and automate bounty payouts with AI. Join the waitlist for early access.",
+    title = "DevAsign — Multimodal, Goal-Aware AI Code Review",
+    description = "The AI code reviewer that reads the ticket first. DevAsign ingests your tickets, screenshots, Figma, and Loom — then reviews every PR against what was actually asked. Catch what compiles, passes tests, and still ships the wrong thing.",
+    ogTitle,
+    ogDescription,
     canonical,
     image = "/link-preview.webp", // Using existing image as default or fallback
     type = "website",
     breadcrumbs
 }: SEOProps) => {
+    const resolvedOgTitle = ogTitle ?? title;
+    const resolvedOgDescription = ogDescription ?? description;
     const siteUrl = "https://devasign.com"; // TODO: Update with actual domain
     const fullCanonical = canonical ? (canonical.startsWith('http') ? canonical : `${siteUrl}${canonical}`) : siteUrl;
     const fullImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
@@ -55,15 +61,15 @@ export const SEO = ({
             {/* Open Graph / Facebook */}
             <meta property="og:type" content={type} />
             <meta property="og:url" content={fullCanonical} />
-            <meta property="og:title" content={title} />
-            <meta property="og:description" content={description} />
+            <meta property="og:title" content={resolvedOgTitle} />
+            <meta property="og:description" content={resolvedOgDescription} />
             <meta property="og:image" content={fullImage} />
 
             {/* Twitter */}
             <meta property="twitter:card" content="summary_large_image" />
             <meta property="twitter:url" content={fullCanonical} />
-            <meta property="twitter:title" content={title} />
-            <meta property="twitter:description" content={description} />
+            <meta property="twitter:title" content={resolvedOgTitle} />
+            <meta property="twitter:description" content={resolvedOgDescription} />
             <meta property="twitter:image" content={fullImage} />
 
             <script type="application/ld+json">
