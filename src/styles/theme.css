@@ -1664,6 +1664,32 @@
 .da-footer-col a { color: var(--fg); font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.02em; }
 .da-footer-col a:hover { color: var(--brand); }
 .da-footer-tag { font-family: var(--font-mono); font-size: 13px; color: var(--fg-muted); margin-top: 14px; line-height: 1.55; }
+.da-footer-social {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+}
+.da-footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--fg-muted);
+  border: 1.5px solid var(--border-faint);
+  transition: color 120ms ease, border-color 120ms ease, transform 120ms ease;
+}
+.da-footer-social a:hover {
+  color: var(--brand);
+  border-color: var(--brand);
+  transform: translate(-1px, -1px);
+}
+.da-footer-social svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
 .da-footer-form { display: flex; flex-direction: column; gap: 12px; }
 .da-footer-form label {
   font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted);
