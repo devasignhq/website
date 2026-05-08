@@ -5,6 +5,20 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        brand: '#fe891f',
+        'brand-soft': '#2A1A05',
+        'brand-deep': '#b85f10',
+        coral: '#FF5D3D',
+        amber: '#FFD43D',
+        info: '#3DB4FF',
+      },
+      fontFamily: {
+        display: ['"Geist Mono"', 'ui-monospace', 'monospace'],
+        body: ['"Geist Mono"', 'ui-monospace', 'monospace'],
+        mono: ['"Geist Mono"', 'ui-monospace', 'monospace'],
+        sans: ['"Geist Mono"', 'ui-monospace', 'monospace'],
+      },
       keyframes: {
         'pulse-glow': {
           '0%, 100%': { 
