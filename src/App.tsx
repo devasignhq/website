@@ -8,6 +8,24 @@ import { BountyPayoutsPage } from './pages/BountyPayoutsPage';
 import { PricingPage } from './pages/PricingPage';
 import { Toaster } from 'sonner';
 
+function GAPageView() {
+  const { pathname, search } = useLocation();
+
+  useEffect(() => {
+    // @ts-expect-error gtag is loaded globally via index.html
+    if (typeof window.gtag === 'function') {
+      // @ts-expect-error gtag is loaded globally via index.html
+      window.gtag('event', 'page_view', {
+        page_path: pathname + search,
+        page_location: window.location.href,
+        page_title: document.title,
+      });
+    }
+  }, [pathname, search]);
+
+  return null;
+}
+
 function ScrollToHash() {
   const { pathname, hash } = useLocation();
 
@@ -46,6 +64,7 @@ export default function App() {
       <Toaster />
       <BrowserRouter>
         <ScrollToHash />
+        <GAPageView />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/pricing" element={<PricingPage />} />
