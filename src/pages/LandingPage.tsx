@@ -2,6 +2,7 @@ import { SEO } from '../components/SEO';
 import { SiteNav } from '../components/layout/SiteNav';
 import { SiteFooter } from '../components/layout/SiteFooter';
 import { MeetDevAsignSection } from '../components/MeetDevAsignSection';
+import { HeroBackground } from '../components/HeroBackground';
 
 const CheckSvg = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
@@ -23,6 +24,7 @@ export function LandingPage() {
 
             {/* HERO */}
             <header className="da-hero" id="hero">
+                <HeroBackground />
                 <div className="da-container">
                     <div className="da-hero-grid">
                         <div>
