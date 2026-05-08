@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
 import { SiteNav } from '../components/layout/SiteNav';
 import { SiteFooter } from '../components/layout/SiteFooter';
@@ -45,18 +46,9 @@ export function NotFoundPage() {
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
-                            <a href="https://app.devasign.com/authenticate/account" className="btn btn-primary">
-                                Get Started
-                            </a>
-                            <button className="btn btn-secondary flex items-center justify-center gap-2 relative overflow-hidden group">
-                                <span className="relative z-10 flex items-center gap-2 pointer-events-none">
-                                    Watch Demo
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M8 5v14l11-7z" />
-                                    </svg>
-                                </span>
-                                <div className="absolute inset-0 opacity-0 cursor-pointer z-20 h-full w-full flex items-center justify-center" dangerouslySetInnerHTML={{ __html: `<wistia-player media-id="stxda2cwpp" wistia-popover="true" aspect="1.83206106870229" style="width: 300px;height: 164px;"></wistia-player>` }} />
-                            </button>
+                            <Link to="/" className="btn btn-primary">
+                                Go Home
+                            </Link>
                         </div>
                     </div>
                 </div>
