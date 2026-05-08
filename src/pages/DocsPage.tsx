@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
-import { Navigation } from '../components/layout/Navigation';
-import { Footer } from '../components/layout/Footer';
+import { SiteNav } from '../components/layout/SiteNav';
+import { SiteFooter } from '../components/layout/SiteFooter';
 import submissionScreenshot from '../assets/devasign.submission.png';
 import installationScreenshot from '../assets/devasign.installation.png';
 import bountyCommentScreenshot from '../assets/bounty.comment.png';
@@ -112,8 +112,8 @@ export function DocsPage() {
 
     return (
         <div className="docs-page">
-            <div className="docs-nav-bar">
-                <Navigation />
+            <div className="da-root">
+                <SiteNav activePath="/docs" />
             </div>
 
             <div className="docs-layout">
@@ -499,7 +499,7 @@ export function DocsPage() {
                     </div>
                 </aside>
             </div>
-            <Footer />
+            <SiteFooter variant="full" />
         </div>
     );
 }

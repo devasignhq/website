@@ -1,47 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap');
-
 /* Ensure html and body fill viewport with dark background */
 html,
 body {
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 100%;
-    background-color: #090603;
-    overflow-x: hidden;
+    background-color: #0A0A0A;
+    font-family: "Geist Mono", ui-monospace, monospace;
+}
+
+body {
+    overflow-x: clip;
 }
 
 #root {
     min-height: 100vh;
     width: 100%;
-    background-color: #090603;
+    background-color: #0A0A0A;
 }
 
-/* Apply Geist Mono globally */
-* {
-    font-family: 'Geist Mono', monospace !important;
-}
-
-/* Geist Mono Font Weight Utilities */
-.font-geist-light {
-    font-weight: 300;
-}
-
-.font-geist-regular {
-    font-weight: 400;
-}
-
-.font-geist-medium {
-    font-weight: 500;
-}
-
-.font-geist-extrabold {
-    font-weight: 800;
-}
-
-.font-geist-ultrablack {
-    font-weight: 900;
-}
+/* Legacy weight helpers — kept for older components that still reference them */
+.font-geist-light { font-weight: 300; }
+.font-geist-regular { font-weight: 400; }
+.font-geist-medium { font-weight: 500; }
+.font-geist-extrabold { font-weight: 800; }
+.font-geist-ultrablack { font-weight: 900; }
 
 /* Hover effect for Sign Up buttons */
 nav .signup-btn:hover {

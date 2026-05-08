@@ -14,15 +14,13 @@ interface SEOProps {
 export const SEO = ({
     title = "DevAsign — Multimodal, Goal-Aware AI Code Review",
     description = "The AI code reviewer that reads the ticket first. DevAsign ingests your tickets, screenshots, Figma, and Loom — then reviews every PR against what was actually asked. Catch what compiles, passes tests, and still ships the wrong thing.",
-    ogTitle,
-    ogDescription,
+    ogTitle = "Code review, against the goal — not just the diff.",
+    ogDescription = "Multimodal, goal-aware review for the era of AI-generated PRs.",
     canonical,
     image = "/link-preview.webp", // Using existing image as default or fallback
     type = "website",
     breadcrumbs
 }: SEOProps) => {
-    const resolvedOgTitle = ogTitle ?? title;
-    const resolvedOgDescription = ogDescription ?? description;
     const siteUrl = "https://devasign.com"; // TODO: Update with actual domain
     const fullCanonical = canonical ? (canonical.startsWith('http') ? canonical : `${siteUrl}${canonical}`) : siteUrl;
     const fullImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
@@ -61,15 +59,15 @@ export const SEO = ({
             {/* Open Graph / Facebook */}
             <meta property="og:type" content={type} />
             <meta property="og:url" content={fullCanonical} />
-            <meta property="og:title" content={resolvedOgTitle} />
-            <meta property="og:description" content={resolvedOgDescription} />
+            <meta property="og:title" content={ogTitle} />
+            <meta property="og:description" content={ogDescription} />
             <meta property="og:image" content={fullImage} />
 
             {/* Twitter */}
             <meta property="twitter:card" content="summary_large_image" />
             <meta property="twitter:url" content={fullCanonical} />
-            <meta property="twitter:title" content={resolvedOgTitle} />
-            <meta property="twitter:description" content={resolvedOgDescription} />
+            <meta property="twitter:title" content={ogTitle} />
+            <meta property="twitter:description" content={ogDescription} />
             <meta property="twitter:image" content={fullImage} />
 
             <script type="application/ld+json">

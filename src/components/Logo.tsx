@@ -1,14 +1,30 @@
 import iconBlack from "../assets/icon-black.png";
 
-export function Logo() {
+interface LogoProps {
+    size?: "sm" | "md";
+    onLight?: boolean;
+}
+
+export function Logo({ size = "md", onLight = false }: LogoProps) {
+    const dims = size === "sm" ? "h-[22px] w-[22px]" : "h-[26px] w-[26px] md:h-[28px] md:w-[28px]";
+    const textSize = size === "sm" ? "text-[18px]" : "text-[20px] md:text-[22px]";
     return (
-        <div className="flex gap-[5.717px] items-center">
+        <div className="flex items-center gap-[10px]">
             <img
                 src={iconBlack}
-                alt="DevAsign Icon"
-                className="h-[25px] md:h-[30px] w-[25px] md:w-[30px] object-cover"
+                alt="DevAsign"
+                className={`${dims} object-contain`}
             />
-            <p className="font-geist-extrabold leading-normal text-lg md:text-xl text-white tracking-[-0.5px] whitespace-pre">DevAsign</p>
+            <span
+                className={`${textSize} leading-none tracking-[-0.02em] whitespace-pre`}
+                style={{
+                    fontFamily: '"Geist Mono", ui-monospace, monospace',
+                    fontWeight: 800,
+                    color: onLight ? "#0A0A0A" : "#F5F5F0",
+                }}
+            >
+                DevAsign
+            </span>
         </div>
     );
 }
