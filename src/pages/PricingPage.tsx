@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useStatsigClient } from '@statsig/react-bindings';
 import { SEO } from '../components/SEO';
 import { SiteNav } from '../components/layout/SiteNav';
 import { SiteFooter } from '../components/layout/SiteFooter';
@@ -37,6 +38,24 @@ export function PricingPage() {
     const [billing, setBilling] = useState<'month' | 'year'>('month');
     const proPrice = billing === 'month' ? '$25' : '$20';
     const maxPrice = billing === 'month' ? '$100' : '$80';
+    const proPriceNum = billing === 'month' ? 25 : 20;
+    const maxPriceNum = billing === 'month' ? 100 : 80;
+    const { client } = useStatsigClient();
+
+    const logCtaClick = (
+        plan: 'free' | 'pro' | 'max' | 'enterprise' | 'na',
+        placement: 'card' | 'closing',
+        priceMonthly: number | null,
+    ) => {
+        client.logEvent('pricing_cta_clicked', plan, {
+            plan,
+            placement,
+            price_monthly: priceMonthly !== null ? String(priceMonthly) : '',
+            billing_period: billing === 'month' ? 'monthly' : 'annual',
+            page_url: typeof window !== 'undefined' ? window.location.href : '',
+        });
+        client.flush();
+    };
 
     return (
         <div className="da-root">
@@ -97,7 +116,16 @@ export function PricingPage() {
                                 </div>
                                 <span className="da-plan-bullet">Public repos only</span>
                             </div>
-                            <a href="https://app.devasign.com/authenticate/account" className="btn btn-secondary btn-block da-plan-cta">Get Started Now</a>
+                            <a
+                                href="https://app.devasign.com/authenticate/account"
+                                className="btn btn-secondary btn-block da-plan-cta"
+                                data-cta="pricing_card_free"
+                                data-plan="free"
+                                data-placement="card"
+                                onClick={() => logCtaClick('free', 'card', 0)}
+                            >
+                                Get Started Now
+                            </a>
                             <div className="da-plan-features">
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Public repositories only</strong> — your project must be open-source</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>PR comments only</strong> — review surfaces inline on GitHub</span></div>
@@ -119,7 +147,16 @@ export function PricingPage() {
                                 </div>
                                 <span className="da-plan-bullet">Private repos · Limited PR review</span>
                             </div>
-                            <a href="https://app.devasign.com/authenticate/account" className="btn btn-primary btn-block da-plan-cta">Start 14-day trial</a>
+                            <a
+                                href="https://app.devasign.com/authenticate/account"
+                                className="btn btn-primary btn-block da-plan-cta"
+                                data-cta="pricing_card_pro"
+                                data-plan="pro"
+                                data-placement="card"
+                                onClick={() => logCtaClick('pro', 'card', proPriceNum)}
+                            >
+                                Start 14-day trial
+                            </a>
                             <div className="da-plan-features">
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Private repositories</strong> — full access</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>200 PR reviews / dev / month</strong> — pooled across the team</span></div>
@@ -165,7 +202,16 @@ export function PricingPage() {
                                 </div>
                                 <span className="da-plan-bullet">Unlimited PR reviews · Priority queue</span>
                             </div>
-                            <a href="https://app.devasign.com/authenticate/account" className="btn btn-tertiary btn-block da-plan-cta">Start 14-day trial</a>
+                            <a
+                                href="https://app.devasign.com/authenticate/account"
+                                className="btn btn-tertiary btn-block da-plan-cta"
+                                data-cta="pricing_card_max"
+                                data-plan="max"
+                                data-placement="card"
+                                onClick={() => logCtaClick('max', 'card', maxPriceNum)}
+                            >
+                                Start 14-day trial
+                            </a>
                             <div className="da-plan-features">
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Unlimited PR reviews</strong> — no per-month cap</span></div>
                                 <div className="da-feat">
@@ -206,7 +252,16 @@ export function PricingPage() {
                                 <div className="da-plan-tag" style={{ color: 'var(--coral)' }}>For orgs with security &amp; scale needs</div>
                                 <span className="da-plan-bullet">Custom deployments with dedicated engineering</span>
                             </div>
-                            <a href="https://cal.com/devasign/speak-to-sales" className="btn btn-coral btn-block da-plan-cta">Talk to sales →</a>
+                            <a
+                                href="https://cal.com/devasign/speak-to-sales"
+                                className="btn btn-coral btn-block da-plan-cta"
+                                data-cta="pricing_card_enterprise"
+                                data-plan="enterprise"
+                                data-placement="card"
+                                onClick={() => logCtaClick('enterprise', 'card', null)}
+                            >
+                                Talk to sales →
+                            </a>
                             <div className="da-plan-features">
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Everything in Max</strong>, plus:</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>SSO</strong> — SAML, OIDC, SCIM provisioning</span></div>
@@ -410,8 +465,26 @@ export function PricingPage() {
                     <h2><span className="da-brand-text">Goal-aware</span> from your first PR</h2>
                     <p>Install on a public repo in 60 seconds. Upgrade only when you have private code that deserves the same review.</p>
                     <div className="da-closing-ctas">
-                        <a href="/#install" className="btn btn-primary">Install on GitHub →</a>
-                        <a href="mailto:sales@devasign.com" className="btn btn-secondary">Talk to sales</a>
+                        <a
+                            href="/#install"
+                            className="btn btn-primary"
+                            data-cta="pricing_closing_install"
+                            data-plan="na"
+                            data-placement="closing"
+                            onClick={() => logCtaClick('na', 'closing', null)}
+                        >
+                            Install on GitHub →
+                        </a>
+                        <a
+                            href="mailto:sales@devasign.com"
+                            className="btn btn-secondary"
+                            data-cta="pricing_closing_enterprise"
+                            data-plan="enterprise"
+                            data-placement="closing"
+                            onClick={() => logCtaClick('enterprise', 'closing', null)}
+                        >
+                            Talk to sales
+                        </a>
                     </div>
                 </div>
             </section>
