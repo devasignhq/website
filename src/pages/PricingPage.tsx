@@ -36,10 +36,10 @@ const TextCell = ({ children, max = false, strong = false }: { children: React.R
 
 export function PricingPage() {
     const [billing, setBilling] = useState<'month' | 'year'>('month');
-    const proPrice = billing === 'month' ? '$25' : '$20';
-    const maxPrice = billing === 'month' ? '$100' : '$80';
-    const proPriceNum = billing === 'month' ? 25 : 20;
-    const maxPriceNum = billing === 'month' ? 100 : 80;
+    const proPrice = billing === 'month' ? '$15' : '$12';
+    const maxPrice = billing === 'month' ? '$45' : '$36';
+    const proPriceNum = billing === 'month' ? 15 : 12;
+    const maxPriceNum = billing === 'month' ? 45 : 36;
     const { client } = useStatsigClient();
 
     const logCtaClick = (
@@ -75,7 +75,7 @@ export function PricingPage() {
                                 Simple, transparent pricing.
                             </h1>
                             <br />
-                            <p style={{ color: 'var(--fg-muted)' }}>One install. Goal-aware review on every PR. Bring the model you trust — Claude, Gemini, Codex, or Grok — and review where you already work: GitHub, the IDE, the CLI.</p>
+                            <p style={{ color: 'var(--fg-muted)' }}>One install. Goal-aware review on every PR — DevAsign pulls context from your tickets, designs, and Loom walkthroughs, then posts the verdict right on your GitHub pull requests.</p>
                         </div>
                         <div className="da-toggle-card">
                             <span className="label">// Billing</span>
@@ -95,7 +95,7 @@ export function PricingPage() {
                                     Yearly <span className="save">−20%</span>
                                 </button>
                             </div>
-                            <span className="label" style={{ borderTop: '1px dashed var(--border-faint)', paddingTop: 12 }}>// All prices in USD · per developer</span>
+                            <span className="label" style={{ borderTop: '1px dashed var(--border-faint)', paddingTop: 12 }}>// All prices in USD · per month</span>
                         </div>
                     </div>
                 </div>
@@ -117,7 +117,7 @@ export function PricingPage() {
                                 <span className="da-plan-bullet">Public repos only</span>
                             </div>
                             <a
-                                href="https://app.devasign.com/authenticate/account"
+                                href="https://devasign.ai"
                                 className="btn btn-secondary btn-block da-plan-cta"
                                 data-cta="pricing_card_free"
                                 data-plan="free"
@@ -129,9 +129,7 @@ export function PricingPage() {
                             <div className="da-plan-features">
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Public repositories only</strong> — your project must be open-source</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>PR comments only</strong> — review surfaces inline on GitHub</span></div>
-                                <div className="da-feat"><span className="circle-x outline"><X /></span><span className="dim">No IDE or CLI integration</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Multimodal goal ingestion — ticket, Figma, Loom</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Default Claude Haiku model</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Community support</span></div>
                             </div>
                         </article>
@@ -143,12 +141,12 @@ export function PricingPage() {
                                 <div className="da-plan-tag">For private repos &amp; small teams</div>
                                 <div className="da-plan-price">
                                     <span className="num">{proPrice}</span>
-                                    <span className="per">/ dev / month</span>
+                                    <span className="per">/ month</span>
                                 </div>
                                 <span className="da-plan-bullet">Private repos · Limited PR review</span>
                             </div>
                             <a
-                                href="https://app.devasign.com/authenticate/account"
+                                href="https://devasign.ai"
                                 className="btn btn-primary btn-block da-plan-cta"
                                 data-cta="pricing_card_pro"
                                 data-plan="pro"
@@ -159,33 +157,9 @@ export function PricingPage() {
                             </a>
                             <div className="da-plan-features">
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Private repositories</strong> — full access</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>200 PR reviews / dev / month</strong> — pooled across the team</span></div>
-                                <div className="da-feat">
-                                    <span className="circle-check"><Check /></span>
-                                    <span>
-                                        <strong>All frontier models</strong> — choose per repo
-                                        <div className="da-models" style={{ marginLeft: 32 }}>
-                                            <span className="da-model-pill">Claude</span>
-                                            <span className="da-model-pill">Gemini</span>
-                                            <span className="da-model-pill">Codex</span>
-                                            <span className="da-model-pill">Grok</span>
-                                        </div>
-                                    </span>
-                                </div>
-                                <div className="da-feat">
-                                    <span className="circle-check"><Check /></span>
-                                    <span>
-                                        <strong>Review in the PR, IDE &amp; CLI</strong>
-                                        <div className="da-tool-row">
-                                            <span className="da-tool-badge"><span className="dot" />Antigravity</span>
-                                            <span className="da-tool-badge"><span className="dot" />Cursor</span>
-                                            <span className="da-tool-badge"><span className="dot" />Windsurf</span>
-                                            <span className="da-tool-badge"><span className="dot" />Claude Code</span>
-                                            <span className="da-tool-badge"><span className="dot" />Gemini CLI</span>
-                                        </div>
-                                    </span>
-                                </div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Linear / Jira / Asana acceptance-criteria sync</span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>200 PR reviews / month</strong> — shared across your team</span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Inline PR reviews on GitHub</strong> — Check Run + grouped review with fix prompts</span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Slack alerts &amp; Linear acceptance-criteria sync</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Email support</span></div>
                             </div>
                         </article>
@@ -198,12 +172,12 @@ export function PricingPage() {
                                 <div className="da-plan-tag">For shipping teams that review at velocity</div>
                                 <div className="da-plan-price">
                                     <span className="num">{maxPrice}</span>
-                                    <span className="per">/ dev / month</span>
+                                    <span className="per">/ month</span>
                                 </div>
                                 <span className="da-plan-bullet">Unlimited PR reviews · Priority queue</span>
                             </div>
                             <a
-                                href="https://app.devasign.com/authenticate/account"
+                                href="https://devasign.ai"
                                 className="btn btn-tertiary btn-block da-plan-cta"
                                 data-cta="pricing_card_max"
                                 data-plan="max"
@@ -214,31 +188,7 @@ export function PricingPage() {
                             </a>
                             <div className="da-plan-features">
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Unlimited PR reviews</strong> — no per-month cap</span></div>
-                                <div className="da-feat">
-                                    <span className="circle-check"><Check /></span>
-                                    <span>
-                                        <strong>All frontier models</strong> — Pro coverage + priority capacity
-                                        <div className="da-models" style={{ marginLeft: 32 }}>
-                                            <span className="da-model-pill">Claude</span>
-                                            <span className="da-model-pill">Gemini</span>
-                                            <span className="da-model-pill">Codex</span>
-                                            <span className="da-model-pill">Grok</span>
-                                        </div>
-                                    </span>
-                                </div>
-                                <div className="da-feat">
-                                    <span className="circle-check"><Check /></span>
-                                    <span>
-                                        <strong>Review in the PR, IDE &amp; CLI</strong>
-                                        <div className="da-tool-row">
-                                            <span className="da-tool-badge"><span className="dot" />Antigravity</span>
-                                            <span className="da-tool-badge"><span className="dot" />Cursor</span>
-                                            <span className="da-tool-badge"><span className="dot" />Windsurf</span>
-                                            <span className="da-tool-badge"><span className="dot" />Claude Code</span>
-                                            <span className="da-tool-badge"><span className="dot" />Gemini CLI</span>
-                                        </div>
-                                    </span>
-                                </div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Inline PR reviews on GitHub</strong> — Check Run + grouped review with fix prompts</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Custom review policies</strong> per repo &amp; team</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Goal-coverage analytics &amp; dashboards</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Priority Slack support · 24h response</span></div>
@@ -308,7 +258,7 @@ export function PricingPage() {
 
                                 <tr className="section-row"><td>Reviews</td><td /><td /><td className="col-max" /><td /></tr>
                                 <tr>
-                                    <td className="feat-name">PR reviews / dev / month</td>
+                                    <td className="feat-name">PR reviews / month</td>
                                     <TextCell>25</TextCell>
                                     <TextCell strong>200</TextCell>
                                     <TextCell max strong>Unlimited</TextCell>
@@ -332,14 +282,14 @@ export function PricingPage() {
 
                                 <tr className="section-row"><td>Models</td><td /><td /><td className="col-max" /><td /></tr>
                                 <tr>
-                                    <td className="feat-name">Default model</td>
-                                    <TextCell>Gemini 3 Pro</TextCell>
-                                    <TextCell>Choose per repo</TextCell>
-                                    <TextCell max>Choose per repo</TextCell>
-                                    <TextCell>Choose per repo</TextCell>
+                                    <td className="feat-name">Review model — managed by DevAsign</td>
+                                    <TextCell>Standard</TextCell>
+                                    <TextCell>Frontier</TextCell>
+                                    <TextCell max>Frontier</TextCell>
+                                    <TextCell>Frontier</TextCell>
                                 </tr>
                                 <tr>
-                                    <td className="feat-name">Claude · Gemini · Codex · Grok</td>
+                                    <td className="feat-name">Frontier models — Claude · Gemini · Codex · Grok</td>
                                     <XCell /><CheckCell /><CheckCell max /><CheckCell />
                                 </tr>
                                 <tr>
@@ -347,28 +297,18 @@ export function PricingPage() {
                                     <XCell /><XCell /><XCell max /><CheckCell />
                                 </tr>
 
-                                <tr className="section-row"><td>Where you can review</td><td /><td /><td className="col-max" /><td /></tr>
-                                <tr>
-                                    <td className="feat-name">PR comments on GitHub</td>
-                                    <CheckCell /><CheckCell /><CheckCell max /><CheckCell />
-                                </tr>
-                                <tr>
-                                    <td className="feat-name">IDE — Antigravity, Cursor, Windsurf</td>
-                                    <XCell /><CheckCell /><CheckCell max /><CheckCell />
-                                </tr>
-                                <tr>
-                                    <td className="feat-name">CLI — Claude Code, Gemini CLI</td>
-                                    <XCell /><CheckCell /><CheckCell max /><CheckCell />
-                                </tr>
-
                                 <tr className="section-row"><td>Integrations</td><td /><td /><td className="col-max" /><td /></tr>
                                 <tr>
-                                    <td className="feat-name">Linear / Jira / Asana sync</td>
+                                    <td className="feat-name">GitHub — inline PR reviews &amp; checks</td>
+                                    <CheckCell /><CheckCell /><CheckCell max /><CheckCell />
+                                </tr>
+                                <tr>
+                                    <td className="feat-name">Slack — verdict broadcasts &amp; alerts</td>
                                     <XCell /><CheckCell /><CheckCell max /><CheckCell />
                                 </tr>
                                 <tr>
-                                    <td className="feat-name">Figma &amp; Loom ingestion</td>
-                                    <CheckCell /><CheckCell /><CheckCell max /><CheckCell />
+                                    <td className="feat-name">Linear — acceptance-criteria sync</td>
+                                    <XCell /><CheckCell /><CheckCell max /><CheckCell />
                                 </tr>
 
                                 <tr className="section-row"><td>Security &amp; admin</td><td /><td /><td className="col-max" /><td /></tr>
@@ -435,16 +375,12 @@ export function PricingPage() {
                                 <div className="da-faq-body"><p>Open source is where the community lives, and we want goal-aware review on every public PR forever — without billing friction. Private repositories carry compute, storage, and access-control overhead that the Pro tier exists to fund.</p></div>
                             </details>
                             <details className="da-faq">
-                                <summary>Can I switch between Claude, Gemini, Codex, and Grok?</summary>
-                                <div className="da-faq-body"><p>On Pro and Max, yes — choose the default model per repository, override per PR with a comment trigger, or pin a specific model for security-sensitive code paths. Free uses Claude Haiku.</p></div>
-                            </details>
-                            <details className="da-faq">
-                                <summary>How do IDE and CLI reviews work?</summary>
-                                <div className="da-faq-body"><p>Pro and Max ship plugins for Antigravity, Cursor, and Windsurf, and integrations for Claude Code and Gemini CLI. Run a goal-aware review locally on your branch before you push — same multimodal context, same acceptance-criteria scoring.</p></div>
+                                <summary>Which model reviews my PRs?</summary>
+                                <div className="da-faq-body"><p>DevAsign manages this for you — there's nothing to configure. On Pro and Max we automatically route each review to the best frontier model for the job (Claude, Gemini, Codex, or Grok). Free runs on a capable standard model.</p></div>
                             </details>
                             <details className="da-faq">
                                 <summary>What if my team uses 1,000 PRs in a month?</summary>
-                                <div className="da-faq-body"><p>If you're consistently above 200 PRs per dev, Max removes the cap entirely and gets you a priority capacity lane. Most teams that hit Pro's ceiling upgrade within 60 days.</p></div>
+                                <div className="da-faq-body"><p>If you're consistently above 200 PR reviews a month, Max removes the cap entirely and gets you a priority capacity lane. Most teams that hit Pro's ceiling upgrade within 60 days.</p></div>
                             </details>
                             <details className="da-faq">
                                 <summary>Does the bounty / Soroban product cost extra?</summary>
@@ -466,7 +402,7 @@ export function PricingPage() {
                     <p>Install on a public repo in 60 seconds. Upgrade only when you have private code that deserves the same review.</p>
                     <div className="da-closing-ctas">
                         <a
-                            href="/#install"
+                            href="https://devasign.ai"
                             className="btn btn-primary"
                             data-cta="pricing_closing_install"
                             data-plan="na"

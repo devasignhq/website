@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
 import { SiteNav } from '../components/layout/SiteNav';
 import { SiteFooter } from '../components/layout/SiteFooter';
@@ -34,7 +35,8 @@ export function BountyPayoutsPage() {
                                 Drop a one-line comment on any GitHub issue. Lock <strong>USDC into a Soroban escrow</strong>. The moment a contributor's PR is tested and merged to <code style={{ background: 'var(--bg-elevated)', padding: '2px 8px', border: '1px solid var(--border-faint)', fontSize: '0.9em' }}>main</code>, the escrow releases — settled on Stellar in seconds.
                             </p>
                             <div className="da-b-ctas">
-                                <a href="https://app.devasign.com/authenticate/account" className="btn btn-primary">Install on a public repo →</a>
+                                <a href="https://app.devasign.com" className="btn btn-primary">Create bounty →</a>
+                                <Link to="/bounty-docs" className="btn btn-secondary">How-to Docs</Link>
                             </div>
                             <div className="da-proof-row">
                                 Built on Stellar &amp; Soroban<span>·</span>USDC settlement &lt; 5s<span>·</span>Sub-cent network fees

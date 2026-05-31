@@ -365,6 +365,128 @@ nav .signup-btn:hover {
     font-weight: 600;
 }
 
+/* ─── Code block (multi-line) ─── */
+.docs-pre {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11.5px;
+    line-height: 1.7;
+    background: rgba(255, 255, 255, 0.03);
+    color: #cfcfcf;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 14px 0 20px;
+    overflow-x: auto;
+    white-space: pre;
+    tab-size: 2;
+}
+
+/* Syntax tokens (JSON / diff / prompt) */
+.docs-pre .tok-key { color: #fe891f; }
+.docs-pre .tok-str { color: #9ece6a; }
+.docs-pre .tok-num { color: #ff9e64; }
+.docs-pre .tok-bool,
+.docs-pre .tok-null { color: #bb9af7; }
+.docs-pre .tok-label { color: #fe891f; font-weight: 600; }
+.docs-pre .tok-placeholder { color: #828896; font-style: italic; }
+.docs-pre .tok-add { color: #9ece6a; }
+.docs-pre .tok-del { color: #f7768e; }
+.docs-pre .tok-fence { color: #6a7080; }
+
+/* ─── Pipeline stage rail ─── */
+.docs-stage-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 22px;
+    counter-reset: stage;
+}
+
+.docs-stage-list li {
+    position: relative;
+    padding: 0 0 18px 40px;
+    counter-increment: stage;
+}
+
+.docs-stage-list li::before {
+    content: counter(stage);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(254, 137, 31, 0.12);
+    border: 1px solid rgba(254, 137, 31, 0.35);
+    color: #fe891f;
+    font-family: 'Geist Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.docs-stage-list li:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 13px;
+    top: 28px;
+    bottom: 0;
+    width: 1px;
+    background: rgba(254, 137, 31, 0.2);
+}
+
+.docs-stage-list .stage-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e0e0e0;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.docs-stage-list .stage-desc {
+    font-size: 13.5px;
+    color: #999;
+    line-height: 1.7;
+}
+
+/* ─── Severity pills ─── */
+.docs-pill {
+    display: inline-block;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    padding: 1px 8px;
+    border-radius: 999px;
+    text-transform: uppercase;
+}
+
+.docs-pill.blocker {
+    background: rgba(255, 86, 86, 0.12);
+    border: 1px solid rgba(255, 86, 86, 0.4);
+    color: #ff7676;
+}
+
+.docs-pill.warn {
+    background: rgba(254, 137, 31, 0.12);
+    border: 1px solid rgba(254, 137, 31, 0.4);
+    color: #fe891f;
+}
+
+/* ─── Permission access pills ─── */
+.docs-pill.read {
+    background: rgba(158, 206, 106, 0.12);
+    border: 1px solid rgba(158, 206, 106, 0.4);
+    color: #9ece6a;
+}
+
+.docs-pill.write {
+    background: rgba(254, 137, 31, 0.12);
+    border: 1px solid rgba(254, 137, 31, 0.4);
+    color: #fe891f;
+}
+
 /* ─── Escrow Contract Card ─── */
 .docs-escrow-contract-card {
     position: relative;
