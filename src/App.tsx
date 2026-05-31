@@ -4,6 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { LandingPage } from './pages/LandingPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { DocsPage } from './pages/DocsPage';
+import { BountyDocsPage } from './pages/BountyDocsPage';
 import { BountyPayoutsPage } from './pages/BountyPayoutsPage';
 import { PricingPage } from './pages/PricingPage';
 import { Toaster } from 'sonner';
@@ -69,6 +70,7 @@ export default function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/bounty-payouts" element={<BountyPayoutsPage />} />
+          <Route path="/bounty-docs" element={<BountyDocsPage />} />
           <Route path="/docs" element={<DocsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

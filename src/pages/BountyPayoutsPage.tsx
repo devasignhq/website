@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
 import { SiteNav } from '../components/layout/SiteNav';
 import { SiteFooter } from '../components/layout/SiteFooter';
@@ -35,6 +36,7 @@ export function BountyPayoutsPage() {
                             </p>
                             <div className="da-b-ctas">
                                 <a href="https://app.devasign.com/authenticate/account" className="btn btn-primary">Install on a public repo →</a>
+                                <Link to="/bounty-docs" className="btn btn-secondary">How-to Docs</Link>
                             </div>
                             <div className="da-proof-row">
                                 Built on Stellar &amp; Soroban<span>·</span>USDC settlement &lt; 5s<span>·</span>Sub-cent network fees
