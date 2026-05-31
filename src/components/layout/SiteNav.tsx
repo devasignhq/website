@@ -51,8 +51,9 @@ export function SiteNav({ activePath }: SiteNavProps) {
         }
     };
 
-    const loginUrl = "https://app.devasign.com/authenticate/account";
-    const signupUrl = "https://app.devasign.com/authenticate/account";
+    const onBountyPayouts = location.pathname === "/bounty-payouts";
+    const loginUrl = onBountyPayouts ? "https://app.devasign.com" : "https://devasign.ai";
+    const signupUrl = onBountyPayouts ? "https://app.devasign.com" : "https://devasign.ai";
 
     return (
         <nav className="da-nav">

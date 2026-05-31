@@ -117,7 +117,7 @@ export function PricingPage() {
                                 <span className="da-plan-bullet">Public repos only</span>
                             </div>
                             <a
-                                href="https://app.devasign.com/authenticate/account"
+                                href="https://devasign.ai"
                                 className="btn btn-secondary btn-block da-plan-cta"
                                 data-cta="pricing_card_free"
                                 data-plan="free"
@@ -146,7 +146,7 @@ export function PricingPage() {
                                 <span className="da-plan-bullet">Private repos · Limited PR review</span>
                             </div>
                             <a
-                                href="https://app.devasign.com/authenticate/account"
+                                href="https://devasign.ai"
                                 className="btn btn-primary btn-block da-plan-cta"
                                 data-cta="pricing_card_pro"
                                 data-plan="pro"
@@ -177,7 +177,7 @@ export function PricingPage() {
                                 <span className="da-plan-bullet">Unlimited PR reviews · Priority queue</span>
                             </div>
                             <a
-                                href="https://app.devasign.com/authenticate/account"
+                                href="https://devasign.ai"
                                 className="btn btn-tertiary btn-block da-plan-cta"
                                 data-cta="pricing_card_max"
                                 data-plan="max"
@@ -402,7 +402,7 @@ export function PricingPage() {
                     <p>Install on a public repo in 60 seconds. Upgrade only when you have private code that deserves the same review.</p>
                     <div className="da-closing-ctas">
                         <a
-                            href="/#install"
+                            href="https://devasign.ai"
                             className="btn btn-primary"
                             data-cta="pricing_closing_install"
                             data-plan="na"

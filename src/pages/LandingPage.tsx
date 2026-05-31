@@ -40,7 +40,7 @@ export function LandingPage() {
                                 DevAsign ingests your <strong>ticket, linked issues, screenshots, Figma frames, and Loom walkthroughs</strong> — then reviews every PR against what was actually asked.
                             </p>
                             <div className="da-hero-ctas">
-                                <a href="https://app.devasign.com/authenticate/account" className="btn btn-primary">Start reviewing →</a>
+                                <a href="https://devasign.ai" className="btn btn-primary">Start reviewing →</a>
                                 {/* <a href="#shots" className="btn btn-secondary">See it review a real PR</a> */}
                             </div>
                             <div className="da-hero-proof">
@@ -525,7 +525,7 @@ export function LandingPage() {
                     <h2>We review the goal not just the diff</h2>
                     <p>Install DevAsign on your repo and watch what your other reviewer missed.</p>
                     <div className="da-closing-ctas">
-                        <a href="https://app.devasign.com/" className="btn btn-primary" target="_blank" rel="noopener noreferrer">Get Started Now</a>
+                        <a href="https://devasign.ai" className="btn btn-primary" target="_blank" rel="noopener noreferrer">Get Started Now</a>
                         <a href="https://cal.com/devasign/30min" className="btn btn-secondary">Talk to founder</a>
                     </div>
                 </div>
