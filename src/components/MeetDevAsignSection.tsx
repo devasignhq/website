@@ -4,7 +4,7 @@ const PILLARS = [
     {
         tag: "PILLAR 01",
         title: "Ingest the goal",
-        body: "Reads the ticket, linked issues, attached screenshots, Figma frames, and Loom walkthroughs — the same inputs the dev was given. It builds a model of what done looks like before it ever opens the diff.",
+        body: "Reads the ticket, linked issues, attached screenshots and Loom walkthroughs — the same inputs the dev was given. It builds a model of what done looks like before it ever opens the diff.",
         illo: "ingest" as const,
     },
     {
@@ -16,7 +16,7 @@ const PILLARS = [
     {
         tag: "PILLAR 03",
         title: "Inline dev guidance",
-        body: "Guides the dev right in the IDE/CLI and on the PR while they're still in the flow. No dashboard. No context switch. Feedback shows up where the work is happening.",
+        body: "Guides the dev right on the PR while they're still in the flow. No context switch. Feedback shows up where the work is happening.",
         illo: "guidance" as const,
     },
 ];
@@ -278,7 +278,7 @@ export function MeetDevAsignSection() {
     };
 
     return (
-        <section ref={sectionRef} className="da-section elevated da-pillar-section" id="introducing">
+        <section ref={sectionRef} className="da-section da-pillar-section" id="introducing">
             <div className="da-pillar-sticky">
                 <div className="da-container">
                     <div className="da-section-head">

@@ -238,7 +238,7 @@ export function LandingPage() {
             </section> */}
 
             {/* SECTION 8 — LIVES WHERE */}
-            <section className="da-section" id="platforms">
+            {/* <section className="da-section" id="platforms">
                 <div className="da-container">
                     <div className="da-section-head">
                         <span className="eyebrow">WHERE YOU SHIP</span>
@@ -247,7 +247,6 @@ export function LandingPage() {
                     </div>
 
                     <div className="da-surfaces">
-                        {/* GitHub */}
                         <div className="da-surface">
                             <div className="da-surface-tab">
                                 <span className="da-surface-dots"><span /><span /><span /></span>
@@ -276,7 +275,6 @@ export function LandingPage() {
                             </div>
                         </div>
 
-                        {/* IDE */}
                         <div className="da-surface">
                             <div className="da-surface-tab">
                                 <span className="da-surface-dots"><span /><span /><span /></span>
@@ -300,7 +298,6 @@ export function LandingPage() {
                             </div>
                         </div>
 
-                        {/* CLI */}
                         <div className="da-surface">
                             <div className="da-surface-tab">
                                 <span className="da-surface-dots"><span /><span /><span /></span>
@@ -321,7 +318,7 @@ export function LandingPage() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             {/* SECTION 9 — SCREENSHOTS */}
             <section className="da-section" id="shots">
@@ -525,7 +522,7 @@ export function LandingPage() {
                     <h2>We review the goal not just the diff</h2>
                     <p>Install DevAsign on your repo and watch what your other reviewer missed.</p>
                     <div className="da-closing-ctas">
-                        <a href="https://devasign.ai" className="btn btn-primary" target="_blank" rel="noopener noreferrer">Get Started Now</a>
+                        <a href="https://app.devasign.com/" className="btn btn-primary" target="_blank" rel="noopener noreferrer">Get Started Now</a>
                         <a href="https://cal.com/devasign/30min" className="btn btn-secondary">Talk to founder</a>
                     </div>
                 </div>
