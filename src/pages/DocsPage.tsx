@@ -31,6 +31,7 @@ const navCategories: NavCategory[] = [
             { id: 'multimodal-review', title: 'Multimodal review' },
             { id: 'holistic-review', title: 'Whole-repo review' },
             { id: 'deferred-work', title: 'Deferred-work detection' },
+            { id: 'devasign-guidance', title: 'DEVASIGN.md guidance' },
         ],
     },
     {
@@ -55,7 +56,7 @@ const navCategories: NavCategory[] = [
         items: [
             { id: 'installation', title: 'Installation' },
             { id: 'permissions', title: 'GitHub permissions' },
-            { id: 'integrations', title: 'Integrations & clients' },
+            { id: 'linear', title: 'Linear integration' },
         ],
     },
 ];
@@ -305,7 +306,7 @@ export function DocsPage() {
                                     </tr>
                                     <tr>
                                         <td><strong>Linear</strong></td>
-                                        <td>Issue description and comments via the Linear API.</td>
+                                        <td>The linked issue's description, comments, sub-issues, and attachments, plus any embedded video — see <a href="#linear" className="docs-link">Linear integration</a>.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Slack / Discord</strong></td>
@@ -428,6 +429,74 @@ Relevant diff:
                         </p>
                     </section>
 
+                    {/* ===== DEVASIGN.md GUIDANCE ===== */}
+                    <section id="devasign-guidance" className="docs-section">
+                        <h2 className="docs-heading">DEVASIGN.md guidance</h2>
+                        <p className="docs-paragraph">
+                            Drop a <code className="docs-code">DEVASIGN.md</code> into your repository to teach the review agent your team's own conventions — the same way you'd use an <code className="docs-code">AGENTS.md</code> or <code className="docs-code">CLAUDE.md</code>. There's <strong>no dashboard setup</strong>: commit the file and the next review picks it up. When no <code className="docs-code">DEVASIGN.md</code> governs the files a PR touches, this step is skipped entirely — it costs nothing.
+                        </p>
+                        <h3 className="docs-subheading">Hierarchical scope</h3>
+                        <p className="docs-paragraph">
+                            DevAsign reads a <code className="docs-code">DEVASIGN.md</code> at <em>every</em> level of your tree and scopes each one to its own directory. Rules <strong>compound down the tree</strong>:
+                        </p>
+                        <ul className="docs-unordered-list">
+                            <li>The repo-root <code className="docs-code">DEVASIGN.md</code> governs every file.</li>
+                            <li>A <code className="docs-code">frontend/DEVASIGN.md</code> governs only files under <code className="docs-code">frontend/</code>.</li>
+                            <li>A changed file obeys every <code className="docs-code">DEVASIGN.md</code> on its path, root → leaf.</li>
+                        </ul>
+                        <p className="docs-paragraph">
+                            The docs are read from the <strong>PR's head commit</strong>, so a PR that edits its own <code className="docs-code">DEVASIGN.md</code> is judged against the new text. To keep reviews bounded, DevAsign reads up to <strong>15</strong> files at <strong>8,000</strong> characters each.
+                        </p>
+                        <h3 className="docs-subheading">Findings are advisory nits</h3>
+                        <p className="docs-paragraph">
+                            The agent flags only what the diff <em>newly</em> introduces — pre-existing code that breaks a rule is left alone. Each finding lands as a <span className="docs-pill nit">nit</span>: it ships a copy-paste <a href="#multimodal-review" className="docs-link">fix prompt</a> but <strong>never blocks the merge</strong> (see <a href="#severity" className="docs-link">Severity &amp; verdict</a>). DevAsign is told to flag only rules a <code className="docs-code">DEVASIGN.md</code> actually states — it won't invent conventions.
+                        </p>
+                        <h3 className="docs-subheading">Docs stay honest (bidirectional)</h3>
+                        <p className="docs-paragraph">
+                            The check runs both ways. If the diff changes code such that a <code className="docs-code">DEVASIGN.md</code> statement is now outdated, DevAsign flags the <strong>doc</strong> for an update too — so your conventions don't silently drift from the code.
+                        </p>
+                        <h3 className="docs-subheading">Starter template</h3>
+                        <p className="docs-paragraph">
+                            Put broad rules in the root file and narrow, area-specific rules in a <code className="docs-code">DEVASIGN.md</code> inside the relevant subdirectory:
+                        </p>
+                        <pre className="docs-pre">{`# DEVASIGN.md
+
+Conventions for this directory and everything under it. Newly introduced
+violations are flagged as nits; they don't block the merge.
+
+## Conventions
+- State each rule as a single, checkable sentence.
+- Prefer concrete, observable rules ("API calls go through \`src/api.ts\`") over
+  subjective taste ("write clean code").
+
+## Examples
+- Error handling: wrap external calls and surface a typed error, never throw raw.
+- Naming: React components are PascalCase; hooks start with \`use\`.`}</pre>
+                        <p className="docs-paragraph">
+                            On each review, DevAsign emits two advisory outputs, both scoped to the files the governing docs cover — convention <code className="docs-code">violations</code> and <code className="docs-code">docUpdates</code> (statements the diff makes outdated):
+                        </p>
+                        <CodeBlock lang="json" code={`{
+  "violations": [
+    {
+      "path": "frontend/src/Button.tsx",
+      "concern": "Rule: styling uses design tokens, but this adds color: '#fe891f' inline.",
+      "fixPrompt": "Fix: Replace the inline hex with a design token ..."
+    }
+  ],
+  "docUpdates": [
+    {
+      "path": "frontend/DEVASIGN.md",
+      "concern": "Doc says the browser talks to the API only through src/api.ts, but this diff routes through src/client.ts.",
+      "fixPrompt": "Fix: Update the convention to point at the new client path ..."
+    }
+  ],
+  "summary": "1 convention nit, 1 doc to update."
+}`} />
+                        <div className="docs-callout">
+                            <strong>Writing good rules:</strong> state each as a single, checkable sentence, and favor concrete, observable rules (<em>"API calls go through <code className="docs-code">src/api.ts</code>"</em>) over subjective taste (<em>"write clean code"</em>). Findings surface in the PR review under a dedicated <strong>📝 DEVASIGN.md</strong> section.
+                        </div>
+                    </section>
+
                     {/* ===== SEVERITY ===== */}
                     <section id="severity" className="docs-section">
                         <h2 className="docs-heading">Severity &amp; verdict</h2>
@@ -453,6 +522,11 @@ Relevant diff:
                                         <td><span className="docs-pill warn">warn</span></td>
                                         <td>No</td>
                                         <td>A plausible concern (or a deferred-work note) worth a human's eyes but not blocking.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span className="docs-pill nit">nit</span></td>
+                                        <td>No</td>
+                                        <td>Advisory only; never gates the merge — e.g. <a href="#devasign-guidance" className="docs-link">DEVASIGN.md</a> convention nits.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -693,20 +767,59 @@ Relevant diff:
                         </div>
                     </section>
 
-                    {/* ===== INTEGRATIONS ===== */}
-                    <section id="integrations" className="docs-section">
-                        <h2 className="docs-heading">Integrations &amp; clients</h2>
+                    {/* ===== LINEAR INTEGRATION ===== */}
+                    <section id="linear" className="docs-section">
+                        <h2 className="docs-heading">Linear integration</h2>
                         <p className="docs-paragraph">
-                            Connect your team's tools so the agent can pull richer ticket context and broadcast verdicts where you already work.
+                            Connect a Linear workspace and DevAsign judges each PR against the <strong>ticket it implements</strong> — pulling the issue into <a href="#context-ingestion" className="docs-link">context ingestion</a> — then reports the verdict back on that issue. It's how the agent learns <em>what was asked</em> when the spec lives in Linear rather than the PR description.
                         </p>
+                        <h3 className="docs-subheading">Connecting</h3>
+                        <p className="docs-paragraph">
+                            In the dashboard, open <strong>Settings → Integrations → Linear</strong> and click <strong>Connect</strong>. A popup hands you to Linear's OAuth screen to authorize your workspace; approve it and the workspace appears in your integration list. There are <strong>no tokens or API keys to paste</strong>, re-connecting simply refreshes the authorization, and one Linear workspace connects per account.
+                        </p>
+                        <h3 className="docs-subheading">Permissions you grant</h3>
+                        <p className="docs-paragraph">
+                            Linear shows you these scopes on the authorization screen — DevAsign requests nothing more:
+                        </p>
+                        <div className="docs-table-wrapper">
+                            <table className="docs-table">
+                                <thead>
+                                    <tr>
+                                        <th>Scope</th>
+                                        <th>Access</th>
+                                        <th>Why DevAsign needs it</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Read</strong></td>
+                                        <td><span className="docs-pill read">read</span></td>
+                                        <td>Ingest the ticket a PR implements — its description, comments, sub-issues, labels, parent and project, plus attachments (PDFs and images) and any embedded Loom / YouTube / Vimeo — as the context a review is judged against.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Write</strong></td>
+                                        <td><span className="docs-pill write">write</span></td>
+                                        <td>Post one short verdict comment back on the linked issue. The full review stays on the PR.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h3 className="docs-subheading">What it can't do</h3>
                         <ul className="docs-unordered-list">
-                            <li><strong>Slack, Linear &amp; Discord</strong> — authorize once to let DevAsign read the thread or issue a task lives in (feeding the review engine) and post verdicts back to your channel.</li>
-                            <li><strong>IDE extensions</strong> — VS Code and JetBrains plugins bring reviews into your editor.</li>
-                            <li><strong>CLI agent</strong> — drop reviews into a terminal or vibe-coding workflow.</li>
+                            <li><strong>Speak as you</strong> — its comment is attributed to the DevAsign app, not your user account.</li>
+                            <li><strong>Change your tickets</strong> — DevAsign never creates, reassigns, closes, or moves the status of an issue; its only write is that single notification comment.</li>
+                            <li><strong>See more than it resolves</strong> — although the Linear OAuth grant is workspace-wide, DevAsign reads only the issues it actually links a PR to.</li>
                         </ul>
-                        <p className="docs-paragraph">
-                            The IDE and CLI clients are thin: they authenticate to DevAsign and call the same review API the dashboard uses.
-                        </p>
+                        <h3 className="docs-subheading">What it does</h3>
+                        <ol className="docs-ordered-list">
+                            <li><strong>Links PRs to tickets.</strong> DevAsign matches a PR to a Linear issue by an explicit reference — an <code className="docs-code">ENG-123</code> key in the PR body or branch name (including the <code className="docs-code">Fixes ENG-123</code> line Linear's own GitHub integration injects) — or, when there's no explicit ref, by a conservative match of the PR title and description against your issues.</li>
+                            <li><strong>Pulls the ticket into the review.</strong> The linked issue's description, discussion, attachments, and embedded videos feed <a href="#end-goal" className="docs-link">end-goal &amp; criteria</a> synthesis, so the PR is measured against what the ticket actually asked for.</li>
+                            <li><strong>Seeds acceptance criteria.</strong> When a ticket is opened or updated, DevAsign synthesizes criteria from it ahead of time and caches them; a PR that later links to that ticket reuses those criteria instead of re-deriving them.</li>
+                            <li><strong>Reports back on the issue.</strong> Once the linked PR is reviewed, DevAsign posts a short comment on the Linear issue — that it reviewed the PR and <em>passed</em> or <em>requested changes</em>, with a link to it. The comment posts once per commit, so re-reviews of the same push don't repeat it.</li>
+                        </ol>
+                        <div className="docs-callout">
+                            <strong>The PR stays the source of truth:</strong> the Linear comment is a pointer. The full verdict — per-criterion evidence, inline comments, and fix prompts — lives on the GitHub PR.
+                        </div>
                     </section>
 
                     {/* Bottom spacer */}
