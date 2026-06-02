@@ -43,7 +43,7 @@ export function PricingPage() {
     const { client } = useStatsigClient();
 
     const logCtaClick = (
-        plan: 'free' | 'pro' | 'max' | 'enterprise' | 'na',
+        plan: 'free' | 'pro' | 'max' | 'na',
         placement: 'card' | 'closing',
         priceMonthly: number | null,
     ) => {
@@ -128,6 +128,7 @@ export function PricingPage() {
                             </a>
                             <div className="da-plan-features">
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Public repositories only</strong> — your project must be open-source</span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>10 PR reviews / month</strong></span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>PR comments only</strong> — review surfaces inline on GitHub</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Multimodal goal ingestion — ticket, Figma, Loom</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Community support</span></div>
@@ -157,9 +158,9 @@ export function PricingPage() {
                             </a>
                             <div className="da-plan-features">
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Private repositories</strong> — full access</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>200 PR reviews / month</strong> — shared across your team</span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>50 PR reviews / month</strong> — shared across your team</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Inline PR reviews on GitHub</strong> — Check Run + grouped review with fix prompts</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Slack alerts &amp; Linear acceptance-criteria sync</span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Linear acceptance-criteria sync</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Email support</span></div>
                             </div>
                         </article>
@@ -194,35 +195,6 @@ export function PricingPage() {
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Priority Slack support · 24h response</span></div>
                             </div>
                         </article>
-
-                        {/* ENTERPRISE */}
-                        <article className="da-plan da-plan-ent">
-                            <div className="da-plan-head">
-                                <div className="da-plan-name">Enterprise</div>
-                                <div className="da-plan-tag" style={{ color: 'var(--coral)' }}>For orgs with security &amp; scale needs</div>
-                                <span className="da-plan-bullet">Custom deployments with dedicated engineering</span>
-                            </div>
-                            <a
-                                href="https://cal.com/devasign/speak-to-sales"
-                                className="btn btn-coral btn-block da-plan-cta"
-                                data-cta="pricing_card_enterprise"
-                                data-plan="enterprise"
-                                data-placement="card"
-                                onClick={() => logCtaClick('enterprise', 'card', null)}
-                            >
-                                Talk to sales →
-                            </a>
-                            <div className="da-plan-features">
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Everything in Max</strong>, plus:</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>SSO</strong> — SAML, OIDC, SCIM provisioning</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>SLA</strong> — 99.9% uptime, 4h P1 response</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>SOC 2 Type II</strong> · DPA · GDPR</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>BYOK</strong> — bring your own model keys</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Self-hosted / VPC</strong> deployment option</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Audit logs</strong> · org-wide policies · role controls</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Dedicated CSM · onboarding workshop</span></div>
-                            </div>
-                        </article>
                     </div>
                 </div>
             </section>
@@ -242,111 +214,69 @@ export function PricingPage() {
                                     <th>Free</th>
                                     <th>Pro</th>
                                     <th className="col-max">Max ★</th>
-                                    <th>Enterprise</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr className="section-row"><td>Repositories</td><td /><td /><td className="col-max" /><td /></tr>
+                                <tr className="section-row"><td>Repositories</td><td /><td /><td className="col-max" /></tr>
                                 <tr>
                                     <td className="feat-name">Public repos</td>
-                                    <CheckCell /><CheckCell /><CheckCell max /><CheckCell />
+                                    <CheckCell /><CheckCell /><CheckCell max />
                                 </tr>
                                 <tr>
                                     <td className="feat-name">Private repos</td>
-                                    <XCell /><CheckCell /><CheckCell max /><CheckCell />
+                                    <XCell /><CheckCell /><CheckCell max />
                                 </tr>
 
-                                <tr className="section-row"><td>Reviews</td><td /><td /><td className="col-max" /><td /></tr>
+                                <tr className="section-row"><td>Reviews</td><td /><td /><td className="col-max" /></tr>
                                 <tr>
                                     <td className="feat-name">PR reviews / month</td>
-                                    <TextCell>25</TextCell>
-                                    <TextCell strong>200</TextCell>
+                                    <TextCell>10</TextCell>
+                                    <TextCell strong>50</TextCell>
                                     <TextCell max strong>Unlimited</TextCell>
-                                    <TextCell strong>Unlimited</TextCell>
                                 </tr>
                                 <tr>
                                     <td className="feat-name">Multimodal goal ingestion (ticket, Figma, Loom)</td>
-                                    <CheckCell /><CheckCell /><CheckCell max /><CheckCell />
+                                    <CheckCell /><CheckCell /><CheckCell max />
                                 </tr>
                                 <tr>
                                     <td className="feat-name">Re-review on every commit</td>
-                                    <CheckCell /><CheckCell /><CheckCell max /><CheckCell />
+                                    <CheckCell /><CheckCell /><CheckCell max />
                                 </tr>
                                 <tr>
                                     <td className="feat-name">Goal-coverage scoring &amp; dashboards</td>
                                     <XCell />
                                     <TextCell>Org-wide</TextCell>
                                     <TextCell max>Org-wide</TextCell>
-                                    <TextCell>Org-wide</TextCell>
                                 </tr>
 
-                                <tr className="section-row"><td>Models</td><td /><td /><td className="col-max" /><td /></tr>
+                                <tr className="section-row"><td>Models</td><td /><td /><td className="col-max" /></tr>
                                 <tr>
                                     <td className="feat-name">Review model — managed by DevAsign</td>
                                     <TextCell>Standard</TextCell>
                                     <TextCell>Frontier</TextCell>
                                     <TextCell max>Frontier</TextCell>
-                                    <TextCell>Frontier</TextCell>
                                 </tr>
                                 <tr>
                                     <td className="feat-name">Frontier models — Claude · Gemini · Codex · Grok</td>
-                                    <XCell /><CheckCell /><CheckCell max /><CheckCell />
-                                </tr>
-                                <tr>
-                                    <td className="feat-name">Bring your own model keys (BYOK)</td>
-                                    <XCell /><XCell /><XCell max /><CheckCell />
+                                    <XCell /><CheckCell /><CheckCell max />
                                 </tr>
 
-                                <tr className="section-row"><td>Integrations</td><td /><td /><td className="col-max" /><td /></tr>
+                                <tr className="section-row"><td>Integrations</td><td /><td /><td className="col-max" /></tr>
                                 <tr>
                                     <td className="feat-name">GitHub — inline PR reviews &amp; checks</td>
-                                    <CheckCell /><CheckCell /><CheckCell max /><CheckCell />
-                                </tr>
-                                <tr>
-                                    <td className="feat-name">Slack — verdict broadcasts &amp; alerts</td>
-                                    <XCell /><CheckCell /><CheckCell max /><CheckCell />
+                                    <CheckCell /><CheckCell /><CheckCell max />
                                 </tr>
                                 <tr>
                                     <td className="feat-name">Linear — acceptance-criteria sync</td>
-                                    <XCell /><CheckCell /><CheckCell max /><CheckCell />
+                                    <XCell /><CheckCell /><CheckCell max />
                                 </tr>
 
-                                <tr className="section-row"><td>Security &amp; admin</td><td /><td /><td className="col-max" /><td /></tr>
-                                <tr>
-                                    <td className="feat-name">SSO (SAML, OIDC, SCIM)</td>
-                                    <XCell /><XCell /><XCell max /><CheckCell />
-                                </tr>
-                                <tr>
-                                    <td className="feat-name">SLA — 99.9% uptime, P1 response</td>
-                                    <XCell /><XCell /><XCell max /><CheckCell />
-                                </tr>
-                                <tr>
-                                    <td className="feat-name">SOC 2 Type II · DPA · GDPR</td>
-                                    <XCell /><XCell /><XCell max /><CheckCell />
-                                </tr>
-                                <tr>
-                                    <td className="feat-name">Audit logs &amp; org-wide policies</td>
-                                    <XCell />
-                                    <TextCell>Basic</TextCell>
-                                    <TextCell max>Advanced</TextCell>
-                                    <TextCell strong>Full</TextCell>
-                                </tr>
-                                <tr>
-                                    <td className="feat-name">Self-hosted / VPC deployment</td>
-                                    <XCell /><XCell /><XCell max /><CheckCell />
-                                </tr>
-
-                                <tr className="section-row"><td>Support</td><td /><td /><td className="col-max" /><td /></tr>
+                                <tr className="section-row"><td>Support</td><td /><td /><td className="col-max" /></tr>
                                 <tr>
                                     <td className="feat-name">Channel</td>
                                     <TextCell>Community</TextCell>
                                     <TextCell>Email</TextCell>
                                     <TextCell max strong>Priority Slack</TextCell>
-                                    <TextCell strong>Dedicated CSM</TextCell>
-                                </tr>
-                                <tr>
-                                    <td className="feat-name">Onboarding workshop</td>
-                                    <XCell /><XCell /><XCell max /><CheckCell />
                                 </tr>
                             </tbody>
                         </table>
@@ -380,7 +310,7 @@ export function PricingPage() {
                             </details>
                             <details className="da-faq">
                                 <summary>What if my team uses 1,000 PRs in a month?</summary>
-                                <div className="da-faq-body"><p>If you're consistently above 200 PR reviews a month, Max removes the cap entirely and gets you a priority capacity lane. Most teams that hit Pro's ceiling upgrade within 60 days.</p></div>
+                                <div className="da-faq-body"><p>If you're consistently above 50 PR reviews a month, Max removes the cap entirely and gets you a priority capacity lane. Most teams that hit Pro's ceiling upgrade within 60 days.</p></div>
                             </details>
                             <details className="da-faq">
                                 <summary>Does the bounty / Soroban product cost extra?</summary>
@@ -410,16 +340,6 @@ export function PricingPage() {
                             onClick={() => logCtaClick('na', 'closing', null)}
                         >
                             Install on GitHub →
-                        </a>
-                        <a
-                            href="mailto:sales@devasign.com"
-                            className="btn btn-secondary"
-                            data-cta="pricing_closing_enterprise"
-                            data-plan="enterprise"
-                            data-placement="closing"
-                            onClick={() => logCtaClick('enterprise', 'closing', null)}
-                        >
-                            Talk to sales
                         </a>
                     </div>
                 </div>
