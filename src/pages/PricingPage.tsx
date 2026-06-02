@@ -313,12 +313,8 @@ export function PricingPage() {
                                 <div className="da-faq-body"><p>If you're consistently above 50 PR reviews a month, Max removes the cap entirely and gets you a priority capacity lane. Most teams that hit Pro's ceiling upgrade within 60 days.</p></div>
                             </details>
                             <details className="da-faq">
-                                <summary>Does the bounty / Soroban product cost extra?</summary>
-                                <div className="da-faq-body"><p>No. The bounty rails are included on every plan. You only pay network fees on Stellar — sub-cent per payout, settled in seconds. Use it or ignore it.</p></div>
-                            </details>
-                            <details className="da-faq">
                                 <summary>Can I cancel any time?</summary>
-                                <div className="da-faq-body"><p>Yes. Pro and Max are month-to-month with no commitment. Yearly saves 20% but if you cancel mid-year we refund the unused portion pro-rata.</p></div>
+                                <div className="da-faq-body"><p>Yes. Pro and Max are month-to-month with no commitment, and you can cancel whenever you like. Cancellations aren't refunded — your plan stays active through the period you've already paid for, then doesn't renew.</p></div>
                             </details>
                         </div>
                     </div>
@@ -339,7 +335,7 @@ export function PricingPage() {
                             data-placement="closing"
                             onClick={() => logCtaClick('na', 'closing', null)}
                         >
-                            Install on GitHub →
+                            Get Started Now
                         </a>
                     </div>
                 </div>
