@@ -1,93 +1,97 @@
-# DevAsign Website + x402 Integration
+# DevAsign Website
 
-This is the website and documentation portal for **DevAsign** — an AI-powered platform that reviews code and automates bounty payouts for open-source projects using the **Stellar** network.
+The marketing and documentation site for **DevAsign** — a multimodal, goal-aware AI code reviewer that reviews every pull request against what was actually asked, and automates bounty payouts for the contributors who ship the work.
 
-## Setup
+This repository contains the **public website only** (landing, pricing, docs, and bounty pages). The product apps live elsewhere:
 
-### 1. Install Dependencies
+- **Code review app** → https://devasign.ai
+- **Bounty app** → https://app.devasign.com
+
+## What is DevAsign?
+
+Most reviewers only see the diff, the lint, and the test status — they never met the ticket, opened the Figma, or watched the Loom. DevAsign ingests the full **goal** behind a change and reviews each PR against what was actually asked. The site presents two things the product does:
+
+- **Goal-aware code review.** DevAsign reads the ticket, linked issues, screenshots, Figma frames, and Loom walkthroughs — the same inputs the developer was given — then reviews every PR against that goal and posts structured feedback, scoring how much of the work the change actually satisfies.
+- **Automated bounty payouts.** Maintainers drop a one-line `/bounty` comment on a GitHub issue to lock USDC into a Soroban escrow. The moment a contributor's PR is merged to `main`, the escrow releases and settles on **Stellar** in seconds — no human in the loop.
+
+## Tech Stack
+
+- **React 18** + **TypeScript**, built with **Vite** (SWC).
+- **React Router 7** for client-side routing.
+- **Tailwind CSS** for styling.
+- **react-helmet-async** for per-page SEO and meta tags.
+
+## Getting Started
+
+### 1. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 2. Configure Environment Variables
-
-Create a `.env` file (or update the existing one) in the project root:
-
-```env
-VITE_API_URL="http://localhost:5000"       # Backend API URL
-VITE_RPC_URL="https://soroban-testnet.stellar.org"  # Stellar Testnet RPC endpoint
-```
-
-### 3. Start Development Server
+### 2. Start the dev server
 
 ```bash
 npm run dev
 ```
 
-The application will start at `http://localhost:3001/` and automatically open in your default browser.
+Vite serves the site at `http://localhost:3001` and opens it in your browser automatically. If port 3001 is already in use, Vite falls back to the next available port.
 
-### 4. Build for Production
+### 3. Build for production
 
 ```bash
 npm run build
 ```
 
-Creates an optimized production build in the `build` directory.
+Outputs an optimized static build to the `build/` directory.
 
 ## Pages & Routes
 
 | Route | Page | Description |
 |-------|------|-------------|
-| `/` | Landing Page | Hero section, "How It Works", benefits, and CTA to the main app |
-| `/docs` | Documentation | Full product documentation with scrollspy sidebar navigation |
-| `/contributor` | Contributors | Dedicated page for developers looking to earn bounties |
-| `/agent-review` | Agent Review (x402) | Pay-per-use AI code review via the x402 payment protocol |
+| `/` | Landing | Hero, "why AI code review isn't enough", how it works, and CTAs |
+| `/pricing` | Pricing | Plans and pricing for the code reviewer |
+| `/bounty-payouts` | Bounty Payouts | How automated, on-merge USDC bounty payouts work |
+| `/bounty-docs` | Bounty Docs | How-to guide for setting up and claiming bounties |
+| `/docs` | Documentation | Full code-review product docs with scrollspy sidebar navigation |
 | `*` | 404 | Custom not-found page |
 
-## ⚡ x402 Payment Protocol Integration
+## Project Structure
 
-This website includes an integration with the [**x402 protocol**](https://www.x402.org/) — an HTTP-native payment standard that enables pay-per-API-call workflows on the Stellar network.
-
-The **Agent Review** page (`/agent-review`) demonstrates this integration end-to-end:
-
-1. A user connects their Stellar wallet via [Stellar Wallets Kit](https://github.com/Creit-Tech/Stellar-Wallets-Kit).
-2. They paste a public GitHub Pull Request URL.
-3. The frontend sends a request to the [**server**](https://github.com/devasignhq/devasign-api), which responds with an HTTP `402 Payment Required` header containing payment instructions.
-4. The client constructs and signs a **0.50 USDC** payment payload via the connected wallet.
-5. The signed payment is sent back with the retry request. The [**server**](https://github.com/devasignhq/devasign-api) verifies and settles the payment on-chain.
-6. Once payment is confirmed, an autonomous AI agent reviews the PR and posts structured feedback as a GitHub comment.
+```
+src/
+├── pages/        # Route-level pages (Landing, Pricing, Docs, Bounty…)
+├── components/   # Reusable UI components
+│   └── layout/   # Site-wide nav & footer
+├── imports/      # Figma-exported components
+├── assets/       # Images and static assets
+└── styles/       # Global styles
+```
 
 ## Available Scripts
 
 | Script | Command | Description |
 |--------|---------|-------------|
-| Dev | `npm run dev` | Start development server on port 3001 |
-| Build | `npm run build` | Create production build in `build/` |
+| Dev | `npm run dev` | Start the Vite dev server (port 3001) |
+| Build | `npm run build` | Create a production build in `build/` |
 
 ## Notes
 
-- The project uses the **Geist Mono** font family loaded from Google Fonts.
-- Path alias `@/` is configured in `vite.config.ts` to point to the `src/` directory.
-- Figma asset hashes are aliased in `vite.config.ts` for seamless imports.
-- The x402 integration currently targets the **Stellar Testnet** (`stellar:testnet`).
+- The UI uses the **Geist Mono** font family, loaded from Google Fonts.
+- Path alias `@/` (configured in `vite.config.ts`) points to the `src/` directory.
+- Figma asset hashes are aliased in `vite.config.ts` so exported assets import cleanly.
 
 ## Troubleshooting
 
-### Port Already in Use
+### Port already in use
 
-The dev server runs on port **3001**. To change it, update `vite.config.ts`:
+The dev server defaults to port **3001** (set in `vite.config.ts`). To pin a different port, edit:
 
 ```typescript
 server: {
-  port: 3002, // Change to any available port
+  port: 3002, // any available port
   open: true,
 }
 ```
-
-### Wallet Connection Issues
-
-- Ensure you have a Stellar-compatible wallet extension installed (e.g., Freighter).
-- The wallet must be set to the **Testnet** network to match the application's configuration.
 
 © 2026 DevAsign, Inc.
