@@ -64,7 +64,6 @@ export function SiteNav({ activePath }: SiteNavProps) {
                 <div className="da-nav-links">
                     <Link to="/#introducing" className={productActive} onClick={goToProduct}>Product</Link>
                     <Link to="/pricing" className={is("/pricing")} onClick={goToTop("/pricing")}>Pricing</Link>
-                    <a href="https://github.com/devasignhq/devasign-api" target="_blank" rel="noopener noreferrer">GitHub</a>
                     <Link to="/bounty-payouts" className={is("/bounty-payouts")} onClick={goToTop("/bounty-payouts")}>Bounty</Link>
                     <Link to="/docs" className={is("/docs")} onClick={goToTop("/docs")}>Docs</Link>
                     <a href={loginUrl} className="da-nav-login">Login</a>
@@ -99,7 +98,6 @@ export function SiteNav({ activePath }: SiteNavProps) {
                     <div className="da-nav-mobile-links">
                         <Link to="/#introducing" onClick={goToProduct}>Product</Link>
                         <Link to="/pricing" onClick={goToTop("/pricing")}>Pricing</Link>
-                        <a href="https://github.com/devasignhq/devasign-api" target="_blank" rel="noopener noreferrer" onClick={closeMobile}>GitHub</a>
                         <Link to="/bounty-payouts" onClick={goToTop("/bounty-payouts")}>Bounty</Link>
                         <Link to="/docs" onClick={goToTop("/docs")}>Docs</Link>
                     </div>
