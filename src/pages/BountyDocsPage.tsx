@@ -145,12 +145,12 @@ export function BountyDocsPage() {
                     {/* ===== OVERVIEW ===== */}
                     <section id="overview" className="docs-section">
                         <br/>
-                        <h1 className="docs-title">DevAsign Documentation</h1>
+                        <h1 className="docs-title">Bounty Documentation</h1>
                         <p className="docs-paragraph">
-                            DevAsign helps engineering managers and open-source project maintainers review developers' code and give detailed feedback using <strong>AI</strong>, while automating bounty payouts using <strong>Soroban</strong> smart contract.
+                            DevAsign helps open-source project maintainers review developers' code and give detailed feedback with <strong>AI</strong>, while automating bounty payouts using <strong>Soroban</strong> smart contract.
                         </p>
                         <p className="docs-paragraph">
-                            Whether you're an <strong>engineering manager</strong> looking to incentivize contributions, or a <strong>developer</strong> hunting for paid open-source work, this guide covers everything you need to get started.
+                            Whether you're a <strong>project maintainer</strong> looking to incentivize contributions, or a <strong>developer</strong> hunting for paid open-source work, this guide covers everything you need to get started.
                         </p>
                         <img
                             src={submissionScreenshot}

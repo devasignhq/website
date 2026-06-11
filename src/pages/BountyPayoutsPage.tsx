@@ -36,7 +36,7 @@ export function BountyPayoutsPage() {
                             </p>
                             <div className="da-b-ctas">
                                 <a href="https://app.devasign.com" className="btn btn-primary">Create bounty →</a>
-                                <Link to="/bounty-docs" className="btn btn-secondary">How-to Docs</Link>
+                                <Link to="/bounty-docs" className="btn btn-secondary">Bounty Docs</Link>
                             </div>
                             <div className="da-proof-row">
                                 Built on Stellar &amp; Soroban<span>·</span>USDC settlement &lt; 5s<span>·</span>Sub-cent network fees
