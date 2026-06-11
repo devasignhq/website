@@ -2,6 +2,8 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { SiteNav } from '../components/layout/SiteNav';
 import { SiteFooter } from '../components/layout/SiteFooter';
 import agentDashboard from '../assets/devasign-agent.webp';
+import agentWorkflow from '../assets/devasign-workflow.webp';
+import linearWorkflow from '../assets/devasign-installation.webp';
 import onboardingScreenshot from '../assets/devasign-onboarding.webp';
 
 interface NavItem {
@@ -24,6 +26,14 @@ const navCategories: NavCategory[] = [
         ],
     },
     {
+        label: 'SETUP',
+        items: [
+            { id: 'installation', title: 'Installation' },
+            { id: 'permissions', title: 'GitHub permissions' },
+            { id: 'linear', title: 'Linear integration' },
+        ],
+    },
+    {
         label: 'THE REVIEW ENGINE',
         items: [
             { id: 'context-ingestion', title: 'Context ingestion' },
@@ -31,6 +41,12 @@ const navCategories: NavCategory[] = [
             { id: 'multimodal-review', title: 'Multimodal review' },
             { id: 'holistic-review', title: 'Whole-repo review' },
             { id: 'deferred-work', title: 'Deferred-work detection' },
+        ],
+    },
+    {
+        label: 'CUSTOMIZATION',
+        items: [
+            { id: 'workflow', title: 'Review workflow' },
             { id: 'devasign-guidance', title: 'DEVASIGN.md guidance' },
         ],
     },
@@ -49,14 +65,6 @@ const navCategories: NavCategory[] = [
             { id: 'models', title: 'Models' },
             { id: 'repo-index', title: 'Repository index' },
             { id: 'architecture', title: 'Architecture' },
-        ],
-    },
-    {
-        label: 'SETUP',
-        items: [
-            { id: 'installation', title: 'Installation' },
-            { id: 'permissions', title: 'GitHub permissions' },
-            { id: 'linear', title: 'Linear integration' },
         ],
     },
 ];
@@ -206,10 +214,10 @@ export function DocsPage() {
                         <br />
                         <h1 className="docs-title">Code Review Documentation</h1>
                         <p className="docs-paragraph">
-                            DevAsign is a <strong>multimodal AI code review agent</strong> that reviews every pull request against <strong>what was actually asked</strong> — not just the diff in isolation. It pulls context from the ticket, linked issues, Slack/Linear/Discord threads, Figma frames, Loom walkthroughs, screenshots, and PDFs, then synthesizes a concrete <strong>End goal</strong> and checks the PR against it.
+                            DevAsign is a <strong>multimodal AI code review agent</strong> that reviews every pull request against what was actually asked — not just the diff in isolation. It pulls context from the ticket, linked issues, Slack/Linear/Discord threads, Figma frames, Loom walkthroughs, screenshots, and PDFs, then synthesizes a concrete End goal and checks the PR against it.
                         </p>
                         <p className="docs-paragraph">
-                            When a review finishes, DevAsign posts a <strong>GitHub Check Run</strong> and a single grouped <strong>PR review</strong> with per-criterion evidence, inline comments, and copy-paste fix prompts — then broadcasts the verdict to your team chat. The verdict is <strong>advisory</strong>: it never blocks merging, and a human always makes the final call.
+                            Every repository also gets its own editable <strong><a href="#workflow" className="docs-link">review workflow</a></strong>: toggle stages, steer each AI step with your own instructions, choose blocking or comment-only verdicts, and even dispatch a GitHub Action when a review finishes.
                         </p>
                         <div className="docs-callout">
                             <strong>Why it's different:</strong> traditional review bots grade style and surface lint. DevAsign judges the change against <em>intent</em> — the acceptance criteria distilled from the ticket and everything attached to it — and flags whole-repo regressions the diff alone can't reveal.
@@ -230,7 +238,7 @@ export function DocsPage() {
                         <ol className="docs-stage-list">
                             <li>
                                 <span className="stage-title">Trigger &amp; enqueue</span>
-                                <span className="stage-desc">A GitHub webhook (HMAC-verified) materializes a review record and pushes a job onto the queue.</span>
+                                <span className="stage-desc">A GitHub webhook (HMAC-verified) applies your repo's trigger policy, materializes a review record, and pushes a job onto the queue. The moment a worker picks it up, a "review in progress" comment lands on the PR.</span>
                             </li>
                             <li>
                                 <span className="stage-title">Context ingestion</span>
@@ -254,11 +262,15 @@ export function DocsPage() {
                             </li>
                             <li>
                                 <span className="stage-title">Output</span>
-                                <span className="stage-desc">Post the Check Run + PR review, write the append-only review-log timeline, and broadcast to Slack/Discord.</span>
+                                <span className="stage-desc">Edit the progress comment into the verdict, refresh the Check Run, approve (or withdraw a stale approval), and broadcast to Slack/Discord.</span>
+                            </li>
+                            <li>
+                                <span className="stage-title">Run GitHub Action <em>(optional)</em></span>
+                                <span className="stage-desc">Dispatch a GitHub Actions workflow you chose — on every verdict, or only when the review passes.</span>
                             </li>
                         </ol>
                         <p className="docs-paragraph">
-                            Every stage appends to a per-PR <strong>review log</strong> — an append-only timeline you can replay in the dashboard to see exactly what the agent ingested, synthesized, and decided.
+                            Every stage appends to a per-PR <strong>review log</strong> — an append-only timeline you can replay in the dashboard to see exactly what the agent ingested, synthesized, and decided. The optional stages (whole-repo, deferred-work, DEVASIGN.md guidance, the Action step) can be toggled and steered per repository in the <a href="#workflow" className="docs-link">review workflow</a>.
                         </p>
                     </section>
 
@@ -272,12 +284,155 @@ export function DocsPage() {
                         <p className="docs-paragraph">
                             DevAsign reviews a PR whenever GitHub fires one of these <code className="docs-code">pull_request</code> actions: <code className="docs-code">opened</code>, <code className="docs-code">reopened</code>, <code className="docs-code">synchronize</code> (a new push), or <code className="docs-code">ready_for_review</code>. A push to an open PR re-runs the review so the verdict tracks the latest commit.
                         </p>
+                        <p className="docs-paragraph">
+                            This is policy, not hard-coded. The repo's <a href="#workflow" className="docs-link">review workflow</a> can turn off re-review-on-push, skip draft PRs, or skip bot-authored PRs (Dependabot, Renovate, GitHub Apps). A draft marked "ready for review" is still reviewed — the skip applies only while it's a draft.
+                        </p>
                         <h3 className="docs-subheading">Manual</h3>
                         <p className="docs-paragraph">
                             Comment the single word <code className="docs-code">review</code> on any open PR. DevAsign resolves the PR, materializes a review record, and runs the full criteria pipeline — useful for PRs opened before the app was installed.
                         </p>
                         <div className="docs-callout">
                             <strong>On merge:</strong> when a PR is merged, DevAsign queues an <em>incremental</em> refresh of the repository index for the files that changed (see <a href="#repo-index" className="docs-link">Repository index</a>), keeping whole-repo reviews accurate as the codebase evolves.
+                        </div>
+                    </section>
+
+                    {/* ===== INSTALLATION ===== */}
+                    <section id="installation" className="docs-section">
+                        <h2 className="docs-heading">Installation</h2>
+                        <p className="docs-paragraph">
+                            Sign up on <a href="https://app.devasign.com/authenticate/account" target="_blank" rel="noopener noreferrer" className="docs-link">DevAsign</a> with GitHub and install the app on a repository. Public repositories are reviewed on every plan; <strong>private repositories require Pro or Max</strong>. Plans meter <em>unique PRs per month</em> — re-reviews of a PR (new pushes, reruns) never consume quota. See <a href="/pricing" className="docs-link">Pricing</a> for the caps.
+                        </p>
+                        <ol className="docs-ordered-list">
+                            <li>Sign in with GitHub and install the DevAsign GitHub App on your repo.</li>
+                            <li>DevAsign builds the repository index in the background (this enables whole-repo review).</li>
+                            <li>Open any existing PR and comment <code className="docs-code">review</code> to kick off the first review.</li>
+                            <li>From then on, every new PR is reviewed automatically.</li>
+                        </ol>
+                        <img
+                            src={onboardingScreenshot}
+                            alt="DevAsign onboarding — step 1, install the DevAsign GitHub App and choose which repositories it can access"
+                            style={{ width: '100%', marginTop: '2rem' }}
+                        />
+                    </section>
+
+                    {/* ===== GITHUB PERMISSIONS ===== */}
+                    <section id="permissions" className="docs-section">
+                        <h2 className="docs-heading">GitHub permissions</h2>
+                        <p className="docs-paragraph">
+                            DevAsign installs as a <strong>least-privilege GitHub App</strong>. When you install it, GitHub shows you the exact scopes below — and the app requests nothing else. It never sees your GitHub password, and rather than hold a long-lived key it exchanges the installation for a <strong>short-lived token</strong>, scoped to the repositories you picked, on each request.
+                        </p>
+
+                        <h3 className="docs-subheading">What we request</h3>
+                        <div className="docs-table-wrapper">
+                            <table className="docs-table">
+                                <thead>
+                                    <tr>
+                                        <th>Permission</th>
+                                        <th>Access</th>
+                                        <th>Why DevAsign needs it</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Pull requests</strong></td>
+                                        <td><span className="docs-pill write">read · write</span></td>
+                                        <td>Read the title, description, and diff; post the grouped review, inline comments, and the approve / request-changes verdict.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Checks</strong></td>
+                                        <td><span className="docs-pill write">write</span></td>
+                                        <td>Publish the <code className="docs-code">DevAsign · End goal</code> Check Run on the head commit.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Contents</strong></td>
+                                        <td><span className="docs-pill read">read</span></td>
+                                        <td>Read source files to build the <a href="#repo-index" className="docs-link">repository index</a> and run the whole-repo holistic pass. Read-only — DevAsign never pushes commits or edits your code.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Issues</strong></td>
+                                        <td><span className="docs-pill read">read</span></td>
+                                        <td>Read linked issues (<code className="docs-code">closes #N</code>) and PR conversation comments — the ticket context a review is judged against, plus the manual <code className="docs-code">review</code> trigger and maintainer replies.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Metadata</strong></td>
+                                        <td><span className="docs-pill read">read</span></td>
+                                        <td>Mandatory, read-only repository metadata (branches and basic repo info) that every GitHub App receives.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3 className="docs-subheading">What we can't do</h3>
+                        <ul className="docs-unordered-list">
+                            <li><strong>Push, merge, or modify code</strong> — Contents access is read-only, so DevAsign cannot commit, force-push, switch branches, or alter your files.</li>
+                            <li><strong>Touch repository settings</strong> — no access to branch-protection rules, webhooks, secrets, deploy keys, GitHub Actions, or collaborator management.</li>
+                            <li><strong>Block a merge</strong> — DevAsign never sets a required, merge-gating status itself; its Check Run and approval only gate a merge if <em>you</em> choose to require them in branch protection (see <a href="#severity" className="docs-link">verdict modes</a>).</li>
+                            <li><strong>See repos you didn't pick</strong> — the app only ever sees the specific repositories you select at install time, and you can add or remove them whenever you like.</li>
+                            <li><strong>Keep a copy of your source</strong> — file contents are fetched on demand via short-lived tokens; what's persisted is the index's short per-file summaries, not your raw code.</li>
+                        </ul>
+
+                        <div className="docs-callout">
+                            <strong>Revoke anytime:</strong> manage or uninstall DevAsign from <em>GitHub → Settings → Applications → Installed GitHub Apps</em>. Removing it revokes all access immediately.
+                        </div>
+                    </section>
+
+                    {/* ===== LINEAR INTEGRATION ===== */}
+                    <section id="linear" className="docs-section">
+                        <h2 className="docs-heading">Linear integration</h2>
+                        <p className="docs-paragraph">
+                            Connect a Linear workspace and DevAsign judges each PR against the <strong>ticket it implements</strong> — pulling the issue into <a href="#context-ingestion" className="docs-link">context ingestion</a> — then reports the verdict back on that issue. It's how the agent learns <em>what was asked</em> when the spec lives in Linear rather than the PR description.
+                        </p>
+                        <h3 className="docs-subheading">Connecting</h3>
+                        <p className="docs-paragraph">
+                            In the dashboard, open <strong>Settings → Integrations → Linear</strong> and click <strong>Connect</strong>. A popup hands you to Linear's OAuth screen to authorize your workspace; approve it and the workspace appears in your integration list. There are <strong>no tokens or API keys to paste</strong>, re-connecting simply refreshes the authorization, and one Linear workspace connects per account. The Linear integration is a <strong>Pro / Max</strong> feature.
+                        </p>
+                        <img
+                            src={linearWorkflow}
+                            alt="DevAsign Linear integration configuration"
+                            style={{ width: '100%' }}
+                        />
+                        <h3 className="docs-subheading">Permissions you grant</h3>
+                        <p className="docs-paragraph">
+                            Linear shows you these scopes on the authorization screen — DevAsign requests nothing more:
+                        </p>
+                        <div className="docs-table-wrapper">
+                            <table className="docs-table">
+                                <thead>
+                                    <tr>
+                                        <th>Scope</th>
+                                        <th>Access</th>
+                                        <th>Why DevAsign needs it</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Read</strong></td>
+                                        <td><span className="docs-pill read">read</span></td>
+                                        <td>Ingest the ticket a PR implements — its description, comments, sub-issues, labels, parent and project, plus attachments (PDFs and images) and any embedded Loom / YouTube / Vimeo — as the context a review is judged against.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Write</strong></td>
+                                        <td><span className="docs-pill write">write</span></td>
+                                        <td>Post one short verdict comment back on the linked issue. The full review stays on the PR.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h3 className="docs-subheading">What it can't do</h3>
+                        <ul className="docs-unordered-list">
+                            <li><strong>Speak as you</strong> — its comment is attributed to the DevAsign app, not your user account.</li>
+                            <li><strong>Change your tickets</strong> — DevAsign never creates, reassigns, closes, or moves the status of an issue; its only write is that single notification comment.</li>
+                            <li><strong>See more than it resolves</strong> — although the Linear OAuth grant is workspace-wide, DevAsign reads only the issues it actually links a PR to.</li>
+                        </ul>
+                        <h3 className="docs-subheading">What it does</h3>
+                        <ol className="docs-ordered-list">
+                            <li><strong>Links PRs to tickets.</strong> DevAsign matches a PR to a Linear issue by an explicit reference — an <code className="docs-code">ENG-123</code> key in the PR body or branch name (including the <code className="docs-code">Fixes ENG-123</code> line Linear's own GitHub integration injects) — or, when there's no explicit ref, by a conservative match of the PR title and description against your issues.</li>
+                            <li><strong>Pulls the ticket into the review.</strong> The linked issue's description, discussion, attachments, and embedded videos feed <a href="#end-goal" className="docs-link">end-goal &amp; criteria</a> synthesis, so the PR is measured against what the ticket actually asked for.</li>
+                            <li><strong>Seeds acceptance criteria.</strong> When a ticket is opened or updated, DevAsign synthesizes criteria from it ahead of time and caches them; a PR that later links to that ticket reuses those criteria instead of re-deriving them.</li>
+                            <li><strong>Reports back on the issue.</strong> Once the linked PR is reviewed, DevAsign posts a short comment on the Linear issue — that it reviewed the PR and <em>passed</em> or <em>requested changes</em>, with a link to it. The comment posts once per commit, so re-reviews of the same push don't repeat it.</li>
+                        </ol>
+                        <div className="docs-callout">
+                            <strong>The PR stays the source of truth:</strong> the Linear comment is a pointer. The full verdict — per-criterion evidence, inline comments, and fix prompts — lives on the GitHub PR.
                         </div>
                     </section>
 
@@ -373,7 +528,7 @@ export function DocsPage() {
                     <section id="multimodal-review" className="docs-section">
                         <h2 className="docs-heading">Multimodal review</h2>
                         <p className="docs-paragraph">
-                            The review model evaluates the diff against each criterion and emits a structured verdict: <code className="docs-code">passed</code> or <code className="docs-code">changes_requested</code>, a per-criterion checklist with <strong>evidence quoted from the diff</strong>, inline comments tied to specific lines, and a fix suggestion for every unmet criterion. It is told to never manufacture issues to appear thorough — a sound diff with no spec returns a short positive summary.
+                            The review model evaluates the diff against each criterion and emits a structured verdict: <code className="docs-code">passed</code> or <code className="docs-code">changes_requested</code>, a per-criterion checklist with <strong>evidence quoted from the diff</strong>, line notes pinned to <code className="docs-code">file:line</code>, and a fix suggestion for every unmet criterion. It is told to never manufacture issues to appear thorough — a sound diff with no spec returns a short positive summary.
                         </p>
                         <h3 className="docs-subheading">Copy-paste fix prompts</h3>
                         <p className="docs-paragraph">
@@ -395,7 +550,7 @@ Relevant diff:
 <the exact hunk this finding refers to>
 \`\`\``} />
                         <p className="docs-paragraph">
-                            When a PR has multiple problems, DevAsign also composes a single <strong>consolidated prompt</strong> that bundles every failed criterion and blocking finding — one paste to fix the whole PR.
+                            When a PR has multiple problems, DevAsign also composes a single <strong>consolidated prompt</strong> that bundles every failed criterion and every review finding — regressions, security warnings, deferred work, even DEVASIGN.md nits, whatever the severity — one paste to fix the whole PR.
                         </p>
                     </section>
 
@@ -411,7 +566,7 @@ Relevant diff:
                             <li><strong>Repo manifest</strong> — a short tour of the largest code files for whole-repo context (capped at 20).</li>
                         </ul>
                         <p className="docs-paragraph">
-                            The model then looks for <strong>regressions, critical errors, and security flaws</strong> beyond what the criteria covered. Each finding is tagged <span className="docs-pill blocker">blocker</span> when it would clearly break a feature, corrupt state, or expose data, or <span className="docs-pill warn">warn</span> for a plausible concern that needs human eyes. A single blocker flips the verdict to <em>changes requested</em>. The pass is skipped until the index has finished building, in which case DevAsign falls back to the criteria-only verdict.
+                            The model then looks for <strong>regressions, critical errors, and security flaws</strong> beyond what the criteria covered. Each finding is tagged <span className="docs-pill blocker">blocker</span> when it would clearly break a feature, corrupt state, or expose data, or <span className="docs-pill warn">warn</span> for a plausible concern that needs human eyes. A single blocker flips the verdict to <em>changes requested</em>. The pass is skipped until the index has finished building, in which case DevAsign falls back to the criteria-only verdict — and it can be switched off per repo in the <a href="#workflow" className="docs-link">review workflow</a>.
                         </p>
                     </section>
 
@@ -426,6 +581,66 @@ Relevant diff:
                         </p>
                         <p className="docs-paragraph">
                             Each genuine finding's explanation leads with <code className="docs-code">Contradicts &lt;criterion&gt;</code> when the punt undercuts something the PR promised, or <code className="docs-code">Incidental</code> when it doesn't. These findings are <strong>advisory</strong> — always <span className="docs-pill warn">warn</span>, never gating the merge — so you see the punt on time without being blocked by it.
+                        </p>
+                    </section>
+
+                    {/* ===== REVIEW WORKFLOW ===== */}
+                    <section id="workflow" className="docs-section">
+                        <h2 className="docs-heading">Review workflow</h2>
+                        <p className="docs-paragraph">
+                            Every repository carries its own <strong>review workflow</strong>, edited on the dashboard's <strong>Workflow</strong> screen — a visual, node-based view of the pipeline with a repository rail, a canvas showing every stage in run order, and a detail panel for the selected stage. The pipeline is a fixed chain: you don't add or remove nodes, you switch the optional stages on or off and steer each AI stage with your own instructions. A repo you never touch reviews exactly like stock DevAsign.
+                        </p>
+                        <img
+                            src={agentWorkflow}
+                            alt="DevAsign code review agent workflow configuration"
+                            style={{ width: '100%' }}
+                        />
+                        <h3 className="docs-subheading">Stage toggles</h3>
+                        <p className="docs-paragraph">
+                            The optional stages — <a href="#holistic-review" className="docs-link">whole-repo review</a>, the <a href="#deferred-work" className="docs-link">deferred-work scan</a>, <a href="#devasign-guidance" className="docs-link">DEVASIGN.md guidance</a>, and the <strong>Run GitHub Action</strong> step — can each be switched off per repository. Context ingestion, criteria synthesis, the diff review, and the verdict always run. Stage toggles are available on every plan.
+                        </p>
+                        <h3 className="docs-subheading">Modes</h3>
+                        <p className="docs-paragraph">
+                            Three one-click presets set the core policy (trigger, stages, verdict). Tweak anything off-preset and the mode chip reads <strong>Custom</strong>. Applying a preset preserves your per-stage prompts and the Action step.
+                        </p>
+                        <div className="docs-table-wrapper">
+                            <table className="docs-table">
+                                <thead>
+                                    <tr>
+                                        <th>Mode</th>
+                                        <th>What it does</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Strict</strong></td>
+                                        <td>Maximum rigor: every stage on, blocking verdicts, and drafts and bot PRs are reviewed too.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Balanced</strong></td>
+                                        <td>Every stage on with blocking verdicts, but draft and bot-authored PRs are skipped.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Light</strong></td>
+                                        <td>Lean and advisory: comment-only verdicts, no re-review on push, whole-repo and deferred-work scans off (DEVASIGN.md guidance stays on), drafts and bots skipped.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h3 className="docs-subheading">Advanced controls <span className="docs-pill write">Pro / Max</span></h3>
+                        <ul className="docs-unordered-list">
+                            <li><strong>Trigger policy</strong> — re-review on every push, skip draft PRs, skip bot-authored PRs (see <a href="#triggering" className="docs-link">Triggering reviews</a>).</li>
+                            <li><strong>Verdict mode</strong> — blocking (default) or comment-only; see <a href="#severity" className="docs-link">Severity &amp; verdict</a>.</li>
+                            <li><strong>Per-stage prompts</strong> — steer each AI stage with your own instructions.</li>
+                            <li><strong>Run GitHub Action</strong> — dispatch a workflow when the review finishes.</li>
+                        </ul>
+                        <h3 className="docs-subheading">Per-stage prompts</h3>
+                        <p className="docs-paragraph">
+                            Each AI stage — criteria synthesis, the diff review, the whole-repo pass, the deferred-work scan, and DEVASIGN.md guidance — accepts a custom prompt of up to <strong>2,000 characters</strong>. It's appended to the stage's system prompt as <em>maintainer instructions</em>: it steers what the stage pays attention to, but it can't override the stage's structured output contract or make the agent invent findings.
+                        </p>
+                        <h3 className="docs-subheading">Run GitHub Action</h3>
+                        <p className="docs-paragraph">
+                            Pick a workflow file from your repo and DevAsign dispatches it (via <code className="docs-code">workflow_dispatch</code>, on the PR's head branch) after the verdict posts — on every review, or only when the review <strong>passes</strong>, so you can chain deploy previews or extra test suites onto a green verdict. The workflow must declare a <code className="docs-code">workflow_dispatch</code> trigger and the DevAsign app needs Actions access on the repo; if either is missing, the step logs a note in the review timeline and never fails the review.
                         </p>
                     </section>
 
@@ -493,7 +708,7 @@ violations are flagged as nits; they don't block the merge.
   "summary": "1 convention nit, 1 doc to update."
 }`} />
                         <div className="docs-callout">
-                            <strong>Writing good rules:</strong> state each as a single, checkable sentence, and favor concrete, observable rules (<em>"API calls go through <code className="docs-code">src/api.ts</code>"</em>) over subjective taste (<em>"write clean code"</em>). Findings surface in the PR review under a dedicated <strong>📝 DEVASIGN.md</strong> section.
+                            <strong>Writing good rules:</strong> state each as a single, checkable sentence, and favor concrete, observable rules (<em>"API calls go through <code className="docs-code">src/api.ts</code>"</em>) over subjective taste (<em>"write clean code"</em>). Findings surface in the verdict comment under a dedicated <strong>DEVASIGN.md</strong> section, and the stage can be toggled or steered per repo in the <a href="#workflow" className="docs-link">review workflow</a>.
                         </div>
                     </section>
 
@@ -501,8 +716,12 @@ violations are flagged as nits; they don't block the merge.
                     <section id="severity" className="docs-section">
                         <h2 className="docs-heading">Severity &amp; verdict</h2>
                         <p className="docs-paragraph">
-                            Findings carry a severity that determines whether they affect the verdict. The verdict itself is always advisory toward GitHub — DevAsign never blocks a merge through branch protection.
+                            Findings carry a severity that determines whether they affect the verdict. How the verdict lands on GitHub depends on the repo's <a href="#workflow" className="docs-link">verdict mode</a>:
                         </p>
+                        <ul className="docs-unordered-list">
+                            <li><strong>Blocking</strong> (default) — a failing review concludes the Check Run as <code className="docs-code">action_required</code> and withdraws DevAsign's earlier approval, so if your branch protection requires the check or an approval, the merge gate stays honest. DevAsign itself never submits a <code className="docs-code">REQUEST_CHANGES</code> review.</li>
+                            <li><strong>Comment-only</strong> (advisory) — the same verdict posts as a plain comment, earlier approvals are left standing, and the merge button is never in the way.</li>
+                        </ul>
                         <div className="docs-table-wrapper">
                             <table className="docs-table">
                                 <thead>
@@ -540,38 +759,42 @@ violations are flagged as nits; they don't block the merge.
                     <section id="github-output" className="docs-section">
                         <h2 className="docs-heading">GitHub output</h2>
                         <p className="docs-paragraph">
-                            DevAsign posts results in two places. A <strong>Check Run</strong> named <code className="docs-code">DevAsign · End goal</code> is keyed to the head commit (concluding <code className="docs-code">success</code> or <code className="docs-code">action_required</code>) and refreshes on every push without adding conversation noise. A single grouped <strong>PR review</strong> carries the detail, structured to be scannable:
+                            DevAsign's whole conversation footprint on a PR is <strong>one self-updating comment</strong> plus a Check Run. When a run starts it posts a <em>"PR Review In Progress"</em> comment; when the run finishes it edits that same comment into the full verdict. It's <strong>one comment per commit</strong>: a rerun on the same commit resets the existing comment back to "in progress" and edits it again, while a new push gets a fresh comment. If a run errors, the comment becomes a failure notice (with an auto-retry on your next push) — it never sticks on "in progress". All comment copy is emoji-free.
+                        </p>
+                        <p className="docs-paragraph">
+                            The verdict comment is structured to be scannable, leading with what needs attention:
                         </p>
                         <ul className="docs-unordered-list">
-                            <li><strong>End goal</strong>, then <strong>❌ criteria not met</strong> (each with a "why it failed" line), then <strong>✅ criteria met</strong>.</li>
-                            <li><strong>🕓 Deferred / incomplete work</strong> the diff conceded.</li>
-                            <li><strong>Suggested changes</strong> with minimal code examples and per-item fix prompts.</li>
-                            <li><strong>Repo-wide concerns</strong> from the holistic pass.</li>
+                            <li><strong>End goal</strong>, then <strong>Previously met — now broken</strong>: criteria an earlier commit satisfied that a later change regressed, each with what broke.</li>
+                            <li><strong>Acceptance criteria not met</strong>, each with a "why it failed" line. Criteria that pass collapse into a count header and an expandable list, so re-reviews don't re-litigate what already passed.</li>
+                            <li><strong>Deferred / incomplete work</strong> the diff conceded.</li>
+                            <li><strong>Suggested changes</strong> with minimal code examples and per-item fix prompts, plus <strong>line notes</strong> pinned to <code className="docs-code">file:line</code>.</li>
+                            <li><strong>Repo-wide concerns</strong> from the holistic pass and <strong>DEVASIGN.md</strong> nits.</li>
                             <li>A collapsible <strong>"one prompt to fix all of this"</strong> for your AI coding agent.</li>
                         </ul>
                         <p className="docs-paragraph">
-                            Inline comments are pre-filtered against the file paths actually present in the diff, so a bad path from the model can't poison the whole review; if GitHub rejects the inline batch, DevAsign falls back to posting the verdict body alone. The review action depends on the outcome:
+                            Line notes are pre-filtered against the file paths actually present in the diff, so a bad path from the model can't put junk in the comment. Alongside the comment, a <strong>Check Run</strong> named <code className="docs-code">DevAsign · End goal</code> is keyed to the head commit — concluding <code className="docs-code">success</code> or <code className="docs-code">action_required</code> — and refreshes on every push without adding conversation noise. The formal GitHub review actions are reduced to invisible timeline signals:
                         </p>
                         <div className="docs-table-wrapper">
                             <table className="docs-table">
                                 <thead>
                                     <tr>
                                         <th>Outcome</th>
-                                        <th>GitHub review event</th>
+                                        <th>What lands on GitHub</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>All acceptance criteria met (spec'd PR)</td>
-                                        <td><code className="docs-code">APPROVE</code></td>
+                                        <td>A <strong>bodyless approval</strong> — the timeline reads "approved these changes" with no extra comment block.</td>
                                     </tr>
                                     <tr>
                                         <td>Any criterion unmet, or a blocker found</td>
-                                        <td><code className="docs-code">REQUEST_CHANGES</code></td>
+                                        <td>The Check Run flips to <code className="docs-code">action_required</code> and DevAsign <strong>withdraws its earlier approval</strong>, so a stale green review can't keep the merge unlocked. No <code className="docs-code">REQUEST_CHANGES</code> review is submitted — GitHub would force it to carry a duplicate comment.</td>
                                     </tr>
                                     <tr>
                                         <td>Clean pass, but no spec to check against</td>
-                                        <td><code className="docs-code">COMMENT</code> + a one-time invite to add an end goal</td>
+                                        <td>The verdict comment alone, plus a one-time invite to add an end goal.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -585,7 +808,7 @@ violations are flagged as nits; they don't block the merge.
                     <section id="maintainer-feedback" className="docs-section">
                         <h2 className="docs-heading">Maintainer feedback loop</h2>
                         <p className="docs-paragraph">
-                            Reviews are conversational. Reply on the PR — as a comment, a formal review, or an inline review comment — and DevAsign ingests it, decides whether it changes what "done" means, and re-reviews if so. You can reply with any of:
+                            Reviews are conversational. Reply on the PR — as a comment, a formal review, or an inline review comment — and DevAsign ingests it and decides whether it changes what "done" means. You can reply with any of:
                         </p>
                         <ul className="docs-unordered-list">
                             <li><strong>Text</strong> — a description of the intended behaviour and acceptance conditions.</li>
@@ -593,7 +816,13 @@ violations are flagged as nits; they don't block the merge.
                             <li><strong>A screenshot + description</strong> — show the expected result and describe it.</li>
                         </ul>
                         <p className="docs-paragraph">
-                            Pure acknowledgements ("lgtm", "ship it") are recognized and don't move the goal. A mid-review Loom flagging a new bug gets a discrete fix comment without disturbing the verdict, and a maintainer's request can be turned into a concrete implementation guide. Bot and self-authored comments are filtered out so the agent never reacts to its own output.
+                            Feedback is <strong>additive</strong>: new requirements are appended to the criteria list — never replacing it — and criteria earlier commits already satisfied keep their verdicts, so moving the bar doesn't re-fail finished work.
+                        </p>
+                        <p className="docs-paragraph">
+                            When feedback does move the goal, DevAsign doesn't burn a full re-review on a diff it just judged. It posts a concrete <strong>implementation guide</strong> for the new requirement, flips the review to <em>changes requested</em> (refreshing the Check Run and, in blocking mode, withdrawing its earlier approval), and runs the real re-review on your <strong>next push</strong> — once there's actually new code to judge.
+                        </p>
+                        <p className="docs-paragraph">
+                            Pure acknowledgements ("lgtm", "ship it") are recognized and don't move the goal. A mid-review Loom flagging a new bug gets a discrete fix comment without disturbing the verdict. Bot and self-authored comments are filtered out so the agent never reacts to its own output.
                         </p>
                     </section>
 
@@ -609,7 +838,7 @@ violations are flagged as nits; they don't block the merge.
                     <section id="models" className="docs-section">
                         <h2 className="docs-heading">Models</h2>
                         <p className="docs-paragraph">
-                            DevAsign routes each task to the model that fits it, and lets you override the reasoning model per repository.
+                            DevAsign routes each task to the model that fits it, and tiers the reasoning model by plan.
                         </p>
                         <div className="docs-table-wrapper">
                             <table className="docs-table">
@@ -622,11 +851,11 @@ violations are flagged as nits; they don't block the merge.
                                 <tbody>
                                     <tr>
                                         <td><strong>Claude Opus</strong></td>
-                                        <td>Criteria synthesis, diff review, the whole-repo holistic pass, and deferred-work judgment.</td>
+                                        <td>The reasoning passes on Pro and Max — criteria synthesis, diff review, the whole-repo holistic pass, deferred-work judgment, and DEVASIGN.md guidance.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Claude Haiku</strong></td>
-                                        <td>Per-file repository-index summaries — cheap and high-volume.</td>
+                                        <td>The same reasoning passes on the Free plan, plus per-file repository-index summaries on every plan — fast and high-volume.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Gemini 2.5 Pro</strong></td>
@@ -636,7 +865,7 @@ violations are flagged as nits; they don't block the merge.
                             </table>
                         </div>
                         <p className="docs-paragraph">
-                            Each repository has a <strong>default model</strong> plus optional per-path overrides, so expensive repos can run a stronger model while routine ones stay cheap. System prompts are sent with <strong>prompt caching</strong> enabled, so the reused instruction blocks don't re-bill on every pass.
+                            The review model follows the repo owner's plan: <strong>Free</strong> reviews run end-to-end on Claude Haiku, while <strong>Pro</strong> and <strong>Max</strong> run the frontier reasoning model. System prompts are sent with <strong>prompt caching</strong> enabled, so the reused instruction blocks don't re-bill on every pass.
                         </p>
                     </section>
 
@@ -683,143 +912,8 @@ violations are flagged as nits; they don't block the merge.
                             <li><strong>Webhook receiver</strong> — verifies each delivery's <code className="docs-code">sha256</code> HMAC signature, then enqueues a job. It does no review work itself.</li>
                             <li><strong>Job queue &amp; workers</strong> — reviews, index builds, and maintainer-feedback jobs run on workers, so multimodal and transcription work isn't capped by a function timeout.</li>
                             <li><strong>Least-privilege GitHub App</strong> — the app requests only Pull requests (read/write), Checks (write), Contents (read), Issues (read), and Metadata (read), and exchanges the installation for short-lived tokens per request rather than holding long-lived credentials (see <a href="#permissions" className="docs-link">GitHub permissions</a>).</li>
-                            <li><strong>Persistence</strong> — reviews, criteria, the index, and an append-only review-log timeline are stored in Postgres.</li>
+                            <li><strong>Persistence</strong> — reviews, criteria, the index, per-repo workflow configs, and an append-only review-log timeline are stored in Postgres.</li>
                         </ul>
-                    </section>
-
-                    {/* ===== INSTALLATION ===== */}
-                    <section id="installation" className="docs-section">
-                        <h2 className="docs-heading">Installation</h2>
-                        <p className="docs-paragraph">
-                            Sign up on <a href="https://app.devasign.com/authenticate/account" target="_blank" rel="noopener noreferrer" className="docs-link">DevAsign</a> with GitHub and install the app on a repository. DevAsign works with any public GitHub repository.
-                        </p>
-                        <ol className="docs-ordered-list">
-                            <li>Sign in with GitHub and install the DevAsign GitHub App on your repo.</li>
-                            <li>DevAsign builds the repository index in the background (this enables whole-repo review).</li>
-                            <li>Open any existing PR and comment <code className="docs-code">review</code> to kick off the first review.</li>
-                            <li>From then on, every new PR is reviewed automatically.</li>
-                        </ol>
-                        <img
-                            src={onboardingScreenshot}
-                            alt="DevAsign onboarding — step 1, install the DevAsign GitHub App and choose which repositories it can access"
-                            style={{ width: '100%', marginTop: '2rem' }}
-                        />
-                    </section>
-
-                    {/* ===== GITHUB PERMISSIONS ===== */}
-                    <section id="permissions" className="docs-section">
-                        <h2 className="docs-heading">GitHub permissions</h2>
-                        <p className="docs-paragraph">
-                            DevAsign installs as a <strong>least-privilege GitHub App</strong>. When you install it, GitHub shows you the exact scopes below — and the app requests nothing else. It never sees your GitHub password, and rather than hold a long-lived key it exchanges the installation for a <strong>short-lived token</strong>, scoped to the repositories you picked, on each request.
-                        </p>
-
-                        <h3 className="docs-subheading">What we request</h3>
-                        <div className="docs-table-wrapper">
-                            <table className="docs-table">
-                                <thead>
-                                    <tr>
-                                        <th>Permission</th>
-                                        <th>Access</th>
-                                        <th>Why DevAsign needs it</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Pull requests</strong></td>
-                                        <td><span className="docs-pill write">read · write</span></td>
-                                        <td>Read the title, description, and diff; post the grouped review, inline comments, and the approve / request-changes verdict.</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Checks</strong></td>
-                                        <td><span className="docs-pill write">write</span></td>
-                                        <td>Publish the <code className="docs-code">DevAsign · End goal</code> Check Run on the head commit.</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Contents</strong></td>
-                                        <td><span className="docs-pill read">read</span></td>
-                                        <td>Read source files to build the <a href="#repo-index" className="docs-link">repository index</a> and run the whole-repo holistic pass. Read-only — DevAsign never pushes commits or edits your code.</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Issues</strong></td>
-                                        <td><span className="docs-pill read">read</span></td>
-                                        <td>Read linked issues (<code className="docs-code">closes #N</code>) and PR conversation comments — the ticket context a review is judged against, plus the manual <code className="docs-code">review</code> trigger and maintainer replies.</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Metadata</strong></td>
-                                        <td><span className="docs-pill read">read</span></td>
-                                        <td>Mandatory, read-only repository metadata (branches and basic repo info) that every GitHub App receives.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <h3 className="docs-subheading">What we can't do</h3>
-                        <ul className="docs-unordered-list">
-                            <li><strong>Push, merge, or modify code</strong> — Contents access is read-only, so DevAsign cannot commit, force-push, switch branches, or alter your files.</li>
-                            <li><strong>Touch repository settings</strong> — no access to branch-protection rules, webhooks, secrets, deploy keys, GitHub Actions, or collaborator management.</li>
-                            <li><strong>Block a merge</strong> — the verdict is advisory; DevAsign posts a Check Run and review but never sets a required, merge-gating status.</li>
-                            <li><strong>See repos you didn't pick</strong> — the app only ever sees the specific repositories you select at install time, and you can add or remove them whenever you like.</li>
-                            <li><strong>Keep a copy of your source</strong> — file contents are fetched on demand via short-lived tokens; what's persisted is the index's short per-file summaries, not your raw code.</li>
-                        </ul>
-
-                        <div className="docs-callout">
-                            <strong>Revoke anytime:</strong> manage or uninstall DevAsign from <em>GitHub → Settings → Applications → Installed GitHub Apps</em>. Removing it revokes all access immediately.
-                        </div>
-                    </section>
-
-                    {/* ===== LINEAR INTEGRATION ===== */}
-                    <section id="linear" className="docs-section">
-                        <h2 className="docs-heading">Linear integration</h2>
-                        <p className="docs-paragraph">
-                            Connect a Linear workspace and DevAsign judges each PR against the <strong>ticket it implements</strong> — pulling the issue into <a href="#context-ingestion" className="docs-link">context ingestion</a> — then reports the verdict back on that issue. It's how the agent learns <em>what was asked</em> when the spec lives in Linear rather than the PR description.
-                        </p>
-                        <h3 className="docs-subheading">Connecting</h3>
-                        <p className="docs-paragraph">
-                            In the dashboard, open <strong>Settings → Integrations → Linear</strong> and click <strong>Connect</strong>. A popup hands you to Linear's OAuth screen to authorize your workspace; approve it and the workspace appears in your integration list. There are <strong>no tokens or API keys to paste</strong>, re-connecting simply refreshes the authorization, and one Linear workspace connects per account.
-                        </p>
-                        <h3 className="docs-subheading">Permissions you grant</h3>
-                        <p className="docs-paragraph">
-                            Linear shows you these scopes on the authorization screen — DevAsign requests nothing more:
-                        </p>
-                        <div className="docs-table-wrapper">
-                            <table className="docs-table">
-                                <thead>
-                                    <tr>
-                                        <th>Scope</th>
-                                        <th>Access</th>
-                                        <th>Why DevAsign needs it</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Read</strong></td>
-                                        <td><span className="docs-pill read">read</span></td>
-                                        <td>Ingest the ticket a PR implements — its description, comments, sub-issues, labels, parent and project, plus attachments (PDFs and images) and any embedded Loom / YouTube / Vimeo — as the context a review is judged against.</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Write</strong></td>
-                                        <td><span className="docs-pill write">write</span></td>
-                                        <td>Post one short verdict comment back on the linked issue. The full review stays on the PR.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <h3 className="docs-subheading">What it can't do</h3>
-                        <ul className="docs-unordered-list">
-                            <li><strong>Speak as you</strong> — its comment is attributed to the DevAsign app, not your user account.</li>
-                            <li><strong>Change your tickets</strong> — DevAsign never creates, reassigns, closes, or moves the status of an issue; its only write is that single notification comment.</li>
-                            <li><strong>See more than it resolves</strong> — although the Linear OAuth grant is workspace-wide, DevAsign reads only the issues it actually links a PR to.</li>
-                        </ul>
-                        <h3 className="docs-subheading">What it does</h3>
-                        <ol className="docs-ordered-list">
-                            <li><strong>Links PRs to tickets.</strong> DevAsign matches a PR to a Linear issue by an explicit reference — an <code className="docs-code">ENG-123</code> key in the PR body or branch name (including the <code className="docs-code">Fixes ENG-123</code> line Linear's own GitHub integration injects) — or, when there's no explicit ref, by a conservative match of the PR title and description against your issues.</li>
-                            <li><strong>Pulls the ticket into the review.</strong> The linked issue's description, discussion, attachments, and embedded videos feed <a href="#end-goal" className="docs-link">end-goal &amp; criteria</a> synthesis, so the PR is measured against what the ticket actually asked for.</li>
-                            <li><strong>Seeds acceptance criteria.</strong> When a ticket is opened or updated, DevAsign synthesizes criteria from it ahead of time and caches them; a PR that later links to that ticket reuses those criteria instead of re-deriving them.</li>
-                            <li><strong>Reports back on the issue.</strong> Once the linked PR is reviewed, DevAsign posts a short comment on the Linear issue — that it reviewed the PR and <em>passed</em> or <em>requested changes</em>, with a link to it. The comment posts once per commit, so re-reviews of the same push don't repeat it.</li>
-                        </ol>
-                        <div className="docs-callout">
-                            <strong>The PR stays the source of truth:</strong> the Linear comment is a pointer. The full verdict — per-criterion evidence, inline comments, and fix prompts — lives on the GitHub PR.
-                        </div>
                     </section>
 
                     {/* Bottom spacer */}

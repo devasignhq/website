@@ -236,6 +236,7 @@ nav .signup-btn:hover {
     font-weight: 400;
     color: #aaa;
     line-height: 1.85;
+    letter-spacing: -0.4px;
     margin-bottom: 14px;
 }
 
@@ -273,7 +274,6 @@ nav .signup-btn:hover {
 .docs-table-wrapper {
     overflow-x: auto;
     margin: 18px 0 22px;
-    border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -373,11 +373,10 @@ nav .signup-btn:hover {
     background: rgba(255, 255, 255, 0.03);
     color: #cfcfcf;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 8px;
     padding: 14px 16px;
     margin: 14px 0 20px;
     overflow-x: auto;
-    white-space: pre;
+    white-space: pre-wrap;
     tab-size: 2;
 }
 
