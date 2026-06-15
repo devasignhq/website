@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback, ReactNode } from 'react';
+import { useEffect, useState, useRef, useCallback, ReactNode, useMemo } from 'react';
 import { SiteNav } from './SiteNav';
 import { SiteFooter } from './SiteFooter';
 import { SEO } from '../SEO';
@@ -30,10 +30,11 @@ interface LegalDocLayoutProps {
  * the nav item ids so the IntersectionObserver can track them.
  */
 export function LegalDocLayout({ activePath, seoTitle, seoDescription, navCategories, children }: LegalDocLayoutProps) {
-    const allNavItems = navCategories.flatMap((cat) => cat.items);
+    const allNavItems = useMemo(() => navCategories.flatMap((cat) => cat.items), [navCategories]);
     const [activeSection, setActiveSection] = useState(allNavItems[0]?.id ?? '');
     const observerRef = useRef<IntersectionObserver | null>(null);
     const isClickScrolling = useRef(false);
+    const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     const scrollToSection = useCallback((id: string) => {
         const element = document.getElementById(id);
@@ -41,17 +42,22 @@ export function LegalDocLayout({ activePath, seoTitle, seoDescription, navCatego
             isClickScrolling.current = true;
             setActiveSection(id);
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            if (scrollTimeoutRef.current) {
+                clearTimeout(scrollTimeoutRef.current);
+            }
+
             // Allow the observer to take over again after the scroll animation.
-            setTimeout(() => {
+            scrollTimeoutRef.current = setTimeout(() => {
                 isClickScrolling.current = false;
             }, 900);
         }
     }, []);
 
-    const scrollToTop = () => {
+    const scrollToTop = useCallback(() => {
         const firstId = allNavItems[0]?.id;
         if (firstId) scrollToSection(firstId);
-    };
+    }, [allNavItems, scrollToSection]);
 
     // IntersectionObserver scrollspy — highlights the topmost visible section.
     useEffect(() => {
@@ -78,7 +84,15 @@ export function LegalDocLayout({ activePath, seoTitle, seoDescription, navCatego
         sectionElements.forEach((el) => observerRef.current?.observe(el));
 
         return () => observerRef.current?.disconnect();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [allNavItems]);
+
+    // Cleanup timeout on unmount
+    useEffect(() => {
+        return () => {
+            if (scrollTimeoutRef.current) {
+                clearTimeout(scrollTimeoutRef.current);
+            }
+        };
     }, []);
 
     return (

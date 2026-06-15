@@ -408,7 +408,7 @@ export function PrivacyPage() {
                     <strong>Privacy Lead / Data Protection Officer</strong><br />
                     DevAsign, Inc.<br />
                     2261 Market Street, San Francisco, CA 94114, US<br />
-                    Email: <a href="mailto:oss@devasign.com" className="docs-link">oss@devasign.com</a>
+                    Email: <a href="mailto:privacy@devasign.com" className="docs-link">privacy@devasign.com</a>
                 </div>
                 <p className="docs-paragraph">EU/UK individuals also have the right to lodge a complaint with their local supervisory authority. California residents may contact the California Privacy Protection Agency or the California Attorney General. Other U.S. residents may contact their state Attorney General.</p>
             </section>
