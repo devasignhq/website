@@ -1,7 +1,8 @@
-import { useEffect, useState, useRef, useCallback, ReactNode, useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { SiteNav } from './SiteNav';
 import { SiteFooter } from './SiteFooter';
 import { SEO } from '../SEO';
+import { useScrollSpy } from '../../hooks/useScrollSpy';
 
 export interface NavItem {
     id: string;
@@ -30,70 +31,11 @@ interface LegalDocLayoutProps {
  * the nav item ids so the IntersectionObserver can track them.
  */
 export function LegalDocLayout({ activePath, seoTitle, seoDescription, navCategories, children }: LegalDocLayoutProps) {
-    const allNavItems = useMemo(() => navCategories.flatMap((cat) => cat.items), [navCategories]);
-    const [activeSection, setActiveSection] = useState(allNavItems[0]?.id ?? '');
-    const observerRef = useRef<IntersectionObserver | null>(null);
-    const isClickScrolling = useRef(false);
-    const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-    const scrollToSection = useCallback((id: string) => {
-        const element = document.getElementById(id);
-        if (element) {
-            isClickScrolling.current = true;
-            setActiveSection(id);
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-            if (scrollTimeoutRef.current) {
-                clearTimeout(scrollTimeoutRef.current);
-            }
-
-            // Allow the observer to take over again after the scroll animation.
-            scrollTimeoutRef.current = setTimeout(() => {
-                isClickScrolling.current = false;
-            }, 900);
-        }
-    }, []);
-
-    const scrollToTop = useCallback(() => {
-        const firstId = allNavItems[0]?.id;
-        if (firstId) scrollToSection(firstId);
-    }, [allNavItems, scrollToSection]);
-
-    // IntersectionObserver scrollspy — highlights the topmost visible section.
-    useEffect(() => {
-        const sectionElements = allNavItems
-            .map((item) => document.getElementById(item.id))
-            .filter(Boolean) as HTMLElement[];
-
-        observerRef.current = new IntersectionObserver(
-            (entries) => {
-                if (isClickScrolling.current) return;
-                const visible = entries
-                    .filter((e) => e.isIntersecting)
-                    .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-                if (visible.length > 0) {
-                    setActiveSection(visible[0].target.id);
-                }
-            },
-            {
-                rootMargin: '-100px 0px -60% 0px',
-                threshold: 0,
-            }
-        );
-
-        sectionElements.forEach((el) => observerRef.current?.observe(el));
-
-        return () => observerRef.current?.disconnect();
-    }, [allNavItems]);
-
-    // Cleanup timeout on unmount
-    useEffect(() => {
-        return () => {
-            if (scrollTimeoutRef.current) {
-                clearTimeout(scrollTimeoutRef.current);
-            }
-        };
-    }, []);
+    const sectionIds = useMemo(
+        () => navCategories.flatMap((cat) => cat.items).map((item) => item.id),
+        [navCategories]
+    );
+    const { activeSection, scrollToSection, scrollToTop } = useScrollSpy(sectionIds);
 
     return (
         <div className="docs-page">

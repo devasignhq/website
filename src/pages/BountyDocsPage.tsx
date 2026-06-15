@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
 import { SiteNav } from '../components/layout/SiteNav';
 import { SiteFooter } from '../components/layout/SiteFooter';
+import { useScrollSpy } from '../hooks/useScrollSpy';
 import submissionScreenshot from '../assets/devasign.submission.png';
 import installationScreenshot from '../assets/devasign.installation.png';
 import bountyCommentScreenshot from '../assets/bounty.comment.png';
@@ -56,59 +56,10 @@ const navCategories: NavCategory[] = [
     },
 ];
 
-const allNavItems = navCategories.flatMap((cat) => cat.items);
+const sectionIds = navCategories.flatMap((cat) => cat.items).map((item) => item.id);
 
 export function BountyDocsPage() {
-    const [activeSection, setActiveSection] = useState('overview');
-    const observerRef = useRef<IntersectionObserver | null>(null);
-    const isClickScrolling = useRef(false);
-
-    // Scroll to section on nav click
-    const scrollToSection = useCallback((id: string) => {
-        const element = document.getElementById(id);
-        if (element) {
-            isClickScrolling.current = true;
-            setActiveSection(id);
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            // Allow observer to take over again after scroll animation
-            setTimeout(() => {
-                isClickScrolling.current = false;
-            }, 900);
-        }
-    }, []);
-
-    // Back to top — reuse scrollToSection so it scrolls the main content correctly
-    const scrollToTop = () => {
-        scrollToSection('overview');
-    };
-
-    // IntersectionObserver for scrollspy
-    useEffect(() => {
-        const sectionElements = allNavItems
-            .map((item) => document.getElementById(item.id))
-            .filter(Boolean) as HTMLElement[];
-
-        observerRef.current = new IntersectionObserver(
-            (entries) => {
-                if (isClickScrolling.current) return;
-                // Find the topmost visible section
-                const visible = entries
-                    .filter((e) => e.isIntersecting)
-                    .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-                if (visible.length > 0) {
-                    setActiveSection(visible[0].target.id);
-                }
-            },
-            {
-                rootMargin: '-100px 0px -60% 0px',
-                threshold: 0,
-            }
-        );
-
-        sectionElements.forEach((el) => observerRef.current?.observe(el));
-
-        return () => observerRef.current?.disconnect();
-    }, []);
+    const { activeSection, scrollToSection, scrollToTop } = useScrollSpy(sectionIds);
 
     return (
         <div className="docs-page">
