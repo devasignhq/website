@@ -7,6 +7,8 @@ import { DocsPage } from './pages/DocsPage';
 import { BountyDocsPage } from './pages/BountyDocsPage';
 import { BountyPayoutsPage } from './pages/BountyPayoutsPage';
 import { PricingPage } from './pages/PricingPage';
+import { TermsPage } from './pages/TermsPage';
+import { PrivacyPage } from './pages/PrivacyPage';
 import { Toaster } from 'sonner';
 
 function GAPageView() {
@@ -72,6 +74,8 @@ export default function App() {
           <Route path="/bounty-payouts" element={<BountyPayoutsPage />} />
           <Route path="/bounty-docs" element={<BountyDocsPage />} />
           <Route path="/docs" element={<DocsPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
