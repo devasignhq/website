@@ -58,7 +58,7 @@ export function PricingPage() {
     };
 
     return (
-        <div className="da-root">
+        <div className="da-root da-pricing">
             <SEO
                 title="Pricing — DevAsign"
                 description="Free for OSS. Flat-rate for teams. Pay for the review, not the seat. Goal-aware code review on every PR."
@@ -74,8 +74,7 @@ export function PricingPage() {
                             <h1>
                                 Simple, transparent pricing.
                             </h1>
-                            <br />
-                            <p style={{ color: 'var(--fg-muted)' }}>One install. Goal-aware review on every PR — DevAsign pulls context from your tickets, designs, and Loom walkthroughs, then posts the verdict right on your GitHub pull requests.</p>
+                            <p className="da-p-hero-sub">One install. Goal-aware review on every PR — DevAsign pulls context from your tickets, designs, and Loom walkthroughs, then posts the verdict right on your GitHub pull requests.</p>
                         </div>
                         <div className="da-toggle-card">
                             <span className="label">// Billing</span>
@@ -291,7 +290,7 @@ export function PricingPage() {
                         <div>
                             <span className="eyebrow">FAQ</span>
                             <h2 style={{ marginTop: 18 }}>Common questions, <span className="da-brand-text">honest answers</span></h2>
-                            <p style={{ marginTop: 18, color: 'var(--fg-muted)', maxWidth: '34ch' }}>
+                            <p className="da-faq-note" style={{ marginTop: 18, maxWidth: '34ch' }}>
                                 Can't find it here? <a href="mailto:bethel@devasign.com">email CEO</a> — replies same day.
                             </p>
                         </div>

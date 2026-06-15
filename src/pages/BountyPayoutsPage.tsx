@@ -11,7 +11,7 @@ const Check = () => (
 
 export function BountyPayoutsPage() {
     return (
-        <div className="da-root">
+        <div className="da-root da-bounty">
             <SEO
                 title="Bounty Payouts — DevAsign"
                 description="Pay contributors in USDC on Stellar the moment their PR ships. Drop a /bounty comment, lock funds in Soroban escrow, settle in seconds."
@@ -31,7 +31,7 @@ export function BountyPayoutsPage() {
                                 Pay contributors the <span className="da-brand-text">moment</span> <span className="da-highlight">their PR merges</span>
                             </h1>
                             <br></br>
-                            <p className="body-sm text-left" style={{ color: 'var(--fg-muted)', maxWidth: 640 }}>
+                            <p className="da-b-hero-sub text-left" style={{ maxWidth: 640 }}>
                                 Drop a one-line comment on any GitHub issue. Lock <strong>USDC into a Soroban escrow</strong>. The moment a contributor's PR is tested and merged to <code style={{ background: 'var(--bg-elevated)', padding: '2px 8px', border: '1px solid var(--border-faint)', fontSize: '0.9em' }}>main</code>, the escrow releases — settled on Stellar in seconds.
                             </p>
                             <div className="da-b-ctas">
@@ -245,7 +245,7 @@ export function BountyPayoutsPage() {
                         <div>
                             <span className="eyebrow">FAQ</span>
                             <h2 style={{ marginTop: 18 }}>Bounty <span className="da-brand-text">questions</span></h2>
-                            <p style={{ marginTop: 18, color: 'var(--fg-muted)', maxWidth: '34ch' }}>
+                            <p className="da-faq-note" style={{ marginTop: 18, maxWidth: '34ch' }}>
                                 Can't find it here? <a href="mailto:bethel@devasign.com">email CEO</a> — replies same day.
                             </p>
                         </div>
