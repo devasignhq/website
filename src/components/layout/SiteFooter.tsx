@@ -107,8 +107,8 @@ export function SiteFooter({ variant = "compact" }: SiteFooterProps) {
                     <div className="da-footer-col">
                         <h4>More</h4>
                         <ul>
-                            <li><a href="https://imaginary-dime-a8c.notion.site/Terms-of-Use-c46ff8a9d3d08262a60b0168117f4926" target="_blank" rel="noopener noreferrer">Terms of Use</a></li>
-                            <li><a href="https://imaginary-dime-a8c.notion.site/Privacy-Policy-35aff8a9d3d08065a770ce7cc313ed53" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
+                            <li><Link to="/terms">Terms of Use</Link></li>
+                            <li><Link to="/privacy">Privacy Policy</Link></li>
                         </ul>
                     </div>
                     <div className="da-footer-col">
