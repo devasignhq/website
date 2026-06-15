@@ -3,6 +3,7 @@ import { SiteNav } from '../components/layout/SiteNav';
 import { SiteFooter } from '../components/layout/SiteFooter';
 import { MeetDevAsignSection } from '../components/MeetDevAsignSection';
 import { HeroBackground } from '../components/HeroBackground';
+import heroApp from '../assets/devasign-app.webp';
 
 const CheckSvg = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
@@ -18,7 +19,7 @@ const XSvg = () => (
 
 export function LandingPage() {
     return (
-        <div className="da-root">
+        <div className="da-root da-landing">
             <SEO />
             <SiteNav activePath="/" />
 
@@ -26,52 +27,26 @@ export function LandingPage() {
             <header className="da-hero" id="hero">
                 <HeroBackground />
                 <div className="da-container">
-                    <div className="da-hero-grid">
-                        <div>
-                            <div className="da-hero-eyebrow">
-                                <span className="dot" />
-                                <span className="mono-sm" style={{ color: 'var(--fg-muted)' }}>The multimodal AI code reviewer</span>
-                            </div>
-                            <h1>
-                                Code review, against the <span className="da-brand-text">goal</span> — not just the <span className="da-strike">diff</span>
-                            </h1>
-                            <br />
-                            <p style={{ color: 'var(--fg-muted)' }}>
-                                DevAsign ingests your <strong>ticket, linked issues, screenshots, Figma frames, and Loom walkthroughs</strong> — then reviews every PR against what was actually asked.
-                            </p>
-                            <div className="da-hero-ctas">
-                                <a href="https://devasign.ai" className="btn btn-primary">Start reviewing →</a>
-                                {/* <a href="#shots" className="btn btn-secondary">See it review a real PR</a> */}
-                            </div>
-                            <div className="da-hero-proof">
-                                Free for OSS<span>·</span>200+ PRs reviewed end-to-end<span>·</span>Goal-aware from PR #1
-                            </div>
+                    <div className="da-hero-centered">
+                        <div className="da-hero-eyebrow">
+                            <span className="dot" />
+                            <span className="mono-sm" style={{ color: 'var(--fg-muted)' }}>The multimodal AI code reviewer</span>
                         </div>
-
-                        <div>
-                            <div className="da-pr-card">
-                                <div className="head">
-                                    <span className="avatar">D</span>
-                                    <span>devasign[bot]</span>
-                                    <span>commented on PR #847</span>
-                                    <span className="meta">2m ago</span>
-                                </div>
-                                <div className="body">
-                                    <p>
-                                        I read ticket <strong>#43</strong> and the attached Figma. The acceptance criteria asked for a <span className="quote">"Resend invite" affordance on the empty state</span> — your diff handles invite-pending but not empty.
-                                    </p>
-                                    <p>
-                                        Also: this PR <span className="miss">silently changes the v2 webhook contract</span>. That'll break the Stripe handler in prod.
-                                    </p>
-                                    <p>
-                                        Goal coverage: <strong>4 / 6</strong> requirements satisfied. I'll re-score on your next commit.<span className="da-cursor" />
-                                    </p>
-                                    <div className="tag-line">
-                                        <span className="chip chip-brand" style={{ fontSize: 10 }}>Goal-aware</span>
-                                        <span style={{ marginLeft: 'auto' }}>PR #847 · feat/team-invites</span>
-                                    </div>
-                                </div>
-                            </div>
+                        <h1>
+                            Code review against the <span className="da-brand-text">goal</span> not just <span className="da-strike">diff</span>
+                        </h1>
+                        <p className="da-hero-sub">
+                            DevAsign ingests your <strong>ticket, linked issues, screenshots, Figma frames, and Loom walkthroughs</strong> — then reviews every PR against what was actually asked.
+                        </p>
+                        <div className="da-hero-ctas">
+                            <a href="https://devasign.ai" className="btn btn-primary">Start reviewing →</a>
+                            <a href="https://cal.com/devasign/30min" className="btn btn-secondary">Talk to Founder</a>
+                        </div>
+                        <div className="da-hero-shot">
+                            <img
+                                src={heroApp}
+                                alt="DevAsign Agents dashboard — review queue, live review log, and the synthesized end goal with acceptance criteria"
+                            />
                         </div>
                     </div>
                 </div>

@@ -414,13 +414,54 @@
 }
 .da-hero-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: center; }
 @media (max-width: 1023px) { .da-hero-grid { grid-template-columns: 1fr; gap: 48px; } }
+/* Left-aligned, vertically stacked hero: text block left-aligned above the app screenshot */
+.da-hero-centered { display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
+.da-hero-centered h1 { max-width: 23ch; }
+.da-hero-centered .da-hero-sub { margin-left: 0; margin-right: 0; }
+.da-hero-centered .da-hero-ctas { justify-content: flex-start; }
 .da-hero-eyebrow { margin-bottom: 28px; display: inline-flex; align-items: center; gap: 10px; }
 .da-hero-eyebrow .dot {
   width: 8px; height: 8px; background: var(--brand); border-radius: 999px;
   box-shadow: 0 0 0 3px rgba(254, 137, 31, 0.18);
 }
-.da-hero-sub { margin-top: 32px; color: var(--fg-muted); font-size: 22px; line-height: 1.45; max-width: 60ch; }
-.da-hero-sub strong { color: var(--fg); font-weight: 500; }
+/* Body text matches the docs page body (.docs-paragraph) font properties */
+.da-hero-sub { margin-top: 32px; color: #aaa; font-size: 14px; font-weight: 400; line-height: 1.85; letter-spacing: -0.4px; max-width: 60ch; }
+.da-hero-sub strong { color: #e0e0e0; font-weight: 600; }
+
+/* Unify all landing-page body copy with the hero body text (size / weight / color / line-height / letter-spacing).
+   Scoped to .da-landing so shared section classes on other pages are untouched. */
+.da-landing .da-section-head p.lead,
+.da-landing .da-not-enough .col-left p,
+.da-landing .da-miss-item p,
+.da-landing .da-acc-body > p,
+.da-landing .da-closing p {
+  font-size: 14px; font-weight: 400; color: #aaa; line-height: 1.85; letter-spacing: -0.4px;
+}
+.da-landing .da-miss-item p strong { color: #e0e0e0; font-weight: 600; }
+/* Stat-card sub sits on a light card — match the type metrics but keep a contrast-safe color. */
+.da-landing .da-stat-card .sub { font-size: 14px; font-weight: 400; line-height: 1.85; letter-spacing: -0.4px; }
+
+/* Pricing page — unify body copy with the hero body text. Scoped to .da-pricing. */
+.da-pricing .da-p-hero-sub,
+.da-pricing .da-faq-note,
+.da-pricing .da-faq-body p,
+.da-pricing .da-closing p {
+  font-size: 14px; font-weight: 400; color: #aaa; line-height: 1.85; letter-spacing: -0.4px;
+}
+
+/* Bounty page — unify body copy with the hero body text. Scoped to .da-bounty. */
+.da-bounty .da-b-hero-sub,
+.da-bounty .da-faq-note,
+.da-bounty .da-faq-body p,
+.da-bounty .da-tl-event p,
+.da-bounty .da-section-head p.lead,
+.da-bounty .da-escrow-copy p,
+.da-bounty .da-closing p {
+  font-size: 14px; font-weight: 400; color: #aaa; line-height: 1.85; letter-spacing: -0.4px;
+}
+.da-bounty .da-b-hero-sub strong { color: #e0e0e0; font-weight: 600; }
+/* Split cards sit on a light surface — match the type metrics but keep a contrast-safe color. */
+.da-bounty .da-split-card p { font-size: 14px; font-weight: 400; line-height: 1.85; letter-spacing: -0.4px; }
 .da-hero-ctas { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 16px; }
 .da-hero-proof {
   margin-top: 48px; padding-top: 24px;
@@ -428,6 +469,15 @@
   font-family: var(--font-mono); font-size: 13px; color: var(--fg-muted); letter-spacing: 0.02em;
 }
 .da-hero-proof span { color: var(--brand); margin: 0 4px; }
+/* App screenshot beneath the hero text */
+.da-hero-shot { margin-top: 80px; width: 100%; max-width: 1100px; }
+.da-hero-shot img {
+  display: block; width: 100%; height: auto;
+  background: #000;
+}
+@media (max-width: 768px) {
+  .da-hero-shot { margin-top: 48px; }
+}
 
 /* ===== PR / ISSUE CARDS ===== */
 .da-pr-card {
@@ -2152,7 +2202,7 @@
   /* Body type scales down on mobile */
   .da-root .body-lg { font-size: 16px; line-height: 1.5; }
   .da-section-head p.lead { font-size: 15px; line-height: 1.5; }
-  .da-hero-sub { font-size: 16px; line-height: 1.5; margin-top: 24px; }
+  .da-hero-sub { margin-top: 24px; }
   .da-p-hero-sub { font-size: 15px; line-height: 1.5; margin-top: 20px; }
   .da-closing p { font-size: 15px; line-height: 1.55; }
   .da-problem-card p { font-size: 14px; line-height: 1.5; }
