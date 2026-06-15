@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
 import { SiteNav } from '../components/layout/SiteNav';
 import { SiteFooter } from '../components/layout/SiteFooter';
+import { useScrollSpy } from '../hooks/useScrollSpy';
 import agentDashboard from '../assets/devasign-agent.webp';
 import agentWorkflow from '../assets/devasign-workflow.webp';
 import linearWorkflow from '../assets/devasign-installation.webp';
@@ -69,7 +69,7 @@ const navCategories: NavCategory[] = [
     },
 ];
 
-const allNavItems = navCategories.flatMap((cat) => cat.items);
+const sectionIds = navCategories.flatMap((cat) => cat.items).map((item) => item.id);
 
 // ─── Lightweight syntax highlighting for the code blocks ───
 // No external dependency: the snippets are static and controlled, so a small
@@ -126,56 +126,7 @@ function CodeBlock({ lang, code }: { lang: 'json' | 'prompt'; code: string }) {
 }
 
 export function DocsPage() {
-    const [activeSection, setActiveSection] = useState('overview');
-    const observerRef = useRef<IntersectionObserver | null>(null);
-    const isClickScrolling = useRef(false);
-
-    // Scroll to section on nav click
-    const scrollToSection = useCallback((id: string) => {
-        const element = document.getElementById(id);
-        if (element) {
-            isClickScrolling.current = true;
-            setActiveSection(id);
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            // Allow observer to take over again after scroll animation
-            setTimeout(() => {
-                isClickScrolling.current = false;
-            }, 900);
-        }
-    }, []);
-
-    // Back to top — reuse scrollToSection so it scrolls the main content correctly
-    const scrollToTop = () => {
-        scrollToSection('overview');
-    };
-
-    // IntersectionObserver for scrollspy
-    useEffect(() => {
-        const sectionElements = allNavItems
-            .map((item) => document.getElementById(item.id))
-            .filter(Boolean) as HTMLElement[];
-
-        observerRef.current = new IntersectionObserver(
-            (entries) => {
-                if (isClickScrolling.current) return;
-                // Find the topmost visible section
-                const visible = entries
-                    .filter((e) => e.isIntersecting)
-                    .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-                if (visible.length > 0) {
-                    setActiveSection(visible[0].target.id);
-                }
-            },
-            {
-                rootMargin: '-100px 0px -60% 0px',
-                threshold: 0,
-            }
-        );
-
-        sectionElements.forEach((el) => observerRef.current?.observe(el));
-
-        return () => observerRef.current?.disconnect();
-    }, []);
+    const { activeSection, scrollToSection, scrollToTop } = useScrollSpy(sectionIds);
 
     return (
         <div className="docs-page">
