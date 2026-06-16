@@ -9,11 +9,11 @@ const Check = () => (
     </svg>
 );
 
-export function BountyPayoutsPage() {
+export function BountyAutomationPage() {
     return (
         <div className="da-root da-bounty">
             <SEO
-                title="Bounty Payouts — DevAsign"
+                title="Bounty Automation — DevAsign"
                 description="Pay contributors in USDC on Stellar the moment their PR ships. Drop a /bounty comment, lock funds in Soroban escrow, settle in seconds."
             />
             <SiteNav />

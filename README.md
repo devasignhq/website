@@ -51,7 +51,7 @@ Outputs an optimized static build to the `build/` directory.
 |-------|------|-------------|
 | `/` | Landing | Hero, "why AI code review isn't enough", how it works, and CTAs |
 | `/pricing` | Pricing | Plans and pricing for the code reviewer |
-| `/bounty-payouts` | Bounty Payouts | How automated, on-merge USDC bounty payouts work |
+| `/bounty-automation` | Bounty Automation | How automated, on-merge USDC bounty payouts work |
 | `/bounty-docs` | Bounty Docs | How-to guide for setting up and claiming bounties |
 | `/docs` | Documentation | Full code-review product docs with scrollspy sidebar navigation |
 | `*` | 404 | Custom not-found page |

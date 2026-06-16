@@ -51,9 +51,9 @@ export function SiteNav({ activePath }: SiteNavProps) {
         }
     };
 
-    const onBountyPayouts = location.pathname === "/bounty-payouts";
-    const loginUrl = onBountyPayouts ? "https://app.devasign.com" : "https://devasign.ai";
-    const signupUrl = onBountyPayouts ? "https://app.devasign.com" : "https://devasign.ai";
+    const onBountyAutomation = location.pathname === "/bounty-automation";
+    const loginUrl = onBountyAutomation ? "https://app.devasign.com" : "https://devasign.ai";
+    const signupUrl = onBountyAutomation ? "https://app.devasign.com" : "https://devasign.ai";
 
     return (
         <nav className="da-nav">
@@ -64,7 +64,7 @@ export function SiteNav({ activePath }: SiteNavProps) {
                 <div className="da-nav-links">
                     <Link to="/#introducing" className={productActive} onClick={goToProduct}>Product</Link>
                     <Link to="/pricing" className={is("/pricing")} onClick={goToTop("/pricing")}>Pricing</Link>
-                    <Link to="/bounty-payouts" className={is("/bounty-payouts")} onClick={goToTop("/bounty-payouts")}>Bounty</Link>
+                    <Link to="/bounty-automation" className={is("/bounty-automation")} onClick={goToTop("/bounty-automation")}>Bounty</Link>
                     <Link to="/docs" className={is("/docs")} onClick={goToTop("/docs")}>Docs</Link>
                     <a href={loginUrl} className="da-nav-login">Login</a>
                     <a href={signupUrl} className="btn btn-sm btn-primary">Get Started →</a>
@@ -98,7 +98,7 @@ export function SiteNav({ activePath }: SiteNavProps) {
                     <div className="da-nav-mobile-links">
                         <Link to="/#introducing" onClick={goToProduct}>Product</Link>
                         <Link to="/pricing" onClick={goToTop("/pricing")}>Pricing</Link>
-                        <Link to="/bounty-payouts" onClick={goToTop("/bounty-payouts")}>Bounty</Link>
+                        <Link to="/bounty-automation" onClick={goToTop("/bounty-automation")}>Bounty</Link>
                         <Link to="/docs" onClick={goToTop("/docs")}>Docs</Link>
                     </div>
                     <div className="da-nav-mobile-ctas">
