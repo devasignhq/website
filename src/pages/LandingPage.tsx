@@ -3,7 +3,7 @@ import { SiteNav } from '../components/layout/SiteNav';
 import { SiteFooter } from '../components/layout/SiteFooter';
 import { MeetDevAsignSection } from '../components/MeetDevAsignSection';
 import { HeroBackground } from '../components/HeroBackground';
-import heroApp from '../assets/devasign-app.webp';
+import heroApp from '../assets/devasign-app.svg';
 
 const CheckSvg = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
@@ -46,6 +46,7 @@ export function LandingPage() {
                             <img
                                 src={heroApp}
                                 alt="DevAsign Agents dashboard — review queue, live review log, and the synthesized end goal with acceptance criteria"
+                                fetchPriority="high"
                             />
                         </div>
                     </div>
