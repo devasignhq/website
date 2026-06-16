@@ -46,6 +46,7 @@ export function LandingPage() {
                             <img
                                 src={heroApp}
                                 alt="DevAsign Agents dashboard — review queue, live review log, and the synthesized end goal with acceptance criteria"
+                                fetchPriority="high"
                             />
                         </div>
                     </div>
