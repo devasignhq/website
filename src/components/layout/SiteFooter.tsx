@@ -26,7 +26,7 @@ export function SiteFooter({ variant = "compact" }: SiteFooterProps) {
             <div className="da-container">
                 <div className="da-footer-bounty">
                     <div>Built on top of DevAsign's open-source bounty rails — pay contributors in USDC on Stellar with on-chain settlement in seconds.</div>
-                    <Link to="/bounty-payouts">Learn more →</Link>
+                    <Link to="/bounty-automation">Learn more →</Link>
                 </div>
                 <div className="da-footer-grid">
                     <div className="da-footer-col">
@@ -90,9 +90,8 @@ export function SiteFooter({ variant = "compact" }: SiteFooterProps) {
                     <div className="da-footer-col">
                         <h4>Product</h4>
                         <ul>
-                            <li><Link to="/#platforms">Platforms</Link></li>
-                            <li><Link to="/#shots">Multimodal</Link></li>
-                            <li><Link to="/bounty-payouts">Bounty Payout</Link></li>
+                            <li><Link to="/#introducing">Code Review</Link></li>
+                            <li><Link to="/bounty-automation">Bounty Automation</Link></li>
                         </ul>
                     </div>
                     <div className="da-footer-col">
