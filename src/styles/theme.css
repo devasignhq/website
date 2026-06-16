@@ -470,13 +470,32 @@
 }
 .da-hero-proof span { color: var(--brand); margin: 0 4px; }
 /* App screenshot beneath the hero text */
-.da-hero-shot { margin-top: 80px; width: 100%; max-width: 1100px; }
+/* Stretch the screenshot to the full hero content width (the .da-container inner width), not a fixed cap */
+.da-hero-shot { margin-top: 80px; width: 100%; max-width: 100%; }
 .da-hero-shot img {
   display: block; width: 100%; height: auto;
   background: #000;
 }
 @media (max-width: 768px) {
-  .da-hero-shot { margin-top: 48px; }
+  /* Trim the oversized hero bottom padding on mobile */
+  .da-hero { padding-bottom: 56px; }
+  .da-hero-shot { margin-top: 48px; position: relative; }
+  /* Bleed the mockup off the right edge */
+  .da-hero-shot img {
+    width: 150%;
+    max-width: none;
+  }
+  /* Dark gradient overlay so the right side of the mockup blends into the screen */
+  .da-hero-shot::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -20px;
+    width: 62%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, #000 90%);
+    pointer-events: none;
+  }
 }
 
 /* ===== PR / ISSUE CARDS ===== */

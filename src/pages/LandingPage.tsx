@@ -3,7 +3,7 @@ import { SiteNav } from '../components/layout/SiteNav';
 import { SiteFooter } from '../components/layout/SiteFooter';
 import { MeetDevAsignSection } from '../components/MeetDevAsignSection';
 import { HeroBackground } from '../components/HeroBackground';
-import heroApp from '../assets/devasign-app.webp';
+import heroApp from '../assets/devasign-app.svg';
 
 const CheckSvg = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
