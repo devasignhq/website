@@ -255,10 +255,6 @@ export function PricingPage() {
                                     <TextCell>Frontier</TextCell>
                                     <TextCell max>Frontier</TextCell>
                                 </tr>
-                                <tr>
-                                    <td className="feat-name">Frontier models — Claude · Gemini · Codex · Grok</td>
-                                    <XCell /><CheckCell /><CheckCell max />
-                                </tr>
 
                                 <tr className="section-row"><td>Integrations</td><td /><td /><td className="col-max" /></tr>
                                 <tr>
