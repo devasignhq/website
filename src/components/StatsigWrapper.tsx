@@ -2,7 +2,7 @@ import { StatsigProvider, useClientAsyncInit } from '@statsig/react-bindings';
 import { StatsigAutoCapturePlugin } from '@statsig/web-analytics';
 import { StatsigSessionReplayPlugin } from '@statsig/session-replay';
 
-const STATSIG_CLIENT_KEY = 'client-UDPVGsEraBM9iIlexMbw0Wmswjb7jN55WR9EWFV6XPM';
+const STATSIG_CLIENT_KEY = 'client-cBOBwEpbz8xXWVxibGwwth6hoDZFc4TfLNpQlA3BFMw';
 
 // Only emit Statsig events from the production site. Localhost, Vercel
 // previews, and any other host stay silent so dev/staging traffic doesn't
