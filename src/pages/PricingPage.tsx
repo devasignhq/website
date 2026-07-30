@@ -3,6 +3,7 @@ import { useStatsigClient } from '@statsig/react-bindings';
 import { SEO } from '../components/SEO';
 import { SiteNav } from '../components/layout/SiteNav';
 import { SiteFooter } from '../components/layout/SiteFooter';
+import { URLS } from '../config/constants';
 
 const Check = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
@@ -116,7 +117,7 @@ export function PricingPage() {
                                 <span className="da-plan-bullet">Public repos only</span>
                             </div>
                             <a
-                                href="https://devasign.ai"
+                                href={URLS.SPONSOR_AUTH}
                                 className="btn btn-secondary btn-block da-plan-cta"
                                 data-cta="pricing_card_free"
                                 data-plan="free"
@@ -146,7 +147,7 @@ export function PricingPage() {
                                 <span className="da-plan-bullet">Private repos · Limited PR review</span>
                             </div>
                             <a
-                                href="https://devasign.ai"
+                                href={URLS.SPONSOR_AUTH}
                                 className="btn btn-primary btn-block da-plan-cta"
                                 data-cta="pricing_card_pro"
                                 data-plan="pro"
@@ -177,7 +178,7 @@ export function PricingPage() {
                                 <span className="da-plan-bullet">Unlimited PR reviews · Priority queue</span>
                             </div>
                             <a
-                                href="https://devasign.ai"
+                                href={URLS.SPONSOR_AUTH}
                                 className="btn btn-tertiary btn-block da-plan-cta"
                                 data-cta="pricing_card_max"
                                 data-plan="max"
@@ -323,7 +324,7 @@ export function PricingPage() {
                     <p>Install on a public repo in 60 seconds. Upgrade only when you have private code that deserves the same review.</p>
                     <div className="da-closing-ctas">
                         <a
-                            href="https://devasign.ai"
+                            href={URLS.SPONSOR_AUTH}
                             className="btn btn-primary"
                             data-cta="pricing_closing_install"
                             data-plan="na"
