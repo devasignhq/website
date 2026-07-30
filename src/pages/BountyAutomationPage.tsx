@@ -256,7 +256,7 @@ export function BountyAutomationPage() {
                             </details>
                             <details className="da-faq">
                                 <summary>Who can post bounty?</summary>
-                                <div className="da-faq-body"><p>Any GitHub user with <em>maintain</em> or <em>admin</em> rights on the repo, and a funded Freighter or any Stellar compatible wallet. Contributors with <em>write</em> access can request a bounty, but only maintainers can lock funds.</p></div>
+                                <div className="da-faq-body"><p>Any GitHub user with <em>maintain</em> or <em>admin</em> rights on the repo, and a funded Freighter or any Stellar-compatible wallet. Contributors with <em>write</em> access can request a bounty, but only maintainers can lock funds.</p></div>
                             </details>
                             <details className="da-faq">
                                 <summary>What happens if no one ships in time?</summary>
