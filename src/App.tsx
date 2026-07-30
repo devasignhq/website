@@ -4,7 +4,6 @@ import { HelmetProvider } from 'react-helmet-async';
 import { LandingPage } from './pages/LandingPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { DocsPage } from './pages/DocsPage';
-import { BountyDocsPage } from './pages/BountyDocsPage';
 import { BountyAutomationPage } from './pages/BountyAutomationPage';
 import { PricingPage } from './pages/PricingPage';
 import { TermsPage } from './pages/TermsPage';
@@ -74,7 +73,6 @@ export default function App() {
           <Route path="/bounty-automation" element={<BountyAutomationPage />} />
           {/* Redirect the old route so existing links don't 404 */}
           <Route path="/bounty-payouts" element={<Navigate to="/bounty-automation" replace />} />
-          <Route path="/bounty-docs" element={<BountyDocsPage />} />
           <Route path="/docs" element={<DocsPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
