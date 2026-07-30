@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Logo } from "../Logo";
+import { URLS } from "../../config/constants";
 
 interface SiteNavProps {
     activePath?: string;
@@ -51,10 +52,6 @@ export function SiteNav({ activePath }: SiteNavProps) {
         }
     };
 
-    const onBountyAutomation = location.pathname === "/bounty-automation";
-    const loginUrl = onBountyAutomation ? "https://app.devasign.com" : "https://devasign.ai";
-    const signupUrl = onBountyAutomation ? "https://app.devasign.com" : "https://devasign.ai";
-
     return (
         <nav className="da-nav">
             <div className="da-nav-inner">
@@ -66,8 +63,8 @@ export function SiteNav({ activePath }: SiteNavProps) {
                     <Link to="/pricing" className={is("/pricing")} onClick={goToTop("/pricing")}>Pricing</Link>
                     <Link to="/bounty-automation" className={is("/bounty-automation")} onClick={goToTop("/bounty-automation")}>Bounty</Link>
                     <Link to="/docs" className={is("/docs")} onClick={goToTop("/docs")}>Docs</Link>
-                    <a href={loginUrl} className="da-nav-login">Login</a>
-                    <a href={signupUrl} className="btn btn-sm btn-primary">Get Started →</a>
+                    <a href={URLS.SPONSOR_AUTH} className="da-nav-login">Login</a>
+                    <a href={URLS.SPONSOR_AUTH} className="btn btn-sm btn-primary">Get Started →</a>
                 </div>
                 <button
                     type="button"
@@ -102,8 +99,8 @@ export function SiteNav({ activePath }: SiteNavProps) {
                         <Link to="/docs" onClick={goToTop("/docs")}>Docs</Link>
                     </div>
                     <div className="da-nav-mobile-ctas">
-                        <a href={loginUrl} className="btn btn-secondary btn-block" onClick={closeMobile}>Login</a>
-                        <a href={signupUrl} className="btn btn-primary btn-block" onClick={closeMobile}>Get Started →</a>
+                        <a href={URLS.SPONSOR_AUTH} className="btn btn-secondary btn-block" onClick={closeMobile}>Login</a>
+                        <a href={URLS.SPONSOR_AUTH} className="btn btn-primary btn-block" onClick={closeMobile}>Get Started →</a>
                     </div>
                 </div>
             )}

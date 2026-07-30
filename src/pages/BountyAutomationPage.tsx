@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
 import { SEO } from '../components/SEO';
 import { SiteNav } from '../components/layout/SiteNav';
 import { SiteFooter } from '../components/layout/SiteFooter';
+import { URLS } from '../config/constants';
 
 const Check = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
@@ -36,7 +36,7 @@ export function BountyAutomationPage() {
                             </p>
                             <div className="da-b-ctas">
                                 <a href="https://app.devasign.com" className="btn btn-primary">Create bounty →</a>
-                                <Link to="/bounty-docs" className="btn btn-secondary">Bounty Docs</Link>
+                                <a href={URLS.CONTRIBUTOR_AUTH} className="btn btn-secondary">Dev Login</a>
                             </div>
                             <div className="da-proof-row">
                                 Built on Stellar &amp; Soroban<span>·</span>USDC settlement &lt; 5s<span>·</span>Sub-cent network fees

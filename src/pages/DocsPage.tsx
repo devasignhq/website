@@ -5,6 +5,14 @@ import agentDashboard from '../assets/devasign-agent.webp';
 import agentWorkflow from '../assets/devasign-workflow.webp';
 import linearWorkflow from '../assets/devasign-installation.webp';
 import onboardingScreenshot from '../assets/devasign-onboarding.webp';
+import bountySubmissionScreenshot from '../assets/devasign.submission.webp';
+import bountyCommentScreenshot from '../assets/bounty.comment.webp';
+import createBountyInapp from '../assets/create.bounty.inapp.webp';
+import topupWalletScreenshot from '../assets/topup.wallet.webp';
+import bountyPR from '../assets/bounty.pr.webp';
+import aiReviewScreenshot from '../assets/code.review.webp';
+import contributorScreenshot from '../assets/contributor.task.webp';
+import submitTaskScreenshot from '../assets/submit.task.webp';
 
 interface NavItem {
     id: string;
@@ -57,6 +65,23 @@ const navCategories: NavCategory[] = [
             { id: 'github-output', title: 'GitHub output' },
             { id: 'maintainer-feedback', title: 'Maintainer feedback loop' },
             { id: 'broadcast', title: 'Broadcast & alerts' },
+        ],
+    },
+    {
+        label: 'BOUNTY AUTOMATION',
+        items: [
+            { id: 'bounty-overview', title: 'Bounty overview' },
+            { id: 'first-bounty', title: 'Your first bounty' },
+            { id: 'bounties', title: 'Bounties' },
+            { id: 'submissions', title: 'Submissions' },
+        ],
+    },
+    {
+        label: 'PAYMENTS & WALLET',
+        items: [
+            { id: 'escrow', title: 'Soroban escrow' },
+            { id: 'wallet', title: 'Built-in wallet' },
+            { id: 'withdrawals', title: 'Withdrawals' },
         ],
     },
     {
@@ -163,12 +188,12 @@ export function DocsPage() {
                     {/* ===== OVERVIEW ===== */}
                     <section id="overview" className="docs-section">
                         <br />
-                        <h1 className="docs-title">Code Review Documentation</h1>
+                        <h1 className="docs-title">DevAsign Documentation</h1>
                         <p className="docs-paragraph">
                             DevAsign is a <strong>multimodal AI code review agent</strong> that reviews every pull request against what was actually asked — not just the diff in isolation. It pulls context from the ticket, linked issues, Slack/Linear/Discord threads, Figma frames, Loom walkthroughs, screenshots, and PDFs, then synthesizes a concrete End goal and checks the PR against it.
                         </p>
                         <p className="docs-paragraph">
-                            Every repository also gets its own editable <strong><a href="#workflow" className="docs-link">review workflow</a></strong>: toggle stages, steer each AI step with your own instructions, choose blocking or comment-only verdicts, and even dispatch a GitHub Action when a review finishes.
+                            Every repository also gets its own editable <strong><a href="#workflow" className="docs-link">review workflow</a></strong>: toggle stages, steer each AI step with your own instructions, choose blocking or comment-only verdicts, and even dispatch a GitHub Action when a review finishes. On top of review, DevAsign also automates <strong><a href="#bounty-overview" className="docs-link">bounty payouts</a></strong> — put a price on a GitHub issue, and the payout settles from a Soroban escrow contract the moment you approve the work.
                         </p>
                         <div className="docs-callout">
                             <strong>Why it's different:</strong> traditional review bots grade style and surface lint. DevAsign judges the change against <em>intent</em> — the acceptance criteria distilled from the ticket and everything attached to it — and flags whole-repo regressions the diff alone can't reveal.
@@ -176,7 +201,10 @@ export function DocsPage() {
                         <img
                             src={agentDashboard}
                             alt="DevAsign Agents dashboard — review queue, review log, and the synthesized end goal with acceptance criteria"
-                            style={{ width: '100%', marginTop: '2rem' }}
+                            width={1889}
+                            height={1020}
+                            decoding="async"
+                            style={{ width: '100%', height: 'auto', marginTop: '2rem' }}
                         />
                     </section>
 
@@ -262,7 +290,11 @@ export function DocsPage() {
                         <img
                             src={onboardingScreenshot}
                             alt="DevAsign onboarding — step 1, install the DevAsign GitHub App and choose which repositories it can access"
-                            style={{ width: '100%', marginTop: '2rem' }}
+                            width={2022}
+                            height={725}
+                            loading="lazy"
+                            decoding="async"
+                            style={{ width: '100%', height: 'auto', marginTop: '2rem' }}
                         />
                     </section>
 
@@ -340,7 +372,11 @@ export function DocsPage() {
                         <img
                             src={linearWorkflow}
                             alt="DevAsign Linear integration configuration"
-                            style={{ width: '100%' }}
+                            width={1889}
+                            height={660}
+                            loading="lazy"
+                            decoding="async"
+                            style={{ width: '100%', height: 'auto' }}
                         />
                         <h3 className="docs-subheading">Permissions you grant</h3>
                         <p className="docs-paragraph">
@@ -544,7 +580,11 @@ Relevant diff:
                         <img
                             src={agentWorkflow}
                             alt="DevAsign code review agent workflow configuration"
-                            style={{ width: '100%' }}
+                            width={1889}
+                            height={1020}
+                            loading="lazy"
+                            decoding="async"
+                            style={{ width: '100%', height: 'auto' }}
                         />
                         <h3 className="docs-subheading">Stage toggles</h3>
                         <p className="docs-paragraph">
@@ -783,6 +823,198 @@ violations are flagged as nits; they don't block the merge.
                         <p className="docs-paragraph">
                             When a verdict lands, DevAsign broadcasts it to your connected <strong>Slack</strong> or <strong>Discord</strong> channel so the team sees the outcome without opening GitHub. In the dashboard, the notification bell surfaces a row per completed review — a blue dot for a clean pass, a red dot for changes requested or a failed run — and clicking it jumps straight to the review detail and its log timeline.
                         </p>
+                    </section>
+
+                    {/* ===== BOUNTY OVERVIEW ===== */}
+                    <section id="bounty-overview" className="docs-section">
+                        <h2 className="docs-heading">Bounty overview</h2>
+                        <p className="docs-paragraph">
+                            Alongside review, DevAsign lets open-source maintainers put a price on a GitHub issue and pay it out automatically — bounty payouts are settled by a <strong>Soroban</strong> smart contract on Stellar, with no manual transfer step.
+                        </p>
+                        <p className="docs-paragraph">
+                            Whether you're a <strong>project maintainer</strong> looking to incentivize contributions, or a <strong>developer</strong> hunting for paid open-source work, the sections below cover everything you need to get started. Setup is the same GitHub App install described in <a href="#installation" className="docs-link">Installation</a> — once it's on your repo, bounties are available immediately.
+                        </p>
+                        <img
+                            src={bountySubmissionScreenshot}
+                            alt="DevAsign submission review interface"
+                            width={1734}
+                            height={1024}
+                            loading="lazy"
+                            decoding="async"
+                            style={{ width: '100%', height: 'auto', marginTop: '2rem' }}
+                        />
+                    </section>
+
+                    {/* ===== YOUR FIRST BOUNTY ===== */}
+                    <section id="first-bounty" className="docs-section">
+                        <h2 className="docs-heading">Your first bounty</h2>
+                        <ol className="docs-ordered-list">
+                            <li>Install the DevAsign GitHub App on your repository — see <a href="#installation" className="docs-link">Installation</a>.</li>
+                            <li>Fund your DevAsign wallet with XLM or USDC</li>
+                            <li>Create a bounty by commenting on the GitHub issue <code className="docs-code">/bounty $10 2 days</code> — $10 is the bounty amount and 2 days is the deadline.</li>
+                            <li>Developers accept the bounty and submit PRs</li>
+                            <li>PR is reviewed with AI and feedback is posted as a comment</li>
+                            <li>Approve or reject PR submission</li>
+                            <li>On merge/approval, the payout is <strong>automatically</strong> released to the developer</li>
+                        </ol>
+                        <img
+                            src={bountyCommentScreenshot}
+                            alt="Create bounty directly in GitHub via comment"
+                            width={1082}
+                            height={425}
+                            loading="lazy"
+                            decoding="async"
+                            style={{ width: '100%', height: 'auto', marginTop: '2rem' }}
+                        />
+                    </section>
+
+                    {/* ===== BOUNTIES ===== */}
+                    <section id="bounties" className="docs-section">
+                        <h2 className="docs-heading">Bounties</h2>
+                        <p className="docs-paragraph">
+                            Maintainers can assign a bounty to any open issue. When creating a bounty, you specify the task deadline and the payout amount in <strong>USDC</strong>. These funds are held securely in a Soroban escrow contract until the work is approved/merged.
+                        </p>
+                        <h3 className="docs-subheading">Bounty lifecycle</h3>
+                        <ol className="docs-ordered-list">
+                            <li><strong>Open</strong> — Maintainer creates a bounty linked to a GitHub issue</li>
+                            <li><strong>In Progress</strong> — A developer claims the bounty</li>
+                            <li><strong>Review</strong> — Developer submits a PR for review</li>
+                            <li><strong>Bounty Paid</strong> — PR is merged/approved and funds are released</li>
+                            <li><strong>Rejected</strong> — Bounty is rejected and funds are returned to the maintainer</li>
+                            <li><strong>Deleted</strong> — Bounty is deleted and funds are returned to the maintainer</li>
+                        </ol>
+                        <img
+                            src={createBountyInapp}
+                            alt="Create bounty directly in DevAsign maintainer app"
+                            width={1734}
+                            height={741}
+                            loading="lazy"
+                            decoding="async"
+                            style={{ width: '100%', height: 'auto', marginTop: '2rem' }}
+                        />
+                        <h3 className="docs-subheading">Topping up funds</h3>
+                        <p className="docs-paragraph">
+                            Before a bounty can be activated, the maintainer must fund the escrow. You can easily top up your DevAsign wallet directly from the dashboard to ensure there is enough balance to cover the bounties you create.
+                        </p>
+                        <img
+                            src={topupWalletScreenshot}
+                            alt="Top up wallet in DevAsign"
+                            width={1734}
+                            height={580}
+                            loading="lazy"
+                            decoding="async"
+                            style={{ width: '100%', height: 'auto', marginTop: '2rem' }}
+                        />
+                    </section>
+
+                    {/* ===== SUBMISSIONS ===== */}
+                    <section id="submissions" className="docs-section">
+                        <h2 className="docs-heading">Submissions</h2>
+                        <p className="docs-paragraph">
+                            Developers browse active bounties on DevAsign. When you find a task you want to work on, click <code className="docs-code">Apply</code>. This lets the maintainer know you are interested in working on it.
+                        </p>
+                        <p className="docs-paragraph">
+                            Once you open a Pull Request against the linked issue, DevAsign automatically kicks in — the same <a href="#how-it-works" className="docs-link">review pipeline</a> runs on the bounty PR, so you get immediate, actionable feedback before the maintainer looks at it.
+                        </p>
+                        <img
+                            src={bountyPR}
+                            alt="Developer bounty PR submission in GitHub"
+                            width={1276}
+                            height={930}
+                            loading="lazy"
+                            decoding="async"
+                            style={{ width: '100%', height: 'auto', marginTop: '2rem' }}
+                        />
+                        <img
+                            src={aiReviewScreenshot}
+                            alt="AI code review posted on a bounty pull request"
+                            width={921}
+                            height={755}
+                            loading="lazy"
+                            decoding="async"
+                            style={{ width: '100%', height: 'auto', marginTop: '2rem' }}
+                        />
+                        <h3 className="docs-subheading">Submission review</h3>
+                        <p className="docs-paragraph">
+                            Maintainers can <strong>approve</strong> or <strong>reject</strong> submissions. On approval, the bounty payout is triggered automatically. On rejection, a reason must be provided so the contributor can iterate or dispute the decision.
+                        </p>
+                        <img
+                            src={contributorScreenshot}
+                            alt="Developer tasks in DevAsign"
+                            width={1734}
+                            height={1024}
+                            loading="lazy"
+                            decoding="async"
+                            style={{ width: '100%', height: 'auto', marginTop: '2rem' }}
+                        />
+                        <img
+                            src={submitTaskScreenshot}
+                            alt="Submit task in DevAsign"
+                            width={1734}
+                            height={583}
+                            loading="lazy"
+                            decoding="async"
+                            style={{ width: '100%', height: 'auto', marginTop: '2rem' }}
+                        />
+                    </section>
+
+                    {/* ===== ESCROW ===== */}
+                    <section id="escrow" className="docs-section">
+                        <h2 className="docs-heading">Soroban escrow</h2>
+                        <p className="docs-paragraph">
+                            Trust is guaranteed via automated Soroban smart contracts on the <strong>Stellar network</strong>.
+                        </p>
+                        <h3 className="docs-subheading">How escrow works</h3>
+                        <p className="docs-paragraph">
+                            When a maintainer creates a bounty, the funds are deposited into a secure Soroban escrow contract. They are locked there until the conditions (PR approval) are met. Neither the maintainer nor the contributor can unilaterally withdraw escrowed funds.
+                        </p>
+
+                        <div className="docs-escrow-contract-card">
+                            <div className="docs-escrow-contract-badge">LIVE ON STELLAR</div>
+                            <div className="docs-escrow-contract-inline">
+                                <span className="docs-escrow-contract-label">Smart Contract:</span>
+                                <a
+                                    href="https://stellar.expert/explorer/public/contract/CDDFBYM5MECFZHDAU3ZZLGGCU4WPSEMRACAMID6UTFV5TGLSKIKTWLQM"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="docs-escrow-contract-address"
+                                >
+                                    CDDFBYM5MECFZHDAU3ZZLGGCU4WPSEMRACAMID6UTFV5TGLSKIKTWLQM
+                                </a>
+                            </div>
+                        </div>
+                        <h3 className="docs-subheading">Automated payouts</h3>
+                        <p className="docs-paragraph">
+                            <strong>Zero manual intervention is required for payouts.</strong> As soon as the maintainer approves the contributor's submission, the system triggers the smart contract. The bounty is paid immediately and automatically directly into the contributor's wallet.
+                        </p>
+                    </section>
+
+                    {/* ===== WALLET ===== */}
+                    <section id="wallet" className="docs-section">
+                        <h2 className="docs-heading">Built-in wallet</h2>
+                        <p className="docs-paragraph">
+                            Web3 onboarding can be tough, which is why DevAsign abstracts it away. Both maintainers and contributors are <strong>automatically provided with a secure, built-in wallet</strong> upon account creation.
+                        </p>
+                        <p className="docs-paragraph">
+                            You do not need to connect a third-party wallet (like Freighter or Lobstr) to start using DevAsign. Your wallet is created and funded automatically through the Stellar network.
+                        </p>
+                        <div className="docs-callout">
+                            <strong>Security:</strong> All wallet secret keys are encrypted at rest using AES-256-GCM with a server-side encryption key.
+                        </div>
+                    </section>
+
+                    {/* ===== WITHDRAWALS ===== */}
+                    <section id="withdrawals" className="docs-section">
+                        <h2 className="docs-heading">Withdrawals</h2>
+                        <p className="docs-paragraph">
+                            Once a contributor receives their bounty in their DevAsign wallet, they can seamlessly withdraw the funds to any external Stellar address or exchange of their choice.
+                        </p>
+                        <h3 className="docs-subheading">Withdrawal requirements</h3>
+                        <ul className="docs-unordered-list">
+                            <li>The destination must be a valid Stellar address with a USDC trustline</li>
+                            <li>Sufficient balance must be available in your wallet</li>
+                            <li>A 24-hour cooldown period applies between withdrawals for security</li>
+                        </ul>
                     </section>
 
                     {/* ===== MODELS ===== */}
