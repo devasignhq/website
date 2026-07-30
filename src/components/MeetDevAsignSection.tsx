@@ -1,25 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-
-const PILLARS = [
-    {
-        tag: "PILLAR 01",
-        title: "Ingest the goal",
-        body: "Reads the ticket, linked issues, attached screenshots and Loom walkthroughs — the same inputs the dev was given. It builds a model of what done looks like before it ever opens the diff.",
-        illo: "ingest" as const,
-    },
-    {
-        tag: "PILLAR 02",
-        title: "Goal-aware review",
-        body: "Every commit & PR is scored against that model — not just against the linter. Missed requirements, silent omissions, and contract-breaking changes get flagged out loud.",
-        illo: "review" as const,
-    },
-    {
-        tag: "PILLAR 03",
-        title: "Inline dev guidance",
-        body: "Guides the dev right on the PR while they're still in the flow. No context switch. Feedback shows up where the work is happening.",
-        illo: "guidance" as const,
-    },
-];
+import { useEffect, useRef } from "react";
+import { AuditIllo, EscrowIllo } from "./story/StoryIllustrations";
 
 type IngestSource = {
     id: string;
@@ -163,172 +143,130 @@ function IngestIllo() {
     );
 }
 
-function ReviewIllo() {
-    return (
-        <div className="da-illo da-illo-review">
-            <div className="review-pr">
-                <div className="head">
-                    <span className="who">PR #43</span>
-                    <span className="meta">+124 / −38</span>
-                </div>
-                <div className="diff">
-                    <div className="line add"><span>+</span> <code>&lt;Button&gt;{"{cta}"}&lt;/Button&gt;</code></div>
-                    <div className="line add"><span>+</span> <code>aria-label="Create team"</code></div>
-                    <div className="line del"><span>−</span> <code>// TODO: empty state</code></div>
-                    <div className="line ctx"><span> </span> <code>return &lt;EmptyState/&gt;;</code></div>
-                    <div className="scan" />
-                </div>
-            </div>
-
-            <div className="review-arrow" aria-hidden="true">
-                <span className="line" />
-                <span className="head" />
-            </div>
-
-            <div className="review-goals">
-                <div className="head">
-                    <span className="who">GOAL MODEL</span>
-                    <span className="score">6/6</span>
-                </div>
-                <ul>
-                    <li className="g1">CTA matches Figma copy</li>
-                    <li className="g2">Empty state visible when teams=0</li>
-                    <li className="g3">a11y label on primary action</li>
-                    <li className="g4">Track impression event</li>
-                    <li className="g5">Mobile matches Figma</li>
-                    <li className="g6">Loading respects skeleton</li>
-                </ul>
-            </div>
-        </div>
-    );
-}
-
-function GuidanceIllo() {
-    return (
-        <div className="da-illo da-illo-guidance">
-            <div className="ide-frame">
-                <div className="ide-tab">
-                    <span className="dots"><span /><span /><span /></span>
-                    <span className="name">EmptyState.tsx</span>
-                </div>
-                <div className="ide-body">
-                    <div className="ide-line l1"><span className="ln">141</span><span className="code"><span className="kw">const</span> cta = <span className="str">"Add team"</span>;</span></div>
-                    <div className="ide-line l2 hot"><span className="ln">142</span><span className="code">&lt;<span className="tag">Button</span>&gt;{"{cta}"}&lt;/<span className="tag">Button</span>&gt;</span></div>
-                    <div className="ide-line l3"><span className="ln">143</span><span className="code">&nbsp;</span></div>
-
-                    <div className="ide-callout" role="note">
-                        <span className="tail" aria-hidden="true" />
-                        <span className="badge">DevAsign</span>
-                        <p className="typewriter">
-                            <span>Should be </span>
-                            <em>"Create your first team"</em>
-                            <span> per Figma frame 4.</span>
-                            <span className="caret" />
-                        </p>
-                        <div className="actions">
-                            <span className="kbd">⌘ ↵</span>
-                            <span>apply fix</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-}
-
+/**
+ * Bento layout: the three chapters as large tiles, interleaved with small
+ * accent tiles that carry one hard fact each. Tiles reveal (and their
+ * illustrations start animating) as the grid scrolls into view.
+ */
 export function MeetDevAsignSection() {
-    const [active, setActive] = useState(0);
-    const sectionRef = useRef<HTMLElement | null>(null);
-    const current = PILLARS[active];
+    const gridRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        const update = () => {
-            const sec = sectionRef.current;
-            if (!sec) return;
-            // Skip scroll-pinning on tablet/mobile — the layout is stacked.
-            if (window.innerWidth < 1024) return;
-            const total = sec.offsetHeight - window.innerHeight;
-            if (total <= 0) return;
-            const rect = sec.getBoundingClientRect();
-            const progress = Math.max(0, Math.min(1, -rect.top / total));
-            const next = progress >= 0.66 ? 2 : progress >= 0.33 ? 1 : 0;
-            setActive((prev) => (prev === next ? prev : next));
+        const grid = gridRef.current;
+        if (!grid) return;
+        const tiles = [...grid.querySelectorAll<HTMLElement>(".da-bento-tile")];
+        if (!tiles.length) return;
+
+        // Opt into the hidden-until-revealed state only now that the revealer is
+        // definitely running — if this effect never fires the tiles stay visible.
+        grid.classList.add("js-reveal");
+
+        // Seven rect reads, and the listener detaches itself once the last tile
+        // has been revealed — cheap enough not to need throttling.
+        const reveal = () => {
+            let pending = 0;
+            for (const t of tiles) {
+                if (t.classList.contains("is-in")) continue;
+                // Revealed once its top crosses the lower eighth of the viewport.
+                // Deliberately no lower bound: a jump-to-anchor or fast flick that
+                // lands past the grid must still leave everything above visible.
+                if (t.getBoundingClientRect().top < window.innerHeight * 0.88) t.classList.add("is-in");
+                else pending++;
+            }
+            if (pending === 0) teardown();
         };
-        update();
-        window.addEventListener("scroll", update, { passive: true });
-        window.addEventListener("resize", update);
-        return () => {
-            window.removeEventListener("scroll", update);
-            window.removeEventListener("resize", update);
+        const teardown = () => {
+            window.removeEventListener("scroll", reveal);
+            window.removeEventListener("resize", reveal);
         };
+
+        reveal();
+        window.addEventListener("scroll", reveal, { passive: true });
+        window.addEventListener("resize", reveal);
+        return teardown;
     }, []);
 
-    const goToPillar = (i: number) => {
-        const sec = sectionRef.current;
-        if (sec && window.innerWidth >= 1024) {
-            const total = sec.offsetHeight - window.innerHeight;
-            if (total > 0) {
-                const targetProgress = i === 0 ? 0.05 : i === 1 ? 0.45 : 0.8;
-                const targetTop = sec.offsetTop + total * targetProgress;
-                window.scrollTo({ top: targetTop, behavior: "smooth" });
-                return;
-            }
-        }
-        setActive(i);
-    };
-
     return (
-        <section ref={sectionRef} className="da-section da-pillar-section" id="introducing">
-            <div className="da-pillar-sticky">
-                <div className="da-container">
-                    <div className="da-section-head">
-                        <span className="eyebrow brand">INTRODUCING</span>
-                        <h2>Meet <span className="da-brand-text">DevAsign</span></h2>
-                        <p className="lead">The multimodal, goal-aware code review agent.</p>
-                    </div>
+        <section className="da-section da-bento-section" id="introducing">
+            <div className="da-container">
+                <div className="da-section-head">
+                    <span className="eyebrow brand">INTRODUCING</span>
+                    <h2>One agent, three chapters</h2>
+                </div>
 
-                    <div className="da-pillar-split">
-                        <div className="da-pillar-accordion">
-                            {PILLARS.map((p, i) => {
-                                const isOpen = active === i;
-                                return (
-                                    <div
-                                        key={p.tag}
-                                        className={`da-acc-item ${isOpen ? "open" : ""}`}
-                                    >
-                                        <button
-                                            type="button"
-                                            className="da-acc-head"
-                                            aria-expanded={isOpen}
-                                            aria-controls={`da-acc-body-${i}`}
-                                            onClick={() => goToPillar(i)}
-                                        >
-                                            <span className="num-tag">{p.tag}</span>
-                                            <span className="da-acc-title">{p.title}</span>
-                                            <span className="da-acc-chev" aria-hidden="true">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                                    <polyline points="6 9 12 15 18 9" />
-                                                </svg>
-                                            </span>
-                                        </button>
-                                        <div
-                                            id={`da-acc-body-${i}`}
-                                            className="da-acc-body"
-                                            role="region"
-                                        >
-                                            <p>{p.body}</p>
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                <div className="da-bento" ref={gridRef}>
+                    {/* ── Chapter 01 ── */}
+                    <article className="da-bento-tile chapter t-read">
+                        <div className="tile-copy">
+                            <span className="tile-tag">CHAPTER 01</span>
+                            <h3>Read what the developer was given</h3>
+                            <p>
+                                It reads what the developer read — ticket, Figma, Loom, the thread where the requirement got decided — and builds a model of <em>done</em>. Then it reviews every commit against that.
+                            </p>
                         </div>
+                        <div className="tile-illo"><IngestIllo /></div>
+                    </article>
 
-                        <div className="da-pillar-illo-wrap" key={active} aria-live="polite">
-                            {current.illo === "ingest" && <IngestIllo />}
-                            {current.illo === "review" && <ReviewIllo />}
-                            {current.illo === "guidance" && <GuidanceIllo />}
+                    {/* ── Accent: the agent's voice ── */}
+                    <article className="da-bento-tile accent t-voice">
+                        <span className="tile-kicker">IN ITS OWN WORDS</span>
+                        <blockquote>
+                            “The ticket asked for a per-org filter. Your diff filters by <code>userId</code> only.”
+                        </blockquote>
+                        <p>Every comment names the requirement it is measuring against — so the feedback is arguable, not oracular.</p>
+                    </article>
+
+                    {/* ── Chapter 02 ── */}
+                    <article className="da-bento-tile chapter t-audit">
+                        <div className="tile-copy">
+                            <span className="tile-tag">CHAPTER 02</span>
+                            <h3>Audit the house, not the doorway</h3>
+                            <p>
+                                Every merge wakes a second agent that ignores your diff entirely. It walks the whole repo&apos;s security surface — routes, tenant scoping, infra, secrets, deps — and never files what it can&apos;t prove.
+                            </p>
                         </div>
-                    </div>
+                        <div className="tile-illo"><AuditIllo /></div>
+                    </article>
+
+                    {/* ── Accent: severity model ── */}
+                    <article className="da-bento-tile accent t-blast">
+                        <span className="tile-kicker">SEVERITY MODEL</span>
+                        <h4>Ranked by blast radius, not likelihood.</h4>
+                        <p>A bug that leaks one tenant to another ends every enterprise contract at once. Priority follows the damage, not the odds.</p>
+                        <ul className="tile-matrix">
+                            <li><span className="s crit">CRITICAL</span><span className="act block">block</span></li>
+                            <li><span className="s high">HIGH</span><span className="act warn">warn</span></li>
+                            <li><span className="s med">MEDIUM</span><span className="act track">track</span></li>
+                            <li><span className="s low">LOW</span><span className="act track">track</span></li>
+                        </ul>
+                    </article>
+
+                    {/* ── Accent: the merge gate ── */}
+                    <article className="da-bento-tile accent t-gate">
+                        <span className="tile-kicker">MERGE GATE</span>
+                        <div className="tile-check fail"><span className="mark">✗</span> devasign/security — blocked</div>
+                        <div className="tile-check pass"><span className="mark">✓</span> devasign/security — passed</div>
+                        <p>Mark the check required and an unresolved critical stops the queue — <strong>yours included</strong>.</p>
+                    </article>
+
+                    {/* ── Accent: settlement ── */}
+                    <article className="da-bento-tile accent t-settle">
+                        <span className="tile-kicker">SETTLEMENT</span>
+                        <div className="tile-stat">~4s</div>
+                        <p>USDC on Stellar. Sub-cent network fee. No invoice, no wire, no thirty-day net — the same speed to Lisbon and to Lagos.</p>
+                    </article>
+
+                    {/* ── Chapter 03 ── */}
+                    <article className="da-bento-tile chapter t-fund">
+                        <div className="tile-copy">
+                            <span className="tile-tag">CHAPTER 03</span>
+                            <h3>Put money on the ones you can&apos;t get to</h3>
+                            <p>
+                                You won&apos;t fix all of them. File one as a GitHub issue in a click, then fund it — USDC locked in escrow a stranger can verify before they clone. Fix accepted, paid in seconds.
+                            </p>
+                        </div>
+                        <div className="tile-illo"><EscrowIllo /></div>
+                    </article>
                 </div>
             </div>
         </section>
