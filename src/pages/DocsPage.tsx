@@ -5,14 +5,6 @@ import agentDashboard from '../assets/devasign-agent.webp';
 import agentWorkflow from '../assets/devasign-workflow.webp';
 import linearWorkflow from '../assets/devasign-installation.webp';
 import onboardingScreenshot from '../assets/devasign-onboarding.webp';
-import bountySubmissionScreenshot from '../assets/devasign.submission.webp';
-import bountyCommentScreenshot from '../assets/bounty.comment.webp';
-import createBountyInapp from '../assets/create.bounty.inapp.webp';
-import topupWalletScreenshot from '../assets/topup.wallet.webp';
-import bountyPR from '../assets/bounty.pr.webp';
-import aiReviewScreenshot from '../assets/code.review.webp';
-import contributorScreenshot from '../assets/contributor.task.webp';
-import submitTaskScreenshot from '../assets/submit.task.webp';
 
 interface NavItem {
     id: string;
@@ -834,15 +826,6 @@ violations are flagged as nits; they don't block the merge.
                         <p className="docs-paragraph">
                             Whether you're a <strong>project maintainer</strong> looking to incentivize contributions, or a <strong>developer</strong> hunting for paid open-source work, the sections below cover everything you need to get started. Setup is the same GitHub App install described in <a href="#installation" className="docs-link">Installation</a> — once it's on your repo, bounties are available immediately.
                         </p>
-                        <img
-                            src={bountySubmissionScreenshot}
-                            alt="DevAsign submission review interface"
-                            width={1734}
-                            height={1024}
-                            loading="lazy"
-                            decoding="async"
-                            style={{ width: '100%', height: 'auto', marginTop: '2rem' }}
-                        />
                     </section>
 
                     {/* ===== YOUR FIRST BOUNTY ===== */}
@@ -857,15 +840,6 @@ violations are flagged as nits; they don't block the merge.
                             <li>Approve or reject PR submission</li>
                             <li>On merge/approval, the payout is <strong>automatically</strong> released to the developer</li>
                         </ol>
-                        <img
-                            src={bountyCommentScreenshot}
-                            alt="Create bounty directly in GitHub via comment"
-                            width={1082}
-                            height={425}
-                            loading="lazy"
-                            decoding="async"
-                            style={{ width: '100%', height: 'auto', marginTop: '2rem' }}
-                        />
                     </section>
 
                     {/* ===== BOUNTIES ===== */}
@@ -883,28 +857,10 @@ violations are flagged as nits; they don't block the merge.
                             <li><strong>Rejected</strong> — Bounty is rejected and funds are returned to the maintainer</li>
                             <li><strong>Deleted</strong> — Bounty is deleted and funds are returned to the maintainer</li>
                         </ol>
-                        <img
-                            src={createBountyInapp}
-                            alt="Create bounty directly in DevAsign maintainer app"
-                            width={1734}
-                            height={741}
-                            loading="lazy"
-                            decoding="async"
-                            style={{ width: '100%', height: 'auto', marginTop: '2rem' }}
-                        />
                         <h3 className="docs-subheading">Topping up funds</h3>
                         <p className="docs-paragraph">
                             Before a bounty can be activated, the maintainer must fund the escrow. You can easily top up your DevAsign wallet directly from the dashboard to ensure there is enough balance to cover the bounties you create.
                         </p>
-                        <img
-                            src={topupWalletScreenshot}
-                            alt="Top up wallet in DevAsign"
-                            width={1734}
-                            height={580}
-                            loading="lazy"
-                            decoding="async"
-                            style={{ width: '100%', height: 'auto', marginTop: '2rem' }}
-                        />
                     </section>
 
                     {/* ===== SUBMISSIONS ===== */}
@@ -916,46 +872,10 @@ violations are flagged as nits; they don't block the merge.
                         <p className="docs-paragraph">
                             Once you open a Pull Request against the linked issue, DevAsign automatically kicks in — the same <a href="#how-it-works" className="docs-link">review pipeline</a> runs on the bounty PR, so you get immediate, actionable feedback before the maintainer looks at it.
                         </p>
-                        <img
-                            src={bountyPR}
-                            alt="Developer bounty PR submission in GitHub"
-                            width={1276}
-                            height={930}
-                            loading="lazy"
-                            decoding="async"
-                            style={{ width: '100%', height: 'auto', marginTop: '2rem' }}
-                        />
-                        <img
-                            src={aiReviewScreenshot}
-                            alt="AI code review posted on a bounty pull request"
-                            width={921}
-                            height={755}
-                            loading="lazy"
-                            decoding="async"
-                            style={{ width: '100%', height: 'auto', marginTop: '2rem' }}
-                        />
                         <h3 className="docs-subheading">Submission review</h3>
                         <p className="docs-paragraph">
                             Maintainers can <strong>approve</strong> or <strong>reject</strong> submissions. On approval, the bounty payout is triggered automatically. On rejection, a reason must be provided so the contributor can iterate or dispute the decision.
                         </p>
-                        <img
-                            src={contributorScreenshot}
-                            alt="Developer tasks in DevAsign"
-                            width={1734}
-                            height={1024}
-                            loading="lazy"
-                            decoding="async"
-                            style={{ width: '100%', height: 'auto', marginTop: '2rem' }}
-                        />
-                        <img
-                            src={submitTaskScreenshot}
-                            alt="Submit task in DevAsign"
-                            width={1734}
-                            height={583}
-                            loading="lazy"
-                            decoding="async"
-                            style={{ width: '100%', height: 'auto', marginTop: '2rem' }}
-                        />
                     </section>
 
                     {/* ===== ESCROW ===== */}

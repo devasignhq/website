@@ -172,7 +172,7 @@ export function LandingPage() {
                 </div>
             </section> */}
 
-            {/* SECTION 6 — INTRODUCING */}
+            {/* SECTION 6 — INTRODUCING: bento grid, three chapters + accent tiles */}
             <MeetDevAsignSection />
 
             {/* SECTION 7 — HOW IT WORKS */}
