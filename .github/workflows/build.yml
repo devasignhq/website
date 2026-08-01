@@ -1,0 +1,41 @@
+name: Build
+
+# Mirrors what Vercel does, but on every push and PR instead of only on deploy.
+# The point is the clean checkout: actions/checkout fetches *tracked files only*,
+# so a file that exists on a developer's disk but was never `git add`ed fails
+# here the same way it fails on Vercel. A local `npm run build` cannot catch that.
+on:
+  push:
+    branches: [web-dev, main]
+  pull_request:
+    branches: [web-dev, main]
+
+permissions:
+  contents: read
+
+# A newer commit on the same branch or PR makes an in-flight run pointless.
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: vite build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Keep in step with the Node version set on the Vercel project,
+          # otherwise CI can pass while the deploy fails (or vice versa).
+          node-version: '22'
+          cache: npm
+
+      # `npm ci` installs strictly from package-lock.json and errors if the
+      # lockfile is out of sync with package.json — another drift Vercel would
+      # otherwise be the first to notice.
+      - run: npm ci
+
+      # Same command as vercel.json's buildCommand.
+      - run: npm run build
