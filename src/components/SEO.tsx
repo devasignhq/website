@@ -12,12 +12,12 @@ interface SEOProps {
 }
 
 export const SEO = ({
-    title = "DevAsign — Multimodal, Goal-Aware AI Code Review",
+    title = "DevAsign - Review the goal. Audit the merge. Fund the fix.",
     description = "The AI code reviewer that reads the ticket first. DevAsign ingests your tickets, screenshots, Figma, and Loom — then reviews every PR against what was actually asked. Catch what compiles, passes tests, and still ships the wrong thing.",
-    ogTitle = "Code review, against the goal — not just the diff.",
-    ogDescription = "Multimodal, goal-aware review for the era of AI-generated PRs.",
+    ogTitle = "DevAsign | Review the goal. Audit the merge. Fund the fix.",
+    ogDescription = "DevAsign reviews pull requests & audits your entire codebase for what an attacker can actually reach, then suggests a fix or helps you create a bounty (in USDC) for the fixes you'll never get to.",
     canonical,
-    image = "/link-preview.webp", // Using existing image as default or fallback
+    image = "/devasign-preview.webp", // Default social/link-preview image
     type = "website",
     breadcrumbs
 }: SEOProps) => {
