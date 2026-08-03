@@ -262,7 +262,7 @@ export function MeetDevAsignSection() {
                             <span className="tile-tag">CHAPTER 03</span>
                             <h3>Put a bounty on the ones you can&apos;t get to</h3>
                             <p>
-                                You won&apos;t fix all of them. Create a GitHub issue in a click, then fund it <strong>USDC locked in escrow</strong> — a dev can verify before they apply. Once a fix accepted merged, bounty is paid in seconds.
+                                You won&apos;t fix all of them. Create a GitHub issue in a click, then fund it <strong>USDC locked in escrow</strong> — a dev can verify before they apply. Once a fix is accepted and merged, the bounty is paid in seconds.
                             </p>
                         </div>
                         <div className="tile-illo"><EscrowIllo /></div>
