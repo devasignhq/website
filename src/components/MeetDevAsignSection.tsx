@@ -209,11 +209,11 @@ export function MeetDevAsignSection() {
 
                     {/* ── Accent: the agent's voice ── */}
                     <article className="da-bento-tile accent t-voice">
-                        <span className="tile-kicker">IN ITS OWN WORDS</span>
-                        <blockquote>
-                            “The ticket asked for a per-org filter. Your diff filters by <code>userId</code> only.”
-                        </blockquote>
-                        <p>Every comment names the requirement it is measuring against — so the feedback is arguable, not oracular.</p>
+                        {/* <span className="tile-kicker">IN ITS OWN WORDS</span> */}
+                        <h5>
+                            “...the ticket asked for a per-org filter. Your diff filters by <code>userId</code> only.”
+                        </h5>
+                        <p>Every comment names the requirement it is measuring against — so the feedback is arguable, not vague.</p>
                     </article>
 
                     {/* ── Chapter 02 ── */}
@@ -222,7 +222,7 @@ export function MeetDevAsignSection() {
                             <span className="tile-tag">CHAPTER 02</span>
                             <h3>Audit the house, not the doorway</h3>
                             <p>
-                                Every merge wakes a second agent that ignores your diff entirely. It walks the whole repo&apos;s security surface — routes, tenant scoping, infra, secrets, deps — and never files what it can&apos;t prove.
+                                Every merge wakes a second agent that walks the whole repo&apos;s security surface — routes, tenant scoping, infra, secrets, deps — and never files what it can&apos;t prove.
                             </p>
                         </div>
                         <div className="tile-illo"><AuditIllo /></div>
@@ -230,8 +230,8 @@ export function MeetDevAsignSection() {
 
                     {/* ── Accent: severity model ── */}
                     <article className="da-bento-tile accent t-blast">
-                        <span className="tile-kicker">SEVERITY MODEL</span>
-                        <h4>Ranked by blast radius, not likelihood.</h4>
+                        {/* <span className="tile-kicker">SEVERITY MODEL</span> */}
+                        <h5>Ranked by blast radius, not likelihood.</h5>
                         <p>A bug that leaks one tenant to another ends every enterprise contract at once. Priority follows the damage, not the odds.</p>
                         <ul className="tile-matrix">
                             <li><span className="s crit">CRITICAL</span><span className="act block">block</span></li>
@@ -243,7 +243,7 @@ export function MeetDevAsignSection() {
 
                     {/* ── Accent: the merge gate ── */}
                     <article className="da-bento-tile accent t-gate">
-                        <span className="tile-kicker">MERGE GATE</span>
+                        {/* <span className="tile-kicker">MERGE GATE</span> */}
                         <div className="tile-check fail"><span className="mark">✗</span> devasign/security — blocked</div>
                         <div className="tile-check pass"><span className="mark">✓</span> devasign/security — passed</div>
                         <p>Mark the check required and an unresolved critical stops the queue — <strong>yours included</strong>.</p>
@@ -251,7 +251,7 @@ export function MeetDevAsignSection() {
 
                     {/* ── Accent: settlement ── */}
                     <article className="da-bento-tile accent t-settle">
-                        <span className="tile-kicker">SETTLEMENT</span>
+                        {/* <span className="tile-kicker">SETTLEMENT</span> */}
                         <div className="tile-stat">~4s</div>
                         <p>USDC on Stellar. Sub-cent network fee. No invoice, no wire, no thirty-day net — the same speed to Lisbon and to Lagos.</p>
                     </article>
@@ -260,9 +260,9 @@ export function MeetDevAsignSection() {
                     <article className="da-bento-tile chapter t-fund">
                         <div className="tile-copy">
                             <span className="tile-tag">CHAPTER 03</span>
-                            <h3>Put money on the ones you can&apos;t get to</h3>
+                            <h3>Put a bounty on the ones you can&apos;t get to</h3>
                             <p>
-                                You won&apos;t fix all of them. File one as a GitHub issue in a click, then fund it — USDC locked in escrow a stranger can verify before they clone. Fix accepted, paid in seconds.
+                                You won&apos;t fix all of them. Create a GitHub issue in a click, then fund it <strong>USDC locked in escrow</strong> — a dev can verify before they apply. Once a fix is accepted and merged, the bounty is paid in seconds.
                             </p>
                         </div>
                         <div className="tile-illo"><EscrowIllo /></div>
