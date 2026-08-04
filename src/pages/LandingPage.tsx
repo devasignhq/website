@@ -37,7 +37,7 @@ export function LandingPage() {
                             Code review against the <span className="da-brand-text">goal</span> not just <span className="da-strike">diff</span>
                         </h1>
                         <p className="da-hero-sub">
-                            DevAsign reviews pull requests & audits entire codebase for what an attacker can actually reach, then suggests a fix or help you create a bounty (in USDC) for the fixes you'll never get to.
+                            DevAsign reviews pull requests against the end-goal & audits entire codebase for what an attacker can actually reach, then suggests a fix or help you create a bounty (in USDC) for the fixes you'll never get to.
                         </p>
                         <div className="da-hero-ctas">
                             <a href={URLS.SPONSOR_AUTH} className="btn btn-primary">Start reviewing →</a>
