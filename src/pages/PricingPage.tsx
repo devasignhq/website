@@ -37,6 +37,8 @@ const TextCell = ({ children, max = false, strong = false }: { children: React.R
 
 export function PricingPage() {
     const [billing, setBilling] = useState<'month' | 'year'>('month');
+    // Analytics keys 'pro'/'max' are frozen legacy identifiers for the Personal/Team tiers
+    // (logCtaClick plan values, data-plan/data-cta) — kept stable for Statsig dashboard continuity.
     const proPrice = billing === 'month' ? '$20' : '$16';
     const maxPrice = billing === 'month' ? '$100' : '$80';
     const proPriceNum = billing === 'month' ? 20 : 16;
@@ -197,6 +199,7 @@ export function PricingPage() {
                             </a>
                             <div className="da-plan-features">
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Auto-reviews every PR opened in your GitHub org</strong></span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Comment <strong>"review"</strong> to review any other PR</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Private + public repositories</strong></span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>600 PR reviews / month</strong></span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>650 overage credits / month</strong> — keep reviewing past the cap</span></div>
@@ -204,7 +207,7 @@ export function PricingPage() {
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Custom workflows</strong> — tailor the review pipeline per repository</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Onchain bounty automation</strong> on GitHub</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Custom review policies</strong> per repo &amp; team</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Goal-coverage analytics &amp; dashboards · Linear sync</span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Linear sync — acceptance-criteria</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Priority Slack support · 24h response</span></div>
                             </div>
                         </article>
@@ -252,6 +255,10 @@ export function PricingPage() {
                                     <XCell />
                                     <TextCell>150</TextCell>
                                     <TextCell max>650</TextCell>
+                                </tr>
+                                <tr>
+                                    <td className="feat-name">Comment "review" to review any PR</td>
+                                    <CheckCell /><CheckCell /><CheckCell max />
                                 </tr>
                                 <tr>
                                     <td className="feat-name">Auto-review every PR in your GitHub org</td>
@@ -335,7 +342,7 @@ export function PricingPage() {
                             </details>
                             <details className="da-faq">
                                 <summary>What if my team reviews far more than the cap?</summary>
-                                <div className="da-faq-body"><p>If you're consistently above Personal's 120 reviews a month, Team lifts you to 600 reviews plus 650 overage credits and a priority capacity lane. Most teams that hit Personal's ceiling upgrade within 60 days.</p></div>
+                                <div className="da-faq-body"><p>If you're consistently above Personal's 120 reviews a month, Team lifts you to 600 reviews plus 650 overage credits. Most teams that hit Personal's ceiling upgrade within 60 days.</p></div>
                             </details>
                             <details className="da-faq">
                                 <summary>Can I cancel any time?</summary>
