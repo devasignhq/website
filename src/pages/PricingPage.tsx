@@ -130,7 +130,7 @@ export function PricingPage() {
                             </a>
                             <div className="da-plan-features">
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Auto-reviews your own PRs</strong> — every PR you open</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Comment <strong>"review"</strong> to review any other PR</span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Comment <strong>"review"</strong> to review PRs authored by other collaborators</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Public repositories only</strong> — your project must be open-source</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>30 PR reviews / month</strong></span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Standard model — managed by DevAsign</span></div>
@@ -163,7 +163,7 @@ export function PricingPage() {
                             </a>
                             <div className="da-plan-features">
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Auto-reviews your own PRs</strong> — every PR you open</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Comment <strong>"review"</strong> to review any other PR</span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Comment <strong>"review"</strong> to review PRs authored by other collaborators</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Private + public repositories</strong> — full access</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>120 PR reviews / month</strong></span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>150 overage credits / month</strong> — keep reviewing past the cap</span></div>
@@ -199,7 +199,7 @@ export function PricingPage() {
                             </a>
                             <div className="da-plan-features">
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Auto-reviews every PR opened in your GitHub org</strong></span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Comment <strong>"review"</strong> to review any other PR</span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Comment <strong>"review"</strong> to review PRs authored by other collaborators</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Private + public repositories</strong></span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>600 PR reviews / month</strong></span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>650 overage credits / month</strong> — keep reviewing past the cap</span></div>
