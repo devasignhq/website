@@ -39,7 +39,7 @@ const navCategories: NavCategory[] = [
             { id: 'context-ingestion', title: 'Context ingestion' },
             { id: 'end-goal', title: 'End goal & criteria' },
             { id: 'multimodal-review', title: 'Multimodal review' },
-            { id: 'holistic-review', title: 'Whole-repo review' },
+            { id: 'holistic-review', title: 'Codebase-aware review' },
             { id: 'deferred-work', title: 'Deferred-work detection' },
         ],
     },
@@ -72,14 +72,14 @@ const navCategories: NavCategory[] = [
         label: 'PAYMENTS & WALLET',
         items: [
             { id: 'escrow', title: 'Soroban escrow' },
-            { id: 'wallet', title: 'Built-in wallet' },
-            { id: 'withdrawals', title: 'Withdrawals' },
+            { id: 'wallet', title: 'Payout wallet' },
+            { id: 'withdrawals', title: 'Deadlines & disputes' },
         ],
     },
     {
         label: 'UNDER THE HOOD',
         items: [
-            { id: 'models', title: 'Models' },
+            { id: 'models', title: 'Models & plans' },
             { id: 'repo-index', title: 'Repository index' },
             { id: 'architecture', title: 'Architecture' },
         ],
@@ -182,17 +182,17 @@ export function DocsPage() {
                         <br />
                         <h1 className="docs-title">DevAsign Documentation</h1>
                         <p className="docs-paragraph">
-                            DevAsign is a <strong>multimodal AI code review agent</strong> that reviews every pull request against what was actually asked — not just the diff in isolation. It pulls context from the ticket, linked issues, Slack/Linear/Discord threads, Figma frames, Loom walkthroughs, screenshots, and PDFs, then synthesizes a concrete End goal and checks the PR against it.
+                            DevAsign is a <strong>multimodal AI code review agent</strong> that reviews every pull request against what was actually asked, not just the diff in isolation. It pulls context from the ticket, linked issues, Slack/Linear/Discord threads, Figma frames, Loom walkthroughs, screenshots, and PDFs, then synthesizes a concrete End goal and checks the PR against it.
                         </p>
                         <p className="docs-paragraph">
-                            Every repository also gets its own editable <strong><a href="#workflow" className="docs-link">review workflow</a></strong>: toggle stages, steer each AI step with your own instructions, choose blocking or comment-only verdicts, and even dispatch a GitHub Action when a review finishes. On top of review, DevAsign also automates <strong><a href="#bounty-overview" className="docs-link">bounty payouts</a></strong> — put a price on a GitHub issue, and the payout settles from a Soroban escrow contract the moment you approve the work.
+                            Every repository also gets its own editable <strong><a href="#workflow" className="docs-link">review workflow</a></strong>: toggle stages, steer each AI step with your own instructions, choose blocking or comment-only verdicts, and even dispatch a GitHub Action when a review finishes. On top of review, DevAsign also automates <strong><a href="#bounty-overview" className="docs-link">bounty payouts</a></strong>: put a price on a GitHub issue, and the payout settles from a Soroban escrow contract the moment you approve the work.
                         </p>
                         <div className="docs-callout">
-                            <strong>Why it's different:</strong> traditional review bots grade style and surface lint. DevAsign judges the change against <em>intent</em> — the acceptance criteria distilled from the ticket and everything attached to it — and flags whole-repo regressions the diff alone can't reveal.
+                            <strong>Why it's different:</strong> traditional review bots grade style and surface lint. DevAsign judges the change against <em>intent</em> (the acceptance criteria distilled from the ticket and everything attached to it) and flags regressions across the wider codebase that the diff alone can't reveal.
                         </div>
                         <img
                             src={agentDashboard}
-                            alt="DevAsign Agents dashboard — review queue, review log, and the synthesized end goal with acceptance criteria"
+                            alt="DevAsign Agents dashboard: review queue, review log, and the synthesized end goal with acceptance criteria"
                             width={1889}
                             height={1020}
                             decoding="async"
@@ -204,7 +204,7 @@ export function DocsPage() {
                     <section id="how-it-works" className="docs-section">
                         <h2 className="docs-heading">How a review works</h2>
                         <p className="docs-paragraph">
-                            A review is an <strong>asynchronous pipeline</strong>, not a request/response. A PR event lands, DevAsign enqueues a job, and a worker runs the full pipeline before posting results back. Reviews never run inline in the webhook handler — long multimodal and transcription work runs on dedicated workers so it isn't bound by function timeouts.
+                            A PR event lands, DevAsign enqueues a job, and a worker runs the full pipeline before posting results back. Reviews never run inline in the webhook handler. Long multimodal and transcription work runs on dedicated workers, so it isn't bound by function timeouts.
                         </p>
                         <ol className="docs-stage-list">
                             <li>
@@ -213,23 +213,19 @@ export function DocsPage() {
                             </li>
                             <li>
                                 <span className="stage-title">Context ingestion</span>
-                                <span className="stage-desc">Gather everything the PR should be judged against — diff, linked issues, attached videos, designs, and docs.</span>
+                                <span className="stage-desc">Gather everything the PR should be judged against: diff, linked issues, attached videos, designs, and docs.</span>
                             </li>
                             <li>
                                 <span className="stage-title">End-goal synthesis</span>
                                 <span className="stage-desc">Distill that context into a one-sentence end goal plus a list of independently checkable acceptance criteria.</span>
                             </li>
                             <li>
-                                <span className="stage-title">Multimodal review</span>
-                                <span className="stage-desc">Evaluate the diff against each criterion, producing a verdict, per-criterion evidence, inline comments, and fix suggestions.</span>
+                                <span className="stage-title">Review</span>
+                                <span className="stage-desc">Judge the diff against every criterion and, in the same pass, look for regressions and security flaws in the surrounding codebase, self-admitted punts, and DEVASIGN.md convention breaks, so each finding is weighed with all the others in view.</span>
                             </li>
                             <li>
-                                <span className="stage-title">Whole-repo holistic pass</span>
-                                <span className="stage-desc">Check the diff against the repository index for regressions, critical errors, and security flaws beyond the criteria.</span>
-                            </li>
-                            <li>
-                                <span className="stage-title">Deferred-work scan</span>
-                                <span className="stage-desc">Mine the diff's own added lines for self-admitted punts — TODOs, stubs, "deferred to a follow-up".</span>
+                                <span className="stage-title">Second-pass verification</span>
+                                <span className="stage-desc">A separate adversarial pass re-examines the draft: it drops findings it can't substantiate, downgrades ones it can't justify at the stated severity, and adds anything the first pass missed. The timeline records what changed.</span>
                             </li>
                             <li>
                                 <span className="stage-title">Output</span>
@@ -237,11 +233,11 @@ export function DocsPage() {
                             </li>
                             <li>
                                 <span className="stage-title">Run GitHub Action <em>(optional)</em></span>
-                                <span className="stage-desc">Dispatch a GitHub Actions workflow you chose — on every verdict, or only when the review passes.</span>
+                                <span className="stage-desc">Dispatch a GitHub Actions workflow you chose, on every verdict or only when the review passes.</span>
                             </li>
                         </ol>
                         <p className="docs-paragraph">
-                            Every stage appends to a per-PR <strong>review log</strong> — an append-only timeline you can replay in the dashboard to see exactly what the agent ingested, synthesized, and decided. The optional stages (whole-repo, deferred-work, DEVASIGN.md guidance, the Action step) can be toggled and steered per repository in the <a href="#workflow" className="docs-link">review workflow</a>.
+                            Every stage appends to a per-PR <strong>review log</strong>: an append-only timeline you can replay in the dashboard to see exactly what the agent ingested, synthesized, and decided. The optional checks (codebase-aware analysis, deferred-work, DEVASIGN.md guidance, the Action step) can be toggled and steered per repository in the <a href="#workflow" className="docs-link">review workflow</a>.
                         </p>
                     </section>
 
@@ -256,14 +252,23 @@ export function DocsPage() {
                             DevAsign reviews a PR whenever GitHub fires one of these <code className="docs-code">pull_request</code> actions: <code className="docs-code">opened</code>, <code className="docs-code">reopened</code>, <code className="docs-code">synchronize</code> (a new push), or <code className="docs-code">ready_for_review</code>. A push to an open PR re-runs the review so the verdict tracks the latest commit.
                         </p>
                         <p className="docs-paragraph">
-                            This is policy, not hard-coded. The repo's <a href="#workflow" className="docs-link">review workflow</a> can turn off re-review-on-push, skip draft PRs, or skip bot-authored PRs (Dependabot, Renovate, GitHub Apps). A draft marked "ready for review" is still reviewed — the skip applies only while it's a draft.
+                            This is policy, not hard-coded. On <strong>Personal</strong> and <strong>Team</strong>, the repo's <a href="#workflow" className="docs-link">review workflow</a> controls the entry triggers: turn off re-review-on-push, skip draft PRs, or skip bot-authored PRs (Dependabot, Renovate, GitHub Apps). A draft marked "ready for review" is still reviewed; the skip applies only while it's a draft.
+                        </p>
+                        <p className="docs-paragraph">
+                            On the <strong>Free</strong> plan the entry triggers are fixed: a PR is reviewed when it's opened, reopened, or marked ready for review, and <strong>pushes don't re-run the review</strong>. You can still start one by hand at any time (below), and upgrading turns re-review-on-push on.
                         </p>
                         <h3 className="docs-subheading">Manual</h3>
                         <p className="docs-paragraph">
-                            Comment the single word <code className="docs-code">review</code> on any open PR. DevAsign resolves the PR, materializes a review record, and runs the full criteria pipeline — useful for PRs opened before the app was installed.
+                            Comment the single word <code className="docs-code">review</code> on any open PR. DevAsign resolves the PR, materializes a review record, and runs the full criteria pipeline, useful for PRs opened before the app was installed.
+                        </p>
+                        <p className="docs-paragraph">
+                            Reviewing a PR for the first time spends one of your plan's monthly pull requests; re-reviews of that same PR don't. Each PR carries its own window of <strong>6 re-reviews a month</strong>, enough for a normal cycle of pushes. Past that, a paid plan draws on its overage credits to keep going; on Free, further runs on that PR wait until the next month. Opening a new PR always starts fresh.
                         </p>
                         <div className="docs-callout">
-                            <strong>On merge:</strong> when a PR is merged, DevAsign queues an <em>incremental</em> refresh of the repository index for the files that changed (see <a href="#repo-index" className="docs-link">Repository index</a>), keeping whole-repo reviews accurate as the codebase evolves.
+                            <strong>If a PR closes mid-review:</strong> DevAsign stops the run at the next checkpoint instead of spending the rest of it, and rewrites its comment to say the review was abandoned because the PR is no longer open. Reopening the PR queues a fresh review.
+                        </div>
+                        <div className="docs-callout">
+                            <strong>On merge:</strong> when a PR is merged, DevAsign refreshes its index of the files that changed (see <a href="#repo-index" className="docs-link">Repository index</a>), keeping codebase-aware reviews accurate as the repository evolves.
                         </div>
                     </section>
 
@@ -271,17 +276,17 @@ export function DocsPage() {
                     <section id="installation" className="docs-section">
                         <h2 className="docs-heading">Installation</h2>
                         <p className="docs-paragraph">
-                            Sign up on <a href="https://app.devasign.com/authenticate/account" target="_blank" rel="noopener noreferrer" className="docs-link">DevAsign</a> with GitHub and install the app on a repository. Public repositories are reviewed on every plan; <strong>private repositories require Pro or Max</strong>. Plans meter <em>unique PRs per month</em> — re-reviews of a PR (new pushes, reruns) never consume quota. See <a href="/pricing" className="docs-link">Pricing</a> for the caps.
+                            Sign up on <a href="https://app.devasign.com/authenticate/account" target="_blank" rel="noopener noreferrer" className="docs-link">DevAsign</a> with GitHub and install the app on a repository. Public repositories are reviewed on every plan; <strong>private repositories require Personal or Team</strong>. Plans meter <em>unique PRs per month</em>, so re-reviewing the same PR after a push doesn't spend another PR from your allowance. See <a href="/pricing" className="docs-link">Pricing</a> for the caps.
                         </p>
                         <ol className="docs-ordered-list">
                             <li>Sign in with GitHub and install the DevAsign GitHub App on your repo.</li>
-                            <li>DevAsign builds the repository index in the background (this enables whole-repo review).</li>
+                            <li>DevAsign indexes the repository in the background, so reviews can reason about code beyond the diff.</li>
                             <li>Open any existing PR and comment <code className="docs-code">review</code> to kick off the first review.</li>
                             <li>From then on, every new PR is reviewed automatically.</li>
                         </ol>
                         <img
                             src={onboardingScreenshot}
-                            alt="DevAsign onboarding — step 1, install the DevAsign GitHub App and choose which repositories it can access"
+                            alt="DevAsign onboarding: step 1, install the DevAsign GitHub App and choose which repositories it can access"
                             width={2022}
                             height={725}
                             loading="lazy"
@@ -294,7 +299,7 @@ export function DocsPage() {
                     <section id="permissions" className="docs-section">
                         <h2 className="docs-heading">GitHub permissions</h2>
                         <p className="docs-paragraph">
-                            DevAsign installs as a <strong>least-privilege GitHub App</strong>. When you install it, GitHub shows you the exact scopes below — and the app requests nothing else. It never sees your GitHub password, and rather than hold a long-lived key it exchanges the installation for a <strong>short-lived token</strong>, scoped to the repositories you picked, on each request.
+                            DevAsign installs as a <strong>least-privilege GitHub App</strong>. When you install it, GitHub shows you the exact scopes below, and the app requests nothing else. It never sees your GitHub password, and rather than hold a long-lived key it exchanges the installation for a <strong>short-lived token</strong>, scoped to the repositories you picked, on each request.
                         </p>
 
                         <h3 className="docs-subheading">What we request</h3>
@@ -321,17 +326,27 @@ export function DocsPage() {
                                     <tr>
                                         <td><strong>Contents</strong></td>
                                         <td><span className="docs-pill read">read</span></td>
-                                        <td>Read source files to build the <a href="#repo-index" className="docs-link">repository index</a> and run the whole-repo holistic pass. Read-only — DevAsign never pushes commits or edits your code.</td>
+                                        <td>Read source files to build the <a href="#repo-index" className="docs-link">repository index</a> and run the <a href="#holistic-review" className="docs-link">codebase-aware review</a>. Read-only: DevAsign never pushes commits or edits your code.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Issues</strong></td>
-                                        <td><span className="docs-pill read">read</span></td>
-                                        <td>Read linked issues (<code className="docs-code">closes #N</code>) and PR conversation comments — the ticket context a review is judged against, plus the manual <code className="docs-code">review</code> trigger and maintainer replies.</td>
+                                        <td><span className="docs-pill write">read · write</span></td>
+                                        <td>Read linked issues (<code className="docs-code">closes #N</code>) and PR conversation comments: the ticket context a review is judged against, plus the manual <code className="docs-code">review</code> trigger and maintainer replies. Write is used by <a href="#bounty-overview" className="docs-link">bounty automation</a> to post the bounty comment on an issue and apply its status label.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Actions</strong></td>
+                                        <td><span className="docs-pill write">read · write</span></td>
+                                        <td>List the workflows in your repository so you can pick one, and dispatch it after a review when you enable <a href="#workflow" className="docs-link">Run GitHub Action</a>. DevAsign only triggers workflows you selected; it never edits them.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Metadata</strong></td>
                                         <td><span className="docs-pill read">read</span></td>
                                         <td>Mandatory, read-only repository metadata (branches and basic repo info) that every GitHub App receives.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Members</strong> <span className="mute">(organization)</span></td>
+                                        <td><span className="docs-pill read">read</span></td>
+                                        <td>Confirm a teammate genuinely belongs to your GitHub organization before linking their account to the organization's DevAsign installation.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -339,11 +354,11 @@ export function DocsPage() {
 
                         <h3 className="docs-subheading">What we can't do</h3>
                         <ul className="docs-unordered-list">
-                            <li><strong>Push, merge, or modify code</strong> — Contents access is read-only, so DevAsign cannot commit, force-push, switch branches, or alter your files.</li>
-                            <li><strong>Touch repository settings</strong> — no access to branch-protection rules, webhooks, secrets, deploy keys, GitHub Actions, or collaborator management.</li>
-                            <li><strong>Block a merge</strong> — DevAsign never sets a required, merge-gating status itself; its Check Run and approval only gate a merge if <em>you</em> choose to require them in branch protection (see <a href="#severity" className="docs-link">verdict modes</a>).</li>
-                            <li><strong>See repos you didn't pick</strong> — the app only ever sees the specific repositories you select at install time, and you can add or remove them whenever you like.</li>
-                            <li><strong>Keep a copy of your source</strong> — file contents are fetched on demand via short-lived tokens; what's persisted is the index's short per-file summaries, not your raw code.</li>
+                            <li><strong>Push, merge, or modify code</strong>: Contents access is read-only, so DevAsign cannot commit, force-push, switch branches, or alter your files.</li>
+                            <li><strong>Touch repository settings</strong>: no access to branch-protection rules, webhooks, secrets, deploy keys, or collaborator management. DevAsign can dispatch a GitHub Actions workflow you picked, but cannot create, edit, or delete one.</li>
+                            <li><strong>Block a merge</strong>: DevAsign never sets a required, merge-gating status itself; its Check Run and approval only gate a merge if <em>you</em> choose to require them in branch protection (see <a href="#severity" className="docs-link">verdict modes</a>).</li>
+                            <li><strong>See repos you didn't pick</strong>: the app only ever sees the specific repositories you select at install time, and you can add or remove them whenever you like.</li>
+                            <li><strong>Use your code to train models</strong>: your source is read to produce a review and nothing else. The <a href="#repo-index" className="docs-link">repository index</a> stores excerpts of your code so reviews can cite them, scoped to your installation alone and deleted when you uninstall.</li>
                         </ul>
 
                         <div className="docs-callout">
@@ -355,11 +370,11 @@ export function DocsPage() {
                     <section id="linear" className="docs-section">
                         <h2 className="docs-heading">Linear integration</h2>
                         <p className="docs-paragraph">
-                            Connect a Linear workspace and DevAsign judges each PR against the <strong>ticket it implements</strong> — pulling the issue into <a href="#context-ingestion" className="docs-link">context ingestion</a> — then reports the verdict back on that issue. It's how the agent learns <em>what was asked</em> when the spec lives in Linear rather than the PR description.
+                            Connect a Linear workspace and DevAsign judges each PR against the <strong>ticket it implements</strong>, pulling the issue into <a href="#context-ingestion" className="docs-link">context ingestion</a>, then reports the verdict back on that issue. It's how the agent learns <em>what was asked</em> when the spec lives in Linear rather than the PR description.
                         </p>
                         <h3 className="docs-subheading">Connecting</h3>
                         <p className="docs-paragraph">
-                            In the dashboard, open <strong>Settings → Integrations → Linear</strong> and click <strong>Connect</strong>. A popup hands you to Linear's OAuth screen to authorize your workspace; approve it and the workspace appears in your integration list. There are <strong>no tokens or API keys to paste</strong>, re-connecting simply refreshes the authorization, and one Linear workspace connects per account. The Linear integration is a <strong>Pro / Max</strong> feature.
+                            In the dashboard, open <strong>Settings → Integrations → Linear</strong> and click <strong>Connect</strong>. A popup hands you to Linear's OAuth screen to authorize your workspace; approve it and the workspace appears in your integration list. There are <strong>no tokens or API keys to paste</strong>, re-connecting just refreshes the authorization, and one Linear workspace connects per account. The Linear integration is a <strong>Personal / Team</strong> feature.
                         </p>
                         <img
                             src={linearWorkflow}
@@ -372,7 +387,7 @@ export function DocsPage() {
                         />
                         <h3 className="docs-subheading">Permissions you grant</h3>
                         <p className="docs-paragraph">
-                            Linear shows you these scopes on the authorization screen — DevAsign requests nothing more:
+                            Linear shows you these scopes on the authorization screen, and DevAsign requests nothing more:
                         </p>
                         <div className="docs-table-wrapper">
                             <table className="docs-table">
@@ -387,7 +402,7 @@ export function DocsPage() {
                                     <tr>
                                         <td><strong>Read</strong></td>
                                         <td><span className="docs-pill read">read</span></td>
-                                        <td>Ingest the ticket a PR implements — its description, comments, sub-issues, labels, parent and project, plus attachments (PDFs and images) and any embedded Loom / YouTube / Vimeo — as the context a review is judged against.</td>
+                                        <td>Ingest the ticket a PR implements: its description, comments, sub-issues, labels, parent and project, plus attachments (PDFs and images) and any embedded Loom / YouTube / Vimeo, all as the context a review is judged against.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Write</strong></td>
@@ -399,19 +414,19 @@ export function DocsPage() {
                         </div>
                         <h3 className="docs-subheading">What it can't do</h3>
                         <ul className="docs-unordered-list">
-                            <li><strong>Speak as you</strong> — its comment is attributed to the DevAsign app, not your user account.</li>
-                            <li><strong>Change your tickets</strong> — DevAsign never creates, reassigns, closes, or moves the status of an issue; its only write is that single notification comment.</li>
-                            <li><strong>See more than it resolves</strong> — although the Linear OAuth grant is workspace-wide, DevAsign reads only the issues it actually links a PR to.</li>
+                            <li><strong>Speak as you</strong>: its comment is attributed to the DevAsign app, not your user account.</li>
+                            <li><strong>Change your tickets</strong>: DevAsign never creates, reassigns, closes, or moves the status of an issue; its only write is that single notification comment.</li>
+                            <li><strong>See more than it resolves</strong>: although the Linear OAuth grant is workspace-wide, DevAsign reads only the issues it actually links a PR to.</li>
                         </ul>
                         <h3 className="docs-subheading">What it does</h3>
                         <ol className="docs-ordered-list">
-                            <li><strong>Links PRs to tickets.</strong> DevAsign matches a PR to a Linear issue by an explicit reference — an <code className="docs-code">ENG-123</code> key in the PR body or branch name (including the <code className="docs-code">Fixes ENG-123</code> line Linear's own GitHub integration injects) — or, when there's no explicit ref, by a conservative match of the PR title and description against your issues.</li>
+                            <li><strong>Links PRs to tickets.</strong> DevAsign matches a PR to a Linear issue by an explicit reference, an <code className="docs-code">ENG-123</code> key in the PR body or branch name (including the <code className="docs-code">Fixes ENG-123</code> line Linear's own GitHub integration injects). Failing that, it falls back to a conservative match of the PR title and description against your issues.</li>
                             <li><strong>Pulls the ticket into the review.</strong> The linked issue's description, discussion, attachments, and embedded videos feed <a href="#end-goal" className="docs-link">end-goal &amp; criteria</a> synthesis, so the PR is measured against what the ticket actually asked for.</li>
                             <li><strong>Seeds acceptance criteria.</strong> When a ticket is opened or updated, DevAsign synthesizes criteria from it ahead of time and caches them; a PR that later links to that ticket reuses those criteria instead of re-deriving them.</li>
-                            <li><strong>Reports back on the issue.</strong> Once the linked PR is reviewed, DevAsign posts a short comment on the Linear issue — that it reviewed the PR and <em>passed</em> or <em>requested changes</em>, with a link to it. The comment posts once per commit, so re-reviews of the same push don't repeat it.</li>
+                            <li><strong>Reports back on the issue.</strong> Once the linked PR is reviewed, DevAsign posts a short comment on the Linear issue saying it reviewed the PR and <em>passed</em> or <em>requested changes</em>, with a link to it. The comment posts once per commit, so re-reviews of the same push don't repeat it.</li>
                         </ol>
                         <div className="docs-callout">
-                            <strong>The PR stays the source of truth:</strong> the Linear comment is a pointer. The full verdict — per-criterion evidence, inline comments, and fix prompts — lives on the GitHub PR.
+                            <strong>The PR stays the source of truth:</strong> the Linear comment is a pointer. The full verdict, with per-criterion evidence, inline comments and fix prompts, lives on the GitHub PR.
                         </div>
                     </section>
 
@@ -419,7 +434,7 @@ export function DocsPage() {
                     <section id="context-ingestion" className="docs-section">
                         <h2 className="docs-heading">Context ingestion</h2>
                         <p className="docs-paragraph">
-                            The first stage gathers every source the PR should be measured against. This is the multimodal layer — DevAsign reads code <em>and</em> watches video, parses designs, and reads documents.
+                            The first stage gathers every source the PR should be measured against. This is the multimodal layer: DevAsign reads code <em>and</em> watches video, parses designs, and reads documents.
                         </p>
                         <div className="docs-table-wrapper">
                             <table className="docs-table">
@@ -440,7 +455,7 @@ export function DocsPage() {
                                     </tr>
                                     <tr>
                                         <td><strong>Linear</strong></td>
-                                        <td>The linked issue's description, comments, sub-issues, and attachments, plus any embedded video — see <a href="#linear" className="docs-link">Linear integration</a>.</td>
+                                        <td>The linked issue's description, comments, sub-issues, and attachments, plus any embedded video. See <a href="#linear" className="docs-link">Linear integration</a>.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Slack / Discord</strong></td>
@@ -452,11 +467,15 @@ export function DocsPage() {
                                     </tr>
                                     <tr>
                                         <td><strong>Loom / YouTube / Vimeo</strong></td>
-                                        <td>Transcript and a visual walkthrough, summarized by Gemini (see below).</td>
+                                        <td>Transcript and a visual walkthrough, summarized into acceptance signals (see below).</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Screenshots / PDF</strong></td>
-                                        <td>Images are passed to a vision model; PDFs are parsed to text.</td>
+                                        <td>Images are read by a vision-capable model; PDFs are parsed to text.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>PR state</strong></td>
+                                        <td>Mergeability, merge conflicts, and the status of your CI checks on the head commit, so the review can tell you a PR is broken or unmergeable rather than reviewing it in a vacuum.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -464,18 +483,12 @@ export function DocsPage() {
 
                         <h3 className="docs-subheading">Video understanding</h3>
                         <p className="docs-paragraph">
-                            DevAsign scans the PR body, every linked issue, and task attachments for video URLs, de-duplicates them, and hands each to <strong>Gemini 2.5 Pro</strong>. YouTube videos are watched natively; other providers are inferred conservatively and flagged as <code className="docs-code">unreliable</code>. Each video becomes a structured summary the reviewer can reason over:
+                            DevAsign scans the PR body, every linked issue, and task attachments for video URLs and de-duplicates them, then watches each one. Up to five videos are summarized per PR. Every video becomes a structured summary the review can reason over: what the recording demonstrates, the key moments it walks through, and the <strong>acceptance signals</strong> a reviewer should confirm the PR actually implements. Where a host can't be watched directly, DevAsign says so rather than inventing detail.
                         </p>
-                        <CodeBlock lang="json" code={`{
-  "summary": "What the recording shows and the UX it implies",
-  "keyMoments": [ { "t": "00:42", "note": "Empty state renders a placeholder" } ],
-  "acceptanceSignals": [ "List paginates after 20 items" ],
-  "unreliable": false
-}`} />
 
                         <h3 className="docs-subheading">The Message-agent inbox</h3>
                         <p className="docs-paragraph">
-                            Anything you send the agent on the <strong>Message-agent</strong> screen — a Loom link, a Figma frame, an image, a PDF, a plain link, or free text — is attached to the task and ingested exactly like the sources above. It's how you give the agent context that doesn't live in the ticket.
+                            Anything you send the agent on the <strong>Message-agent</strong> screen, whether that's a Loom link, a Figma frame, an image, a PDF, a plain link or free text, is attached to the task and ingested exactly like the sources above. It's how you give the agent context that doesn't live in the ticket.
                         </p>
                     </section>
 
@@ -483,23 +496,23 @@ export function DocsPage() {
                     <section id="end-goal" className="docs-section">
                         <h2 className="docs-heading">End goal &amp; acceptance criteria</h2>
                         <p className="docs-paragraph">
-                            A single LLM pass distills all that raw context into a one-sentence <strong>End goal</strong> and a list of independently checkable <strong>acceptance criteria</strong>. This is the heart of the product: a structured, editable object — not a black box — persisted on the task and visible in the dashboard, where you can refine it before or during review.
+                            A single LLM pass distills all that raw context into a one-sentence <strong>End goal</strong> and a list of independently checkable <strong>acceptance criteria</strong>. The result is a structured object you can edit, not a black box. It's persisted on the task and shown in the dashboard, so you can correct it before or during a review.
                         </p>
                         <CodeBlock lang="json" code={`{
-  "endGoal": "Users can withdraw USDC to any Stellar address with a trustline.",
+  "endGoal": "Team members can be invited by email and land in the right workspace role.",
   "criteria": [
-    { "id": "c1", "text": "Withdrawal validates the destination has a USDC trustline" },
-    { "id": "c2", "text": "Insufficient-balance attempts return a clear error" },
-    { "id": "c3", "text": "A 24h cooldown is enforced between withdrawals" }
+    { "id": "c1", "text": "An invite email is sent to a valid, non-member address" },
+    { "id": "c2", "text": "Re-inviting an existing member returns a clear error, not a duplicate" },
+    { "id": "c3", "text": "The accepted invite grants exactly the role it was sent for" }
   ]
 }`} />
                         <h3 className="docs-subheading">PRs with no spec</h3>
                         <p className="docs-paragraph">
-                            When a PR has no linked issue, attachment, or video, DevAsign does <strong>not</strong> invent requirements. Synthesis is instructed to derive criteria only from explicit, checkable claims the PR's own title and description make — and if there are none, it returns <strong>zero criteria</strong> with a neutral end goal, then reviews the diff for correctness only.
+                            When a PR has no linked issue, attachment, or video, DevAsign does <strong>not</strong> invent requirements. Synthesis is instructed to derive criteria only from explicit, checkable claims the PR's own title and description make. If there are none, it returns <strong>zero criteria</strong> with a neutral end goal, then reviews the diff for correctness only.
                         </p>
-                        <h3 className="docs-subheading">Refining from video</h3>
+                        <h3 className="docs-subheading">Editing the goal</h3>
                         <p className="docs-paragraph">
-                            If a walkthrough is attached, a follow-up pass lets the model reconsider the end goal in light of what the video actually shows. It only updates the goal when the recording reveals concrete, product-aligned requirements that weren't already covered — never speculative ones.
+                            The end goal and its criteria are yours to correct. Edit them in the dashboard and the next run judges the PR against your version. It's the fastest way to steer a review that misread the intent. Attached walkthroughs feed the same synthesis, so a video that demonstrates a concrete requirement shapes the criteria directly.
                         </p>
                     </section>
 
@@ -507,11 +520,11 @@ export function DocsPage() {
                     <section id="multimodal-review" className="docs-section">
                         <h2 className="docs-heading">Multimodal review</h2>
                         <p className="docs-paragraph">
-                            The review model evaluates the diff against each criterion and emits a structured verdict: <code className="docs-code">passed</code> or <code className="docs-code">changes_requested</code>, a per-criterion checklist with <strong>evidence quoted from the diff</strong>, line notes pinned to <code className="docs-code">file:line</code>, and a fix suggestion for every unmet criterion. It is told to never manufacture issues to appear thorough — a sound diff with no spec returns a short positive summary.
+                            The review model evaluates the diff against each criterion and emits a structured verdict: <code className="docs-code">passed</code> or <code className="docs-code">changes_requested</code>, a per-criterion checklist with <strong>evidence quoted from the diff</strong>, line notes pinned to <code className="docs-code">file:line</code>, and a fix suggestion for every unmet criterion. It is told to never manufacture issues to appear thorough, and a sound diff with no spec returns a short positive summary.
                         </p>
                         <h3 className="docs-subheading">Copy-paste fix prompts</h3>
                         <p className="docs-paragraph">
-                            Every suggestion (and every blocking finding) ships a self-contained <strong>fix prompt</strong> you can paste straight into an external AI coding agent — Cursor, Claude Code, or Codex. It quotes the relevant diff hunk verbatim so the agent can act without repository access:
+                            Every suggestion (and every blocking finding) ships a self-contained <strong>fix prompt</strong> you can paste straight into an external AI coding agent such as Cursor, Claude Code, or Codex. It quotes the relevant diff hunk verbatim so the agent can act without repository access:
                         </p>
                         <CodeBlock lang="prompt" code={`Fix: <one-line summary>
 
@@ -529,23 +542,36 @@ Relevant diff:
 <the exact hunk this finding refers to>
 \`\`\``} />
                         <p className="docs-paragraph">
-                            When a PR has multiple problems, DevAsign also composes a single <strong>consolidated prompt</strong> that bundles every failed criterion and every review finding — regressions, security warnings, deferred work, even DEVASIGN.md nits, whatever the severity — one paste to fix the whole PR.
+                            When a PR has multiple problems, DevAsign also composes a single <strong>consolidated prompt</strong> that bundles every failed criterion and every review finding, from regressions and security warnings to deferred work and DEVASIGN.md nits, whatever the severity. One paste to fix the whole PR.
+                        </p>
+                        <h3 className="docs-subheading">Second-pass verification</h3>
+                        <p className="docs-paragraph">
+                            False positives cost you more time than they save, so nothing is published on the first pass. A second, adversarial pass re-examines the draft and tries to knock findings down: anything it can't substantiate against the actual code is <strong>dropped</strong>, anything real but overstated is <strong>downgraded</strong>, and anything the first pass missed is <strong>added</strong>. Only what survives reaches your PR.
+                        </p>
+                        <p className="docs-paragraph">
+                            The review log records the counts for every run, so you can see how much the verification pass changed. If it can't complete, DevAsign publishes the unverified draft rather than dropping the review.
                         </p>
                     </section>
 
                     {/* ===== HOLISTIC REVIEW ===== */}
                     <section id="holistic-review" className="docs-section">
-                        <h2 className="docs-heading">Whole-repo (holistic) review</h2>
+                        <h2 className="docs-heading">Codebase-aware review</h2>
                         <p className="docs-paragraph">
-                            Acceptance criteria capture intent, but a diff can satisfy every criterion and still break the rest of the codebase. The holistic pass closes that gap. Using the <a href="#repo-index" className="docs-link">repository index</a>, DevAsign assembles a focused slice of the repo around the change:
+                            Acceptance criteria capture intent, but a diff can satisfy every criterion and still break the rest of the codebase. So DevAsign doesn't review the diff alone. Using the <a href="#repo-index" className="docs-link">repository index</a>, it pulls in the code around the change: the definitions the diff calls, the callers that depend on it, and the surrounding scope. The change is judged in that context.
+                        </p>
+                        <p className="docs-paragraph">
+                            That surfaces three things a diff-only reviewer can't see:
                         </p>
                         <ul className="docs-unordered-list">
-                            <li><strong>Touched files</strong> — the files the diff actually modifies (capped at 25).</li>
-                            <li><strong>Dependents</strong> — files that import the touched files' symbols, so the model sees blast radius (capped at 25).</li>
-                            <li><strong>Repo manifest</strong> — a short tour of the largest code files for whole-repo context (capped at 20).</li>
+                            <li><strong>Regressions and critical errors</strong>: the change is correct in isolation but breaks a caller, an invariant, or an existing feature.</li>
+                            <li><strong>Security flaws the change introduces</strong>, flagged <span className="docs-pill blocker">blocker</span> when they would expose data or corrupt state.</li>
+                            <li><strong>Pre-existing vulnerabilities</strong> in the code the PR touches or depends on, reported as advisory context, never held against the author, since the PR didn't introduce them.</li>
                         </ul>
                         <p className="docs-paragraph">
-                            The model then looks for <strong>regressions, critical errors, and security flaws</strong> beyond what the criteria covered. Each finding is tagged <span className="docs-pill blocker">blocker</span> when it would clearly break a feature, corrupt state, or expose data, or <span className="docs-pill warn">warn</span> for a plausible concern that needs human eyes. A single blocker flips the verdict to <em>changes requested</em>. The pass is skipped until the index has finished building, in which case DevAsign falls back to the criteria-only verdict — and it can be switched off per repo in the <a href="#workflow" className="docs-link">review workflow</a>.
+                            Findings also record <em>which tree</em> they describe: your PR's code as it stands, or what happens once the base branch is merged in. A conflict that only appears after merging is a real problem, and DevAsign labels it as one rather than reporting it against code you can see.
+                        </p>
+                        <p className="docs-paragraph">
+                            A single blocker flips the verdict to <em>changes requested</em>. Reviews still run before a repository has finished indexing; the analysis is just limited to the diff until the index is ready. This check can be switched off per repo in the <a href="#workflow" className="docs-link">review workflow</a>.
                         </p>
                     </section>
 
@@ -553,13 +579,13 @@ Relevant diff:
                     <section id="deferred-work" className="docs-section">
                         <h2 className="docs-heading">Deferred-work detection</h2>
                         <p className="docs-paragraph">
-                            A coding agent will sometimes agree to a design, then quietly punt part of it during implementation — burying the admission in a code comment instead of telling you. DevAsign catches those self-admissions in the PR's <strong>own added lines</strong>.
+                            A coding agent will sometimes agree to a design, then quietly punt part of it during implementation, burying the admission in a code comment instead of telling you. DevAsign catches those self-admissions in the PR's <strong>own added lines</strong>.
                         </p>
                         <p className="docs-paragraph">
-                            A cheap regex pre-scan first flags candidate lines against a set of markers — <code className="docs-code">TODO</code>, <code className="docs-code">FIXME</code>, <code className="docs-code">NotImplemented</code>, <code className="docs-code">stub</code>, "for now", "deferred to a follow-up", and more. A clean diff costs nothing. Only when candidates surface does a precision LLM pass decide which are real scope cuts versus benign matches (an unrelated pre-existing TODO, a marker inside a logging string).
+                            DevAsign looks for the markers these admissions hide behind: <code className="docs-code">TODO</code>, <code className="docs-code">FIXME</code>, <code className="docs-code">NotImplemented</code>, <code className="docs-code">stub</code>, "for now", "deferred to a follow-up". It then judges which are genuine scope cuts and which are benign matches, like an unrelated pre-existing TODO or a marker inside a log string.
                         </p>
                         <p className="docs-paragraph">
-                            Each genuine finding's explanation leads with <code className="docs-code">Contradicts &lt;criterion&gt;</code> when the punt undercuts something the PR promised, or <code className="docs-code">Incidental</code> when it doesn't. These findings are <strong>advisory</strong> — always <span className="docs-pill warn">warn</span>, never gating the merge — so you see the punt on time without being blocked by it.
+                            Each genuine finding's explanation leads with <code className="docs-code">Contradicts &lt;criterion&gt;</code> when the punt undercuts something the PR promised, or <code className="docs-code">Incidental</code> when it doesn't. These findings are <strong>advisory</strong>. They're always <span className="docs-pill warn">warn</span> and never gate the merge, so you see the punt on time without being blocked by it.
                         </p>
                     </section>
 
@@ -567,7 +593,7 @@ Relevant diff:
                     <section id="workflow" className="docs-section">
                         <h2 className="docs-heading">Review workflow</h2>
                         <p className="docs-paragraph">
-                            Every repository carries its own <strong>review workflow</strong>, edited on the dashboard's <strong>Workflow</strong> screen — a visual, node-based view of the pipeline with a repository rail, a canvas showing every stage in run order, and a detail panel for the selected stage. The pipeline is a fixed chain: you don't add or remove nodes, you switch the optional stages on or off and steer each AI stage with your own instructions. A repo you never touch reviews exactly like stock DevAsign.
+                            Every repository carries its own <strong>review workflow</strong>, edited on the dashboard's <strong>Workflow</strong> screen: a visual, node-based view of the pipeline with a repository rail, a canvas showing every stage in run order, and a detail panel for the selected stage. The pipeline is a fixed chain: you don't add or remove nodes, you switch the optional stages on or off and steer each AI stage with your own instructions. A repo you never touch reviews exactly like stock DevAsign.
                         </p>
                         <img
                             src={agentWorkflow}
@@ -580,50 +606,63 @@ Relevant diff:
                         />
                         <h3 className="docs-subheading">Stage toggles</h3>
                         <p className="docs-paragraph">
-                            The optional stages — <a href="#holistic-review" className="docs-link">whole-repo review</a>, the <a href="#deferred-work" className="docs-link">deferred-work scan</a>, <a href="#devasign-guidance" className="docs-link">DEVASIGN.md guidance</a>, and the <strong>Run GitHub Action</strong> step — can each be switched off per repository. Context ingestion, criteria synthesis, the diff review, and the verdict always run. Stage toggles are available on every plan.
+                            The optional checks (<a href="#holistic-review" className="docs-link">codebase-aware review</a>, the <a href="#deferred-work" className="docs-link">deferred-work scan</a>, and <a href="#devasign-guidance" className="docs-link">DEVASIGN.md guidance</a>) can each be switched off per repository. Context ingestion, criteria synthesis, the review itself, the verification pass, and the verdict always run. <strong>Stage toggles are available on every plan.</strong>
                         </p>
-                        <h3 className="docs-subheading">Modes</h3>
+                        <h3 className="docs-subheading">What you can configure</h3>
                         <p className="docs-paragraph">
-                            Three one-click presets set the core policy (trigger, stages, verdict). Tweak anything off-preset and the mode chip reads <strong>Custom</strong>. Applying a preset preserves your per-stage prompts and the Action step.
+                            Select any node on the canvas to open its detail panel. Most of the pipeline is configurable on every plan; the two controls that change <em>when</em> DevAsign runs, and what it triggers afterwards, are Personal/Team.
                         </p>
                         <div className="docs-table-wrapper">
                             <table className="docs-table">
                                 <thead>
                                     <tr>
-                                        <th>Mode</th>
+                                        <th>Control</th>
                                         <th>What it does</th>
+                                        <th>Plan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><strong>Strict</strong></td>
-                                        <td>Maximum rigor: every stage on, blocking verdicts, and drafts and bot PRs are reviewed too.</td>
+                                        <td><strong>Stage toggles</strong></td>
+                                        <td>Switch the codebase-aware review, deferred-work scan, and DEVASIGN.md guidance on or off.</td>
+                                        <td>All plans</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Balanced</strong></td>
-                                        <td>Every stage on with blocking verdicts, but draft and bot-authored PRs are skipped.</td>
+                                        <td><strong>Verdict mode</strong></td>
+                                        <td>Blocking (default) or comment-only. See <a href="#severity" className="docs-link">Severity &amp; verdict</a>.</td>
+                                        <td>All plans</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Light</strong></td>
-                                        <td>Lean and advisory: comment-only verdicts, no re-review on push, whole-repo and deferred-work scans off (DEVASIGN.md guidance stays on), drafts and bots skipped.</td>
+                                        <td><strong>Stage instructions</strong></td>
+                                        <td>Your own standing instructions for each AI stage.</td>
+                                        <td>All plans</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Entry triggers</strong></td>
+                                        <td>Re-review on every push, skip draft PRs, skip bot-authored PRs. See <a href="#triggering" className="docs-link">Triggering reviews</a>.</td>
+                                        <td><span className="docs-pill write">Personal / Team</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Run GitHub Action</strong></td>
+                                        <td>Dispatch a workflow once the review finishes.</td>
+                                        <td><span className="docs-pill write">Personal / Team</span></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <h3 className="docs-subheading">Advanced controls <span className="docs-pill write">Pro / Max</span></h3>
-                        <ul className="docs-unordered-list">
-                            <li><strong>Trigger policy</strong> — re-review on every push, skip draft PRs, skip bot-authored PRs (see <a href="#triggering" className="docs-link">Triggering reviews</a>).</li>
-                            <li><strong>Verdict mode</strong> — blocking (default) or comment-only; see <a href="#severity" className="docs-link">Severity &amp; verdict</a>.</li>
-                            <li><strong>Per-stage prompts</strong> — steer each AI stage with your own instructions.</li>
-                            <li><strong>Run GitHub Action</strong> — dispatch a workflow when the review finishes.</li>
-                        </ul>
-                        <h3 className="docs-subheading">Per-stage prompts</h3>
                         <p className="docs-paragraph">
-                            Each AI stage — criteria synthesis, the diff review, the whole-repo pass, the deferred-work scan, and DEVASIGN.md guidance — accepts a custom prompt of up to <strong>2,000 characters</strong>. It's appended to the stage's system prompt as <em>maintainer instructions</em>: it steers what the stage pays attention to, but it can't override the stage's structured output contract or make the agent invent findings.
+                            Edits save as you make them and apply from the next review onward. A control your plan doesn't cover is shown in its enforced state and locked instead of hidden, so you can always see what a repository is actually running. Your configuration is kept if a plan lapses: DevAsign falls back to the free behaviour while you're downgraded, and restores your settings when you upgrade again.
+                        </p>
+                        <h3 className="docs-subheading">Stage instructions</h3>
+                        <p className="docs-paragraph">
+                            Each AI stage (criteria synthesis, the diff review, the codebase-aware pass, the deferred-work scan, and DEVASIGN.md guidance) accepts your own instructions, up to <strong>2,000 characters</strong> each. They're carried into the review as <em>maintainer instructions</em>: they steer what a stage pays attention to, but they can't make the agent invent findings or skip its checks.
+                        </p>
+                        <p className="docs-paragraph">
+                            Use them for the things a reviewer on your team would already know: that a service is latency-critical and added round-trips should be flagged, or that you're mid-migration off a legacy client and its use shouldn't be reported yet.
                         </p>
                         <h3 className="docs-subheading">Run GitHub Action</h3>
                         <p className="docs-paragraph">
-                            Pick a workflow file from your repo and DevAsign dispatches it (via <code className="docs-code">workflow_dispatch</code>, on the PR's head branch) after the verdict posts — on every review, or only when the review <strong>passes</strong>, so you can chain deploy previews or extra test suites onto a green verdict. The workflow must declare a <code className="docs-code">workflow_dispatch</code> trigger and the DevAsign app needs Actions access on the repo; if either is missing, the step logs a note in the review timeline and never fails the review.
+                            Pick a workflow file from your repo and DevAsign dispatches it (via <code className="docs-code">workflow_dispatch</code>, on the PR's head branch) after the verdict posts, either on every review or only when the review <strong>passes</strong>, so you can chain deploy previews or extra test suites onto a green verdict. The workflow must declare a <code className="docs-code">workflow_dispatch</code> trigger and the DevAsign app needs Actions access on the repo; if either is missing, the step logs a note in the review timeline and never fails the review.
                         </p>
                     </section>
 
@@ -631,7 +670,7 @@ Relevant diff:
                     <section id="devasign-guidance" className="docs-section">
                         <h2 className="docs-heading">DEVASIGN.md guidance</h2>
                         <p className="docs-paragraph">
-                            Drop a <code className="docs-code">DEVASIGN.md</code> into your repository to teach the review agent your team's own conventions — the same way you'd use an <code className="docs-code">AGENTS.md</code> or <code className="docs-code">CLAUDE.md</code>. There's <strong>no dashboard setup</strong>: commit the file and the next review picks it up. When no <code className="docs-code">DEVASIGN.md</code> governs the files a PR touches, this step is skipped entirely — it costs nothing.
+                            Drop a <code className="docs-code">DEVASIGN.md</code> into your repository to teach the review agent your team's own conventions, the same way you'd use an <code className="docs-code">AGENTS.md</code> or <code className="docs-code">CLAUDE.md</code>. There's <strong>no dashboard setup</strong>: commit the file and the next review picks it up. When no <code className="docs-code">DEVASIGN.md</code> governs the files a PR touches, this step is skipped entirely and costs nothing.
                         </p>
                         <h3 className="docs-subheading">Hierarchical scope</h3>
                         <p className="docs-paragraph">
@@ -647,11 +686,11 @@ Relevant diff:
                         </p>
                         <h3 className="docs-subheading">Findings are advisory nits</h3>
                         <p className="docs-paragraph">
-                            The agent flags only what the diff <em>newly</em> introduces — pre-existing code that breaks a rule is left alone. Each finding lands as a <span className="docs-pill nit">nit</span>: it ships a copy-paste <a href="#multimodal-review" className="docs-link">fix prompt</a> but <strong>never blocks the merge</strong> (see <a href="#severity" className="docs-link">Severity &amp; verdict</a>). DevAsign is told to flag only rules a <code className="docs-code">DEVASIGN.md</code> actually states — it won't invent conventions.
+                            The agent flags only what the diff <em>newly</em> introduces; pre-existing code that breaks a rule is left alone. Each finding lands as a <span className="docs-pill nit">nit</span>: it ships a copy-paste <a href="#multimodal-review" className="docs-link">fix prompt</a> but <strong>never blocks the merge</strong> (see <a href="#severity" className="docs-link">Severity &amp; verdict</a>). DevAsign is told to flag only rules a <code className="docs-code">DEVASIGN.md</code> actually states, so it won't invent conventions.
                         </p>
                         <h3 className="docs-subheading">Docs stay honest (bidirectional)</h3>
                         <p className="docs-paragraph">
-                            The check runs both ways. If the diff changes code such that a <code className="docs-code">DEVASIGN.md</code> statement is now outdated, DevAsign flags the <strong>doc</strong> for an update too — so your conventions don't silently drift from the code.
+                            The check runs both ways. If the diff changes code such that a <code className="docs-code">DEVASIGN.md</code> statement is now outdated, DevAsign flags the <strong>doc</strong> for an update too, so your conventions don't silently drift from the code.
                         </p>
                         <h3 className="docs-subheading">Starter template</h3>
                         <p className="docs-paragraph">
@@ -671,7 +710,7 @@ violations are flagged as nits; they don't block the merge.
 - Error handling: wrap external calls and surface a typed error, never throw raw.
 - Naming: React components are PascalCase; hooks start with \`use\`.`}</pre>
                         <p className="docs-paragraph">
-                            On each review, DevAsign emits two advisory outputs, both scoped to the files the governing docs cover — convention <code className="docs-code">violations</code> and <code className="docs-code">docUpdates</code> (statements the diff makes outdated):
+                            On each review, DevAsign emits two advisory outputs, both scoped to the files the governing docs cover: convention <code className="docs-code">violations</code> and <code className="docs-code">docUpdates</code> (statements the diff makes outdated):
                         </p>
                         <CodeBlock lang="json" code={`{
   "violations": [
@@ -702,8 +741,8 @@ violations are flagged as nits; they don't block the merge.
                             Findings carry a severity that determines whether they affect the verdict. How the verdict lands on GitHub depends on the repo's <a href="#workflow" className="docs-link">verdict mode</a>:
                         </p>
                         <ul className="docs-unordered-list">
-                            <li><strong>Blocking</strong> (default) — a failing review concludes the Check Run as <code className="docs-code">action_required</code> and withdraws DevAsign's earlier approval, so if your branch protection requires the check or an approval, the merge gate stays honest. DevAsign itself never submits a <code className="docs-code">REQUEST_CHANGES</code> review.</li>
-                            <li><strong>Comment-only</strong> (advisory) — the same verdict posts as a plain comment, earlier approvals are left standing, and the merge button is never in the way.</li>
+                            <li><strong>Blocking</strong> (default): a failing review concludes the Check Run as <code className="docs-code">action_required</code> and withdraws DevAsign's earlier approval, so if your branch protection requires the check or an approval, the merge gate stays honest. DevAsign itself never submits a <code className="docs-code">REQUEST_CHANGES</code> review.</li>
+                            <li><strong>Comment-only</strong> (advisory): the same verdict posts as a plain comment, earlier approvals are left standing, and the merge button is never in the way.</li>
                         </ul>
                         <div className="docs-table-wrapper">
                             <table className="docs-table">
@@ -728,11 +767,14 @@ violations are flagged as nits; they don't block the merge.
                                     <tr>
                                         <td><span className="docs-pill nit">nit</span></td>
                                         <td>No</td>
-                                        <td>Advisory only; never gates the merge — e.g. <a href="#devasign-guidance" className="docs-link">DEVASIGN.md</a> convention nits.</td>
+                                        <td>Advisory only; never gates the merge. For example, <a href="#devasign-guidance" className="docs-link">DEVASIGN.md</a> convention nits.</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
+                        <p className="docs-paragraph">
+                            Severities are assigned during the review and then re-tested by the <a href="#multimodal-review" className="docs-link">verification pass</a>, which can downgrade a finding it can't justify at the stated severity or drop it entirely. A blocker that reaches your PR has survived that second look.
+                        </p>
                         <div className="docs-callout">
                             <strong>Verdict rule:</strong> a PR passes only when <em>every</em> acceptance criterion is met <em>and</em> no blocker-severity finding surfaced. Otherwise DevAsign requests changes.
                         </div>
@@ -742,21 +784,21 @@ violations are flagged as nits; they don't block the merge.
                     <section id="github-output" className="docs-section">
                         <h2 className="docs-heading">GitHub output</h2>
                         <p className="docs-paragraph">
-                            DevAsign's whole conversation footprint on a PR is <strong>one self-updating comment</strong> plus a Check Run. When a run starts it posts a <em>"PR Review In Progress"</em> comment; when the run finishes it edits that same comment into the full verdict. It's <strong>one comment per commit</strong>: a rerun on the same commit resets the existing comment back to "in progress" and edits it again, while a new push gets a fresh comment. If a run errors, the comment becomes a failure notice (with an auto-retry on your next push) — it never sticks on "in progress". All comment copy is emoji-free.
+                            DevAsign's whole conversation footprint on a PR is <strong>one self-updating comment</strong> plus a Check Run. When a run starts it posts a <em>"PR Review In Progress"</em> comment; when the run finishes it edits that same comment into the full verdict. It's <strong>one comment per commit</strong>: a rerun on the same commit resets the existing comment back to "in progress" and edits it again, while a new push gets a fresh comment. If a run errors, the comment becomes a failure notice (with an auto-retry on your next push), so it never sticks on "in progress". All comment copy is emoji-free.
                         </p>
                         <p className="docs-paragraph">
                             The verdict comment is structured to be scannable, leading with what needs attention:
                         </p>
                         <ul className="docs-unordered-list">
-                            <li><strong>End goal</strong>, then <strong>Previously met — now broken</strong>: criteria an earlier commit satisfied that a later change regressed, each with what broke.</li>
+                            <li><strong>End goal</strong>, then <strong>Previously met, now broken</strong>: criteria an earlier commit satisfied that a later change regressed, each with what broke.</li>
                             <li><strong>Acceptance criteria not met</strong>, each with a "why it failed" line. Criteria that pass collapse into a count header and an expandable list, so re-reviews don't re-litigate what already passed.</li>
                             <li><strong>Deferred / incomplete work</strong> the diff conceded.</li>
                             <li><strong>Suggested changes</strong> with minimal code examples and per-item fix prompts, plus <strong>line notes</strong> pinned to <code className="docs-code">file:line</code>.</li>
-                            <li><strong>Repo-wide concerns</strong> from the holistic pass and <strong>DEVASIGN.md</strong> nits.</li>
+                            <li><strong>Repo-wide concerns</strong> from the codebase-aware review, including any pre-existing vulnerabilities it noticed, plus <strong>DEVASIGN.md</strong> nits.</li>
                             <li>A collapsible <strong>"one prompt to fix all of this"</strong> for your AI coding agent.</li>
                         </ul>
                         <p className="docs-paragraph">
-                            Line notes are pre-filtered against the file paths actually present in the diff, so a bad path from the model can't put junk in the comment. Alongside the comment, a <strong>Check Run</strong> named <code className="docs-code">DevAsign · End goal</code> is keyed to the head commit — concluding <code className="docs-code">success</code> or <code className="docs-code">action_required</code> — and refreshes on every push without adding conversation noise. The formal GitHub review actions are reduced to invisible timeline signals:
+                            Line notes are pre-filtered against the file paths actually present in the diff, so a bad path from the model can't put junk in the comment. Alongside the comment, a <strong>Check Run</strong> named <code className="docs-code">DevAsign · End goal</code> is keyed to the head commit, concluding <code className="docs-code">success</code> or <code className="docs-code">action_required</code>, and refreshes on every push without adding conversation noise. The formal GitHub review actions are reduced to invisible timeline signals:
                         </p>
                         <div className="docs-table-wrapper">
                             <table className="docs-table">
@@ -769,15 +811,19 @@ violations are flagged as nits; they don't block the merge.
                                 <tbody>
                                     <tr>
                                         <td>All acceptance criteria met (spec'd PR)</td>
-                                        <td>A <strong>bodyless approval</strong> — the timeline reads "approved these changes" with no extra comment block.</td>
+                                        <td>A <strong>bodyless approval</strong>: the timeline reads "approved these changes" with no extra comment block.</td>
                                     </tr>
                                     <tr>
                                         <td>Any criterion unmet, or a blocker found</td>
-                                        <td>The Check Run flips to <code className="docs-code">action_required</code> and DevAsign <strong>withdraws its earlier approval</strong>, so a stale green review can't keep the merge unlocked. No <code className="docs-code">REQUEST_CHANGES</code> review is submitted — GitHub would force it to carry a duplicate comment.</td>
+                                        <td>The Check Run flips to <code className="docs-code">action_required</code> and DevAsign <strong>withdraws its earlier approval</strong>, so a stale green review can't keep the merge unlocked. No <code className="docs-code">REQUEST_CHANGES</code> review is submitted, since GitHub would force it to carry a duplicate comment.</td>
                                     </tr>
                                     <tr>
                                         <td>Clean pass, but no spec to check against</td>
                                         <td>The verdict comment alone, plus a one-time invite to add an end goal.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>The PR is closed while the review is running</td>
+                                        <td>The run stops and the comment says the review was abandoned. No verdict is recorded and the Check Run is left alone.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -791,18 +837,18 @@ violations are flagged as nits; they don't block the merge.
                     <section id="maintainer-feedback" className="docs-section">
                         <h2 className="docs-heading">Maintainer feedback loop</h2>
                         <p className="docs-paragraph">
-                            Reviews are conversational. Reply on the PR — as a comment, a formal review, or an inline review comment — and DevAsign ingests it and decides whether it changes what "done" means. You can reply with any of:
+                            Reviews are conversational. Reply on the PR as a comment, a formal review, or an inline review comment, and DevAsign ingests it and decides whether it changes what "done" means. You can reply with any of:
                         </p>
                         <ul className="docs-unordered-list">
-                            <li><strong>Text</strong> — a description of the intended behaviour and acceptance conditions.</li>
-                            <li><strong>A Loom / YouTube / Vimeo link</strong> — DevAsign watches it and extracts acceptance signals.</li>
-                            <li><strong>A screenshot + description</strong> — show the expected result and describe it.</li>
+                            <li><strong>Text</strong>: a description of the intended behaviour and acceptance conditions.</li>
+                            <li><strong>A Loom / YouTube / Vimeo link</strong>: DevAsign watches it and extracts acceptance signals.</li>
+                            <li><strong>A screenshot + description</strong>: show the expected result and describe it.</li>
                         </ul>
                         <p className="docs-paragraph">
-                            Feedback is <strong>additive</strong>: new requirements are appended to the criteria list — never replacing it — and criteria earlier commits already satisfied keep their verdicts, so moving the bar doesn't re-fail finished work.
+                            Feedback is <strong>additive</strong>: new requirements are appended to the criteria list instead of replacing it, and criteria earlier commits already satisfied keep their verdicts, so moving the bar doesn't re-fail finished work.
                         </p>
                         <p className="docs-paragraph">
-                            When feedback does move the goal, DevAsign doesn't burn a full re-review on a diff it just judged. It posts a concrete <strong>implementation guide</strong> for the new requirement, flips the review to <em>changes requested</em> (refreshing the Check Run and, in blocking mode, withdrawing its earlier approval), and runs the real re-review on your <strong>next push</strong> — once there's actually new code to judge.
+                            When feedback does move the goal, DevAsign doesn't burn a full re-review on a diff it just judged. It posts a concrete <strong>implementation guide</strong> for the new requirement, flips the review to <em>changes requested</em> (refreshing the Check Run and, in blocking mode, withdrawing its earlier approval), and runs the real re-review on your <strong>next push</strong>, once there's actually new code to judge.
                         </p>
                         <p className="docs-paragraph">
                             Pure acknowledgements ("lgtm", "ship it") are recognized and don't move the goal. A mid-review Loom flagging a new bug gets a discrete fix comment without disturbing the verdict. Bot and self-authored comments are filtered out so the agent never reacts to its own output.
@@ -813,7 +859,7 @@ violations are flagged as nits; they don't block the merge.
                     <section id="broadcast" className="docs-section">
                         <h2 className="docs-heading">Broadcast &amp; alerts</h2>
                         <p className="docs-paragraph">
-                            When a verdict lands, DevAsign broadcasts it to your connected <strong>Slack</strong> or <strong>Discord</strong> channel so the team sees the outcome without opening GitHub. In the dashboard, the notification bell surfaces a row per completed review — a blue dot for a clean pass, a red dot for changes requested or a failed run — and clicking it jumps straight to the review detail and its log timeline.
+                            When a verdict lands, DevAsign broadcasts it to your connected <strong>Slack</strong> or <strong>Discord</strong> channel so the team sees the outcome without opening GitHub. In the dashboard, the notification bell surfaces a row per completed review, with a blue dot for a clean pass and a red dot for changes requested or a failed run. Clicking it jumps straight to the review detail and its log timeline.
                         </p>
                     </section>
 
@@ -821,10 +867,16 @@ violations are flagged as nits; they don't block the merge.
                     <section id="bounty-overview" className="docs-section">
                         <h2 className="docs-heading">Bounty overview</h2>
                         <p className="docs-paragraph">
-                            Alongside review, DevAsign lets open-source maintainers put a price on a GitHub issue and pay it out automatically — bounty payouts are settled by a <strong>Soroban</strong> smart contract on Stellar, with no manual transfer step.
+                            Alongside review, DevAsign lets maintainers put a price on a GitHub issue and have it pay out on merge. The money is held by a <strong>Soroban</strong> smart contract on Stellar, not by DevAsign, and settles straight to the contributor's own wallet.
+                        </p>
+                        <div className="docs-callout">
+                            <strong>Non-custodial by design:</strong> DevAsign never holds your funds and never holds your keys. A sponsor funds an escrow from their own Stellar wallet by signing the transaction themselves, and a contributor is paid directly at an address they registered. There is no DevAsign balance to top up and nothing to withdraw.
+                        </div>
+                        <p className="docs-paragraph">
+                            The sections below cover both sides: posting a bounty as a maintainer, and claiming one as a contributor. Setup is the same GitHub App install described in <a href="#installation" className="docs-link">Installation</a>. Once it's on your repo, bounties are available immediately.
                         </p>
                         <p className="docs-paragraph">
-                            Whether you're a <strong>project maintainer</strong> looking to incentivize contributions, or a <strong>developer</strong> hunting for paid open-source work, the sections below cover everything you need to get started. Setup is the same GitHub App install described in <a href="#installation" className="docs-link">Installation</a> — once it's on your repo, bounties are available immediately.
+                            You'll need a <strong>Stellar wallet</strong>: <a href="https://www.freighter.app/" target="_blank" rel="noopener noreferrer" className="docs-link">Freighter</a> to sponsor bounties, and any Stellar wallet with a USDC trustline to receive them.
                         </p>
                     </section>
 
@@ -832,34 +884,60 @@ violations are flagged as nits; they don't block the merge.
                     <section id="first-bounty" className="docs-section">
                         <h2 className="docs-heading">Your first bounty</h2>
                         <ol className="docs-ordered-list">
-                            <li>Install the DevAsign GitHub App on your repository — see <a href="#installation" className="docs-link">Installation</a>.</li>
-                            <li>Fund your DevAsign wallet with XLM or USDC</li>
-                            <li>Create a bounty by commenting on the GitHub issue <code className="docs-code">/bounty $10 2 days</code> — $10 is the bounty amount and 2 days is the deadline.</li>
-                            <li>Developers accept the bounty and submit PRs</li>
-                            <li>PR is reviewed with AI and feedback is posted as a comment</li>
-                            <li>Approve or reject PR submission</li>
-                            <li>On merge/approval, the payout is <strong>automatically</strong> released to the developer</li>
+                            <li>Install the DevAsign GitHub App on your repository. See <a href="#installation" className="docs-link">Installation</a>.</li>
+                            <li>Comment <code className="docs-code">bounty $150 1 week</code> on the issue. DevAsign replies with a funding link and the acceptance criteria it drafted from the issue.</li>
+                            <li>Open the link, connect <strong>Freighter</strong>, and sign the funding transaction. The USDC moves from your wallet into the escrow contract, and the bounty goes live.</li>
+                            <li>Developers apply. Pick one and sign the delegation, which locks the escrow to their payout address and starts the delivery clock.</li>
+                            <li>They open a PR. The usual <a href="#how-it-works" className="docs-link">review pipeline</a> runs on it, so they get feedback before you look.</li>
+                            <li>Merge their PR and the escrow releases automatically, or approve the payout in the dashboard if you'd rather settle without merging.</li>
                         </ol>
+                        <div className="docs-callout">
+                            <strong>Note the two signatures.</strong> You sign once to fund, and once to delegate. Both happen in your own wallet, and the second is what makes the merge-triggered payout safe: the escrow can only ever pay the address you already approved.
+                        </div>
                     </section>
 
                     {/* ===== BOUNTIES ===== */}
                     <section id="bounties" className="docs-section">
                         <h2 className="docs-heading">Bounties</h2>
                         <p className="docs-paragraph">
-                            Maintainers can assign a bounty to any open issue. When creating a bounty, you specify the task deadline and the payout amount in <strong>USDC</strong>. These funds are held securely in a Soroban escrow contract until the work is approved/merged.
+                            Create a bounty by commenting on any open issue with the amount in <strong>USDC</strong> and a delivery window:
+                        </p>
+                        <CodeBlock lang="prompt" code={`bounty $150 1 week`} />
+                        <p className="docs-paragraph">
+                            DevAsign replies on the issue with a funding link, labels the issue, and drafts <a href="#end-goal" className="docs-link">acceptance criteria</a> from the issue text so applicants know what "done" means. You can edit those criteria until the escrow is funded. After that they're locked, since contributors committed to them.
                         </p>
                         <h3 className="docs-subheading">Bounty lifecycle</h3>
-                        <ol className="docs-ordered-list">
-                            <li><strong>Open</strong> — Maintainer creates a bounty linked to a GitHub issue</li>
-                            <li><strong>In Progress</strong> — A developer claims the bounty</li>
-                            <li><strong>Review</strong> — Developer submits a PR for review</li>
-                            <li><strong>Bounty Paid</strong> — PR is merged/approved and funds are released</li>
-                            <li><strong>Rejected</strong> — Bounty is rejected and funds are returned to the maintainer</li>
-                            <li><strong>Deleted</strong> — Bounty is deleted and funds are returned to the maintainer</li>
-                        </ol>
-                        <h3 className="docs-subheading">Topping up funds</h3>
+                        <div className="docs-table-wrapper">
+                            <table className="docs-table">
+                                <thead>
+                                    <tr>
+                                        <th>State</th>
+                                        <th>What it means</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>Pending funding</strong></td><td>The bounty exists but no money is committed. It isn't visible to contributors yet.</td></tr>
+                                    <tr><td><strong>Open</strong></td><td>The escrow is funded on-chain and the bounty is accepting applications.</td></tr>
+                                    <tr><td><strong>Delegated</strong></td><td>You picked an applicant and signed the delegation. The escrow is locked to their payout address and the delivery clock is running.</td></tr>
+                                    <tr><td><strong>In review</strong></td><td>They submitted their work and are waiting on your decision.</td></tr>
+                                    <tr><td><strong>Paid</strong></td><td>The escrow released to the contributor.</td></tr>
+                                    <tr><td><strong>Cancelled</strong></td><td>The escrow refunded to you, because you cancelled it, the deadline elapsed, or a rejection was accepted.</td></tr>
+                                    <tr><td><strong>Disputed</strong></td><td>The contributor contested a rejection or an imminent refund. Settlement is frozen until it's resolved.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h3 className="docs-subheading">Changing a bounty</h3>
                         <p className="docs-paragraph">
-                            Before a bounty can be activated, the maintainer must fund the escrow. You can easily top up your DevAsign wallet directly from the dashboard to ensure there is enough balance to cover the bounties you create.
+                            Before the escrow is funded you can adjust it from the issue:
+                        </p>
+                        <CodeBlock lang="prompt" code={`bounty-update-amount increase $50
+bounty-update-deadline decrease 2 days`} />
+                        <p className="docs-paragraph">
+                            Once the escrow is funded the amount is locked on-chain. To change it, cancel the bounty (the escrow refunds to you) and post a fresh command. The delivery window can be up to a year, and the clock only starts when you delegate the work, not when you create the bounty.
+                        </p>
+                        <h3 className="docs-subheading">Cancelling</h3>
+                        <p className="docs-paragraph">
+                            You can cancel a bounty that hasn't paid out and the escrow refunds to the wallet that funded it. If the work is already delegated, cancelling is a rejection, and the contributor can accept it or dispute it, as below.
                         </p>
                     </section>
 
@@ -867,14 +945,25 @@ violations are flagged as nits; they don't block the merge.
                     <section id="submissions" className="docs-section">
                         <h2 className="docs-heading">Submissions</h2>
                         <p className="docs-paragraph">
-                            Developers browse active bounties on DevAsign. When you find a task you want to work on, click <code className="docs-code">Apply</code>. This lets the maintainer know you are interested in working on it.
+                            Developers browse open bounties in the DevAsign contributor app. When you find one you want, click <strong>Apply</strong>. Applying requires a <a href="#wallet" className="docs-link">payout wallet</a> on file. DevAsign checks the address is valid and has a USDC trustline at that moment, and records it with your application, so the maintainer knows the money can actually reach you.
                         </p>
                         <p className="docs-paragraph">
-                            Once you open a Pull Request against the linked issue, DevAsign automatically kicks in — the same <a href="#how-it-works" className="docs-link">review pipeline</a> runs on the bounty PR, so you get immediate, actionable feedback before the maintainer looks at it.
+                            Applying doesn't reserve the bounty. The maintainer picks one applicant and signs a <strong>delegation</strong>, which locks the escrow to your payout address on-chain and starts the delivery clock. Until that happens you're one of several candidates, and you can withdraw your application at any time.
                         </p>
-                        <h3 className="docs-subheading">Submission review</h3>
+                        <h3 className="docs-subheading">Doing the work</h3>
                         <p className="docs-paragraph">
-                            Maintainers can <strong>approve</strong> or <strong>reject</strong> submissions. On approval, the bounty payout is triggered automatically. On rejection, a reason must be provided so the contributor can iterate or dispute the decision.
+                            Open a pull request against the linked issue. The usual <a href="#how-it-works" className="docs-link">review pipeline</a> runs on it, judged against the bounty's acceptance criteria, so you get actionable feedback before the maintainer looks. When you're ready, submit from the dashboard with the PR link and any supporting links, like a demo video or a deployed preview.
+                        </p>
+                        <h3 className="docs-subheading">Getting paid</h3>
+                        <p className="docs-paragraph">
+                            There are two ways the escrow releases to you, and both pay the address locked at delegation:
+                        </p>
+                        <ul className="docs-unordered-list">
+                            <li><strong>Your PR is merged</strong>: the release fires automatically. DevAsign checks the merged PR was authored by the delegated contributor before releasing anything.</li>
+                            <li><strong>The maintainer approves the payout</strong>: useful when the work shipped without a merge. They sign the release from their own wallet.</li>
+                        </ul>
+                        <p className="docs-paragraph">
+                            If a maintainer <strong>rejects</strong> the submission they must give a reason. You can accept it, which refunds the escrow to them, or <a href="#withdrawals" className="docs-link">dispute</a> it, which freezes settlement while it's worked out.
                         </p>
                     </section>
 
@@ -882,11 +971,18 @@ violations are flagged as nits; they don't block the merge.
                     <section id="escrow" className="docs-section">
                         <h2 className="docs-heading">Soroban escrow</h2>
                         <p className="docs-paragraph">
-                            Trust is guaranteed via automated Soroban smart contracts on the <strong>Stellar network</strong>.
+                            Bounty money is held by a Soroban smart contract on the <strong>Stellar network</strong>, never by DevAsign. Funding, delegating, and approving a payout are all transactions the sponsor signs in their own wallet; DevAsign builds the transaction and broadcasts it, but it can't move funds it wasn't authorized to move.
                         </p>
                         <h3 className="docs-subheading">How escrow works</h3>
                         <p className="docs-paragraph">
-                            When a maintainer creates a bounty, the funds are deposited into a secure Soroban escrow contract. They are locked there until the conditions (PR approval) are met. Neither the maintainer nor the contributor can unilaterally withdraw escrowed funds.
+                            When a sponsor funds a bounty, USDC moves from their wallet into the escrow contract and is locked there. Neither side can unilaterally take it back. Two later actions can move it, and each is constrained by what the sponsor already signed:
+                        </p>
+                        <ul className="docs-unordered-list">
+                            <li><strong>Release</strong>: pays the contributor address the sponsor locked in at delegation. Triggered by merging the delegate's PR, or by the sponsor approving the payout directly.</li>
+                            <li><strong>Refund</strong>: returns the full amount to the wallet that funded it. Happens on cancellation, on an accepted rejection, or automatically once a missed deadline's dispute window closes.</li>
+                        </ul>
+                        <p className="docs-paragraph">
+                            Because the contributor's address is fixed on-chain at delegation, the merge-triggered release doesn't need the sponsor's key and still can't pay anyone else. Automatic payout on merge is therefore a property of the contract, not something you have to take on trust.
                         </p>
 
                         <div className="docs-escrow-contract-card">
@@ -894,81 +990,118 @@ violations are flagged as nits; they don't block the merge.
                             <div className="docs-escrow-contract-inline">
                                 <span className="docs-escrow-contract-label">Smart Contract:</span>
                                 <a
-                                    href="https://stellar.expert/explorer/public/contract/CDDFBYM5MECFZHDAU3ZZLGGCU4WPSEMRACAMID6UTFV5TGLSKIKTWLQM"
+                                    href="https://stellar.expert/explorer/public/contract/CDWMA24IREKTSX25VT27HZFUAQE5PZNDY2EGW56JH6M2GID4UZNWHHJU"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="docs-escrow-contract-address"
                                 >
-                                    CDDFBYM5MECFZHDAU3ZZLGGCU4WPSEMRACAMID6UTFV5TGLSKIKTWLQM
+                                    CDWMA24IREKTSX25VT27HZFUAQE5PZNDY2EGW56JH6M2GID4UZNWHHJU
                                 </a>
                             </div>
                         </div>
-                        <h3 className="docs-subheading">Automated payouts</h3>
+                        <h3 className="docs-subheading">Settlement</h3>
                         <p className="docs-paragraph">
-                            <strong>Zero manual intervention is required for payouts.</strong> As soon as the maintainer approves the contributor's submission, the system triggers the smart contract. The bounty is paid immediately and automatically directly into the contributor's wallet.
+                            Every escrow movement is a real Stellar transaction you can verify on-chain. DevAsign tracks each one until the network confirms it, retries a transaction the network dropped, and reconciles against contract state rather than assuming a broadcast succeeded, so a bounty can't be left reading "paid" when the money never moved, or stuck pending when it did.
+                        </p>
+                        <p className="docs-paragraph">
+                            Both apps carry a transaction ledger of funding, releases and refunds, with a link to each transaction on the Stellar explorer, and sponsors can export theirs as CSV.
                         </p>
                     </section>
 
                     {/* ===== WALLET ===== */}
                     <section id="wallet" className="docs-section">
-                        <h2 className="docs-heading">Built-in wallet</h2>
+                        <h2 className="docs-heading">Payout wallet</h2>
                         <p className="docs-paragraph">
-                            Web3 onboarding can be tough, which is why DevAsign abstracts it away. Both maintainers and contributors are <strong>automatically provided with a secure, built-in wallet</strong> upon account creation.
+                            DevAsign doesn't create or hold a wallet for you. You bring your own Stellar wallet, and both sides of a bounty use it directly.
                         </p>
+                        <h3 className="docs-subheading">Sponsoring bounties</h3>
                         <p className="docs-paragraph">
-                            You do not need to connect a third-party wallet (like Freighter or Lobstr) to start using DevAsign. Your wallet is created and funded automatically through the Stellar network.
+                            Funding, delegating, and approving payouts are signed with <a href="https://www.freighter.app/" target="_blank" rel="noopener noreferrer" className="docs-link">Freighter</a>. DevAsign prepares each transaction and hands it to your wallet to sign. Your keys never leave the extension, and nothing moves without your approval.
                         </p>
+                        <h3 className="docs-subheading">Receiving bounties</h3>
+                        <p className="docs-paragraph">
+                            Contributors register a <strong>payout address</strong> in the dashboard: any Stellar address you control, plus an optional memo if your wallet or exchange requires one. Approved bounties pay out to it directly.
+                        </p>
+                        <ul className="docs-unordered-list">
+                            <li>The address must have a <strong>USDC trustline</strong>. Without one it can't receive USDC, and DevAsign flags this on your wallet rather than letting a payout fail silently.</li>
+                            <li>The address is checked when you apply to a bounty and recorded with that application, so changing it later never redirects a bounty already delegated to you.</li>
+                            <li>You can replace or remove it at any time. Removing it pauses payouts until you add a new one.</li>
+                        </ul>
                         <div className="docs-callout">
-                            <strong>Security:</strong> All wallet secret keys are encrypted at rest using AES-256-GCM with a server-side encryption key.
+                            <strong>There is no DevAsign balance.</strong> We never hold your funds and never hold your keys, so there's nothing to top up and nothing to withdraw. See <a href="#withdrawals" className="docs-link">Deadlines &amp; disputes</a> for what happens when work stalls.
                         </div>
                     </section>
 
                     {/* ===== WITHDRAWALS ===== */}
                     <section id="withdrawals" className="docs-section">
-                        <h2 className="docs-heading">Withdrawals</h2>
+                        <h2 className="docs-heading">Deadlines &amp; disputes</h2>
                         <p className="docs-paragraph">
-                            Once a contributor receives their bounty in their DevAsign wallet, they can seamlessly withdraw the funds to any external Stellar address or exchange of their choice.
+                            A bounty can't stall indefinitely with money locked in escrow. The delivery clock starts when the sponsor delegates the work, not when the bounty is created, and runs for the window they set.
                         </p>
-                        <h3 className="docs-subheading">Withdrawal requirements</h3>
-                        <ul className="docs-unordered-list">
-                            <li>The destination must be a valid Stellar address with a USDC trustline</li>
-                            <li>Sufficient balance must be available in your wallet</li>
-                            <li>A 24-hour cooldown period applies between withdrawals for security</li>
-                        </ul>
+                        <h3 className="docs-subheading">A missed deadline</h3>
+                        <p className="docs-paragraph">
+                            When the delivery window elapses, DevAsign notifies both sides and opens a <strong>24-hour dispute window</strong> before refunding anything. If the contributor doesn't contest it in that time, the escrow refunds to the sponsor automatically. If they do, settlement freezes until it's resolved, so a contributor who delivered late or whose work is under review doesn't lose the bounty to a clock.
+                        </p>
+                        <h3 className="docs-subheading">A rejected submission</h3>
+                        <p className="docs-paragraph">
+                            A sponsor rejecting work must give a reason. The contributor can <strong>accept</strong> it, which refunds the escrow to the sponsor and closes the bounty, or <strong>dispute</strong> it, which holds the escrow in place while the two of you work it out on the issue.
+                        </p>
+                        <div className="docs-callout">
+                            <strong>While a bounty is disputed</strong> the escrow moves in neither direction: no release, no refund, no expiry. It stays locked until the dispute is resolved, so neither side can run out the clock on the other.
+                        </div>
                     </section>
 
                     {/* ===== MODELS ===== */}
                     <section id="models" className="docs-section">
-                        <h2 className="docs-heading">Models</h2>
+                        <h2 className="docs-heading">Models &amp; plans</h2>
                         <p className="docs-paragraph">
-                            DevAsign routes each task to the model that fits it, and tiers the reasoning model by plan.
+                            DevAsign runs on frontier AI models and routes each job to the one that fits it. Which model reviews your code follows the repository owner's plan:
                         </p>
                         <div className="docs-table-wrapper">
                             <table className="docs-table">
                                 <thead>
                                     <tr>
-                                        <th>Model</th>
-                                        <th>Where it's used</th>
+                                        <th>Plan</th>
+                                        <th>Review model</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><strong>Claude Opus</strong></td>
-                                        <td>The reasoning passes on Pro and Max — criteria synthesis, diff review, the whole-repo holistic pass, deferred-work judgment, and DEVASIGN.md guidance.</td>
+                                        <td><strong>Free</strong></td>
+                                        <td><strong>Standard</strong>: a fast, capable model that runs the same pipeline end to end: criteria synthesis, the review, and the verification pass.</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Claude Haiku</strong></td>
-                                        <td>The same reasoning passes on the Free plan, plus per-file repository-index summaries on every plan — fast and high-volume.</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Gemini 2.5 Pro</strong></td>
-                                        <td>Watching and summarizing video (Loom / YouTube / Vimeo) and vision tasks.</td>
+                                        <td><strong>Personal / Team</strong></td>
+                                        <td><strong>Frontier</strong>: the most capable reasoning tier we offer, with extended reasoning enabled so the model works through a change before judging it. Noticeably stronger on large diffs, subtle regressions, and security analysis.</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <p className="docs-paragraph">
-                            The review model follows the repo owner's plan: <strong>Free</strong> reviews run end-to-end on Claude Haiku, while <strong>Pro</strong> and <strong>Max</strong> run the frontier reasoning model. System prompts are sent with <strong>prompt caching</strong> enabled, so the reused instruction blocks don't re-bill on every pass.
+                            Video and image understanding run on a vision-capable model on every plan, so a Free repository still gets walkthroughs watched and screenshots read.
+                        </p>
+                        <p className="docs-paragraph">
+                            Which model sits behind each tier is ours to choose, not a setting you configure. We move each tier onto stronger models as they become available, so reviews improve without any change on your side.
+                        </p>
+                        <h3 className="docs-subheading">Monthly review allowance</h3>
+                        <div className="docs-table-wrapper">
+                            <table className="docs-table">
+                                <thead>
+                                    <tr>
+                                        <th>Plan</th>
+                                        <th>Reviews / month</th>
+                                        <th>Private repositories</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>Free</strong></td><td>30</td><td>No</td></tr>
+                                    <tr><td><strong>Personal</strong></td><td>120</td><td>Yes</td></tr>
+                                    <tr><td><strong>Team</strong></td><td>600</td><td>Yes</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p className="docs-paragraph">
+                            The allowance is per installation and meters <em>unique pull requests</em>: reviewing a PR for the first time spends one, and re-reviewing it after a push does not. Each PR then carries its own window of 6 re-reviews a month; past that a paid plan spends overage credits (150 a month on Personal, 650 on Team). See <a href="#triggering" className="docs-link">Triggering reviews</a>.
                         </p>
                     </section>
 
@@ -976,13 +1109,16 @@ violations are flagged as nits; they don't block the merge.
                     <section id="repo-index" className="docs-section">
                         <h2 className="docs-heading">Repository index</h2>
                         <p className="docs-paragraph">
-                            The whole-repo review is powered by a per-file index: a short LLM-generated summary of each source file, capturing what it does, its top-level <code className="docs-code">exports</code> and <code className="docs-code">imports</code>, and any security-sensitive flags (<code className="docs-code">reads-env</code>, <code className="docs-code">raw-sql</code>, <code className="docs-code">handles-auth</code>, …).
+                            The <a href="#holistic-review" className="docs-link">codebase-aware review</a> is powered by a searchable index of your repository. It lets a review pull in the code that actually matters to a change (the definitions it calls, the callers that depend on it, the surrounding scope) instead of judging the diff in isolation.
                         </p>
                         <ul className="docs-unordered-list">
-                            <li><strong>Full build</strong> — on install, DevAsign walks the default-branch tree, filters to reviewable source files (skipping <code className="docs-code">node_modules</code>, build output, lockfiles, and binaries, with size caps), and summarizes each with Haiku at a concurrency of 8.</li>
-                            <li><strong>SHA-keyed cache</strong> — every entry is keyed by the file's git blob SHA, so re-indexing an unchanged file is free.</li>
-                            <li><strong>Incremental refresh</strong> — when a PR merges, only the changed paths are re-summarized; deleted and renamed files are pruned.</li>
+                            <li><strong>Built on install</strong>: DevAsign indexes your default branch, skipping the things that aren't source: dependencies, build output, lockfiles, and binaries.</li>
+                            <li><strong>Refreshed on merge</strong>: when a PR merges, only what changed is re-indexed, and deleted files are pruned. Unchanged code is never reprocessed.</li>
+                            <li><strong>Private by default</strong>: the index is scoped to your installation and is never shared across accounts. Uninstalling the app deletes it.</li>
                         </ul>
+                        <p className="docs-paragraph">
+                            Indexing runs in the background and reviews never wait on it. Until a repository has finished indexing, usually the first few minutes after install, reviews still run, with the codebase-aware analysis limited to the diff itself.
+                        </p>
                         <p className="docs-paragraph">
                             An index moves through these states, surfaced per-repo in the dashboard:
                         </p>
@@ -997,9 +1133,9 @@ violations are flagged as nits; they don't block the merge.
                                 <tbody>
                                     <tr><td><code className="docs-code">queued</code></td><td>A build job is waiting on the index queue.</td></tr>
                                     <tr><td><code className="docs-code">indexing</code></td><td>A worker is actively walking the tree.</td></tr>
-                                    <tr><td><code className="docs-code">ready</code></td><td>The index is up to date; holistic review is enabled.</td></tr>
+                                    <tr><td><code className="docs-code">ready</code></td><td>The index is up to date; codebase-aware review has full context.</td></tr>
                                     <tr><td><code className="docs-code">stale</code></td><td>A PR merged; an incremental refresh is pending.</td></tr>
-                                    <tr><td><code className="docs-code">errored</code></td><td>The last build failed; reviews fall back to criteria-only.</td></tr>
+                                    <tr><td><code className="docs-code">errored</code></td><td>The last build failed; reviews continue against the diff while DevAsign retries.</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -1012,10 +1148,10 @@ violations are flagged as nits; they don't block the merge.
                             DevAsign keeps the request path thin and pushes the heavy lifting to workers:
                         </p>
                         <ul className="docs-unordered-list">
-                            <li><strong>Webhook receiver</strong> — verifies each delivery's <code className="docs-code">sha256</code> HMAC signature, then enqueues a job. It does no review work itself.</li>
-                            <li><strong>Job queue &amp; workers</strong> — reviews, index builds, and maintainer-feedback jobs run on workers, so multimodal and transcription work isn't capped by a function timeout.</li>
-                            <li><strong>Least-privilege GitHub App</strong> — the app requests only Pull requests (read/write), Checks (write), Contents (read), Issues (read), and Metadata (read), and exchanges the installation for short-lived tokens per request rather than holding long-lived credentials (see <a href="#permissions" className="docs-link">GitHub permissions</a>).</li>
-                            <li><strong>Persistence</strong> — reviews, criteria, the index, per-repo workflow configs, and an append-only review-log timeline are stored in Postgres.</li>
+                            <li><strong>Webhook receiver</strong>: verifies each delivery's <code className="docs-code">sha256</code> HMAC signature, then enqueues a job. It does no review work itself.</li>
+                            <li><strong>Job queue &amp; workers</strong>: reviews, index builds, and maintainer-feedback jobs run on workers, so multimodal and transcription work isn't capped by a function timeout.</li>
+                            <li><strong>Least-privilege GitHub App</strong>: the app requests only the scopes listed under <a href="#permissions" className="docs-link">GitHub permissions</a>, and exchanges the installation for short-lived tokens per request rather than holding long-lived credentials.</li>
+                            <li><strong>Data handling</strong>: your code is read to produce a review and is never used to train models. Reviews, criteria, your repository index, per-repo workflow settings, and the review-log timeline are stored against your installation and removed when you uninstall.</li>
                         </ul>
                     </section>
 
