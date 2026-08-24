@@ -299,7 +299,7 @@ export function DocsPage() {
                     <section id="permissions" className="docs-section">
                         <h2 className="docs-heading">GitHub permissions</h2>
                         <p className="docs-paragraph">
-                            DevAsign installs as a <strong>least-privilege GitHub App</strong>. When you install it, GitHub shows you the exact scopes below, and the app requests nothing else. It never sees your GitHub password, and rather than hold a long-lived key it exchanges the installation for a <strong>short-lived token</strong>, scoped to the repositories you picked, on each request.
+                            When you install it, GitHub shows you the exact scopes below, and the app requests nothing else. It never sees your GitHub password, and rather than hold a long-lived key it exchanges the installation for a <strong>short-lived token</strong>, scoped to the repositories you picked, on each request.
                         </p>
 
                         <h3 className="docs-subheading">What we request</h3>
@@ -1150,7 +1150,7 @@ bounty-update-deadline decrease 2 days`} />
                         <ul className="docs-unordered-list">
                             <li><strong>Webhook receiver</strong>: verifies each delivery's <code className="docs-code">sha256</code> HMAC signature, then enqueues a job. It does no review work itself.</li>
                             <li><strong>Job queue &amp; workers</strong>: reviews, index builds, and maintainer-feedback jobs run on workers, so multimodal and transcription work isn't capped by a function timeout.</li>
-                            <li><strong>Least-privilege GitHub App</strong>: the app requests only the scopes listed under <a href="#permissions" className="docs-link">GitHub permissions</a>, and exchanges the installation for short-lived tokens per request rather than holding long-lived credentials.</li>
+                            <li><strong>GitHub App</strong>: the app requests only the scopes listed under <a href="#permissions" className="docs-link">GitHub permissions</a>, and exchanges the installation for short-lived tokens per request rather than holding long-lived credentials.</li>
                             <li><strong>Data handling</strong>: your code is read to produce a review and is never used to train models. Reviews, criteria, your repository index, per-repo workflow settings, and the review-log timeline are stored against your installation and removed when you uninstall.</li>
                         </ul>
                     </section>
