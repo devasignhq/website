@@ -1103,6 +1103,17 @@ bounty-update-deadline decrease 2 days`} />
                         <p className="docs-paragraph">
                             The allowance is per installation and meters <em>unique pull requests</em>: reviewing a PR for the first time spends one, and re-reviewing it after a push does not. Each PR then carries its own window of 6 re-reviews a month; past that a paid plan spends overage credits (150 a month on Personal, 650 on Team). See <a href="#triggering" className="docs-link">Triggering reviews</a>.
                         </p>
+
+                        <h3 className="docs-subheading">Credits</h3>
+                        <p className="docs-paragraph">
+                            Credits cover reviews beyond your monthly allowance. Personal and Team include a fresh batch every month, and you can buy more at any time from <strong>Settings → Billing</strong> — a one-off purchase, not a subscription. Purchased credits never expire and are only spent once the month's included batch is gone.
+                        </p>
+                        <div className="docs-callout">
+                            <strong>When the allowance runs out:</strong> DevAsign pauses reviews for that installation and leaves a single comment on the pull request explaining why, with a link to your billing page. Nothing is lost — the paused PR is reviewed as soon as you buy credits or the allowance resets.
+                        </div>
+                        <p className="docs-paragraph">
+                            Credits are an add-on for paid plans. On Free, reaching the allowance means waiting for the next month or upgrading. If a credit purchase is refunded or charged back, the credits it bought are removed from the balance; if a chargeback is later resolved in your favour, they are returned.
+                        </p>
                     </section>
 
                     {/* ===== REPO INDEX ===== */}
