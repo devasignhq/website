@@ -487,7 +487,7 @@ export function DocsPage() {
 
                         <h3 className="docs-subheading">Video understanding</h3>
                         <p className="docs-paragraph">
-                            DevAsign scans the PR body, every linked issue, and task attachments for video URLs and de-duplicates them, then watches each one. Up to five videos are summarized per PR. Every video becomes a structured summary the review can reason over: what the recording demonstrates, the key moments it walks through, and the <strong>acceptance signals</strong> a reviewer should confirm the PR actually implements. Where a host can't be watched directly, DevAsign says so rather than inventing detail.
+                            DevAsign scans the PR body, every linked issue, and maintainer messages for video URLs and de-duplicates them, then watches each one. Up to five videos are summarized per PR. Every video becomes a structured summary the review can reason over: what the recording demonstrates, the key moments it walks through, and the <strong>acceptance signals</strong> a reviewer should confirm the PR actually implements. Where a host can't be watched directly, DevAsign says so rather than inventing detail.
                         </p>
 
                         <h3 id="steering" className="docs-subheading">Steering a review</h3>
@@ -495,7 +495,7 @@ export function DocsPage() {
                             The <strong>Steer review</strong> box under the review log sends the agent a message in one of two modes. <strong>Set intent</strong> states what the PR must do in your own words: it becomes the top of the intent hierarchy, above the linked issues, and the acceptance criteria are regenerated from it before the review re-runs. <strong>Add context</strong> points the agent at evidence, such as a test that already covers a criterion, a Loom, a design doc, or a CI flake it should discount, and re-runs the review with the criteria held fixed. Both persist on the pull request across pushes, both use one run, and the verdict comment on GitHub discloses that maintainer input shaped it.
                         </p>
                         <p className="docs-paragraph">
-                            Every acceptance criterion carries a source tag, <em>issue</em>, <em>PR body</em>, <em>maintainer</em> or <em>standing</em>, in the dashboard and in the review prompt. The agent knows when it is grading the author against their own description and weighs the verdict accordingly.
+                            Every acceptance criterion carries a source tag in the dashboard and in the review prompt: <em>issue</em>, <em>PR body</em>, <em>maintainer</em>, or <em>DevAsign rule</em> for the behavior-preservation and test-coverage criteria the agent adds on its own. The agent knows when it is grading the author against their own description and weighs the verdict accordingly.
                         </p>
                     </section>
 
@@ -503,7 +503,7 @@ export function DocsPage() {
                     <section id="end-goal" className="docs-section">
                         <h2 className="docs-heading">End goal &amp; acceptance criteria</h2>
                         <p className="docs-paragraph">
-                            A single LLM pass distills all that raw context into a one-sentence <strong>End goal</strong> and a list of independently checkable <strong>acceptance criteria</strong>. The result is a structured object you can edit, not a black box. It's persisted on the task and shown in the dashboard, so you can correct it before or during a review.
+                            A single LLM pass distills all that raw context into a one-sentence <strong>End goal</strong> and a list of independently checkable <strong>acceptance criteria</strong>. The result is a structured object you can edit, not a black box. It's persisted on the review and shown in the dashboard, so you can correct it before or during a review.
                         </p>
                         <CodeBlock lang="json" code={`{
   "endGoal": "Team members can be invited by email and land in the right workspace role.",
