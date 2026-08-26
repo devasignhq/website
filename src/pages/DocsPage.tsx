@@ -474,6 +474,10 @@ export function DocsPage() {
                                         <td>Images are read by a vision-capable model; PDFs are parsed to text.</td>
                                     </tr>
                                     <tr>
+                                        <td><strong>Maintainer messages</strong></td>
+                                        <td>Directives and notes sent from the dashboard's <strong>Steer review</strong> box, plus any video or image they link. See <a href="#steering" className="docs-link">Steering a review</a>.</td>
+                                    </tr>
+                                    <tr>
                                         <td><strong>PR state</strong></td>
                                         <td>Mergeability, merge conflicts, and the status of your CI checks on the head commit, so the review can tell you a PR is broken or unmergeable rather than reviewing it in a vacuum.</td>
                                     </tr>
@@ -486,9 +490,12 @@ export function DocsPage() {
                             DevAsign scans the PR body, every linked issue, and task attachments for video URLs and de-duplicates them, then watches each one. Up to five videos are summarized per PR. Every video becomes a structured summary the review can reason over: what the recording demonstrates, the key moments it walks through, and the <strong>acceptance signals</strong> a reviewer should confirm the PR actually implements. Where a host can't be watched directly, DevAsign says so rather than inventing detail.
                         </p>
 
-                        <h3 className="docs-subheading">The Message-agent inbox</h3>
+                        <h3 id="steering" className="docs-subheading">Steering a review</h3>
                         <p className="docs-paragraph">
-                            Anything you send the agent on the <strong>Message-agent</strong> screen, whether that's a Loom link, a Figma frame, an image, a PDF, a plain link or free text, is attached to the task and ingested exactly like the sources above. It's how you give the agent context that doesn't live in the ticket.
+                            The <strong>Steer review</strong> box under the review log sends the agent a message in one of two modes. <strong>Set intent</strong> states what the PR must do in your own words: it becomes the top of the intent hierarchy, above the linked issues, and the acceptance criteria are regenerated from it before the review re-runs. <strong>Add context</strong> points the agent at evidence, such as a test that already covers a criterion, a Loom, a design doc, or a CI flake it should discount, and re-runs the review with the criteria held fixed. Both persist on the pull request across pushes, both use one run, and the verdict comment on GitHub discloses that maintainer input shaped it.
+                        </p>
+                        <p className="docs-paragraph">
+                            Every acceptance criterion carries a source tag, <em>issue</em>, <em>PR body</em>, <em>maintainer</em> or <em>standing</em>, in the dashboard and in the review prompt. The agent knows when it is grading the author against their own description and weighs the verdict accordingly.
                         </p>
                     </section>
 
