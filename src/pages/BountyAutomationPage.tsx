@@ -276,7 +276,7 @@ export function BountyAutomationPage() {
                             </details>
                             <details className="da-faq">
                                 <summary>Can I bounty private-repo issues?</summary>
-                                <div className="da-faq-body"><p>Yes — on Pro, Max, and Enterprise. The Free plan supports bounties on public repos only, matching the Free product's open-source scope.</p></div>
+                                <div className="da-faq-body"><p>Yes — on Personal and Team, which both include private repositories. The Free plan supports bounties on public repos only, matching the Free plan's open-source scope.</p></div>
                             </details>
                             <details className="da-faq">
                                 <summary>How does this interact with goal-aware review?</summary>
