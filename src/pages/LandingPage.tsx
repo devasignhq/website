@@ -110,14 +110,14 @@ export function LandingPage() {
                         <div className="col-left">
                             <span className="chip chip-coral" style={{ marginBottom: 18, display: 'inline-flex' }}>OTHER REVIEWERS SEE</span>
                             <h3>The diff. The lint. The test status.</h3>
-                            <p>They approve if it compiles. They never met the ticket. They never opened the Figma. They've never watched the Loom. So they can't tell you what's missing — only what's there.</p>
+                            <p>They approve if it compiles. They never met the ticket. They never read the issue thread. They've never watched the Loom. So they can't tell you what's missing — only what's there.</p>
                         </div>
                         <div className="col-right">
                             <span className="chip chip-brand" style={{ marginBottom: 18, display: 'inline-flex' }}>THEY MISS</span>
                             <div className="da-miss-list">
                                 <div className="da-miss-item"><span className="circle-x" aria-hidden="true"><XSvg /></span><p><strong>The button</strong> the ticket asked for, but the dev forgot.</p></div>
                                 <div className="da-miss-item"><span className="circle-x" aria-hidden="true"><XSvg /></span><p><strong>The flow</strong> described in the Loom that was never implemented.</p></div>
-                                <div className="da-miss-item"><span className="circle-x" aria-hidden="true"><XSvg /></span><p><strong>The state</strong> shown in the Figma that the diff silently skips.</p></div>
+                                <div className="da-miss-item"><span className="circle-x" aria-hidden="true"><XSvg /></span><p><strong>The edge case</strong> called out in the issue thread that the diff silently skips.</p></div>
                                 <div className="da-miss-item"><span className="circle-x" aria-hidden="true"><XSvg /></span><p><strong>The breaking change</strong> that ships fine to staging and explodes in prod.</p></div>
                             </div>
                             <div className="da-cap">This is the gap <span>DevAsign</span> closes.</div>
@@ -142,7 +142,7 @@ export function LandingPage() {
                             <ul className="da-ba-list">
                                 <li>Diff in, diff out</li>
                                 <li>No ticket context</li>
-                                <li>No Figma, no Loom</li>
+                                <li>No screenshots, no Loom</li>
                                 <li>"Approved" ≠ "correct"</li>
                             </ul>
                         </div>
@@ -160,7 +160,7 @@ export function LandingPage() {
                                 AFTER — DEVASIGN
                             </span>
                             <h3>Reads the goal. Reviews against it. Guides inline.</h3>
-                            <p>Agent ingests the <em>full</em> goal — ticket, linked issues, screenshots, Figma, Loom, acceptance criteria. Reviews the PR against the goal, not just the diff.</p>
+                            <p>Agent ingests the <em>full</em> goal — ticket, linked issues, screenshots, Loom, acceptance criteria. Reviews the PR against the goal, not just the diff.</p>
                             <ul className="da-ba-list">
                                 <li>Multimodal goal ingestion</li>
                                 <li>Re-scored on every commit</li>
@@ -186,8 +186,8 @@ export function LandingPage() {
                         <div className="da-step">
                             <div className="step-num">01</div>
                             <h3>Ingest the goal</h3>
-                            <p>Ticket text + linked issues + screenshots + Figma frames + Loom walkthroughs + acceptance criteria. The agent builds a model of what done looks like.</p>
-                            <div className="bullets"><span>Ticket</span><span>Figma</span><span>Loom</span><span>AC</span></div>
+                            <p>Ticket text + linked issues + screenshots + Loom walkthroughs + acceptance criteria. The agent builds a model of what done looks like.</p>
+                            <div className="bullets"><span>Ticket</span><span>Screens</span><span>Loom</span><span>AC</span></div>
                         </div>
                         <div className="da-step">
                             <div className="step-num">02</div>
@@ -241,7 +241,7 @@ export function LandingPage() {
                                         <span className="who bot">devasign</span>
                                         <span className="meta">· just now</span>
                                     </div>
-                                    <p>Goal coverage <strong className="ok">6/6 ✓</strong>. CTA copy now matches the linked Figma frame on line&nbsp;142.</p>
+                                    <p>Goal coverage <strong className="ok">6/6 ✓</strong>. CTA copy now matches the ticket's spec on line&nbsp;142.</p>
                                 </div>
                                 <div className="da-gh-status">
                                     <span className="check">✓</span> All checks passed · Ready to merge
@@ -264,7 +264,7 @@ export function LandingPage() {
                                 <div className="da-ide-line"><span className="ln">143</span><span className="code">&nbsp;</span></div>
                                 <div className="da-ide-hint">
                                     <span className="badge">DevAsign</span>
-                                    <p>Ticket #43 says CTA copy should be <em>"Create your first team"</em> — Figma frame, line 4.</p>
+                                    <p>Ticket #43 says CTA copy should be <em>"Create your first team"</em> — issue #43, acceptance criteria.</p>
                                     <div className="actions">
                                         <span className="kbd">⌘ ↵</span> apply fix
                                     </div>
@@ -283,7 +283,7 @@ export function LandingPage() {
                             </div>
                             <div className="da-surface-body cli">
                                 <div className="da-cli-line"><span className="prompt">$</span> devasign review #43</div>
-                                <div className="da-cli-out dim">→ reading ticket, figma frames, attached loom…</div>
+                                <div className="da-cli-out dim">→ reading ticket, screenshots, attached loom…</div>
                                 <div className="da-cli-out"><span className="ok">✓</span> acceptance criteria · 4/6</div>
                                 <div className="da-cli-out"><span className="warn">!</span> missing: empty-state CTA copy</div>
                                 <div className="da-cli-out"><span className="warn">!</span> missing: a11y label on primary action</div>
@@ -339,16 +339,16 @@ export function LandingPage() {
                                     <div className="da-gh-body">
                                         <div className="da-gh-comment coral">
                                             <div className="head"><span className="who bot coral">devasign</span> flagged · 1m ago</div>
-                                            <p>The attached Figma <strong style={{ color: 'var(--info)' }}>"Teams · v3"</strong> defines an empty state for workspaces with no members.</p>
+                                            <p>The attached screenshot <strong style={{ color: 'var(--info)' }}>"Teams · v3"</strong> defines an empty state for workspaces with no members.</p>
                                             <div className="da-gh-figma">
                                                 <div className="thumb" />
-                                                <p>Frame <em style={{ color: 'var(--info)' }}>empty-state/no-members</em> shows an illustration + <em>"Invite teammates"</em> CTA. Your diff renders <code style={{ color: 'var(--coral)' }}>null</code> in this branch.</p>
+                                                <p>Screen <em style={{ color: 'var(--info)' }}>empty-state/no-members</em> shows an illustration + <em>"Invite teammates"</em> CTA. Your diff renders <code style={{ color: 'var(--coral)' }}>null</code> in this branch.</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="da-shot-cap">Agent references the attached Figma and flags a missing empty state.</div>
+                            <div className="da-shot-cap">Agent references the attached screenshot and flags a missing empty state.</div>
                         </div>
 
                         {/* Shot 3 */}
@@ -398,7 +398,7 @@ export function LandingPage() {
                                             </div>
                                             <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginTop: 6, fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--fg-muted)' }}>
                                                 <span>✓ Resend invite affordance</span>
-                                                <span>✓ Empty state copy matches Figma</span>
+                                                <span>✓ Empty state copy matches the screenshot</span>
                                                 <span>✓ Webhook contract preserved</span>
                                                 <span>✓ Loom flow implemented end-to-end</span>
                                             </div>
@@ -438,7 +438,7 @@ export function LandingPage() {
                                     <div className="da-quad-name">Goal-aware · Independent</div>
                                     <div className="da-quad-devasign" style={{ color: 'var(--fg)' }}>DevAsign</div>
                                 </div>
-                                <div className="da-quad-list" style={{ color: 'var(--brand)' }}>Reads ticket · Figma · Loom · Judges PR</div>
+                                <div className="da-quad-list" style={{ color: 'var(--brand)' }}>Reads ticket · Screens · Loom · Judges PR</div>
                             </div>
                             <div className="da-quad">
                                 <div>

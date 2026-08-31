@@ -10,13 +10,11 @@ type IngestSource = {
     icon: React.ReactNode;
 };
 
-const FigmaIcon = () => (
+const ScreenshotIcon = () => (
     <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 12a4 4 0 1 1 0-8h4a4 4 0 0 1 0 8h-4z" fill="#A259FF" />
-        <path d="M4 8a4 4 0 0 1 4-4h4v8H8a4 4 0 0 1-4-4z" fill="#F24E1E" />
-        <path d="M4 16a4 4 0 0 1 4-4h4v8a4 4 0 1 1-8 0z" fill="#0ACF83" />
-        <path d="M12 12h4a4 4 0 1 1-4 4v-4z" fill="#1ABCFE" />
-        <path d="M4 12a4 4 0 0 0 4 4h4v-8H8a4 4 0 0 0-4 4z" fill="#FF7262" />
+        <rect x="2" y="4" width="20" height="16" rx="3" fill="#F2F2F2" />
+        <circle cx="8" cy="10" r="2" fill="#F5A524" />
+        <path d="M4 18l5-5 4 4 3-3 4 4H4z" fill="#3B82F6" />
     </svg>
 );
 
@@ -43,12 +41,11 @@ const NotionIcon = () => (
     </svg>
 );
 
-const SlackIcon = () => (
+const CommentIcon = () => (
     <svg viewBox="0 0 24 24" aria-hidden="true">
-        <rect x="9.5" y="2" width="3" height="9" rx="1.5" fill="#36C5F0" />
-        <rect x="2" y="11.5" width="9" height="3" rx="1.5" fill="#2EB67D" />
-        <rect x="11.5" y="13" width="3" height="9" rx="1.5" fill="#ECB22E" />
-        <rect x="13" y="9.5" width="9" height="3" rx="1.5" fill="#E01E5A" />
+        <path d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-7l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" fill="#fff" />
+        <rect x="6" y="8" width="12" height="1.6" rx="0.8" fill="#0a0a0a" />
+        <rect x="6" y="11.5" width="8" height="1.6" rx="0.8" fill="#0a0a0a" />
     </svg>
 );
 
@@ -68,11 +65,11 @@ const LinearIcon = () => (
 
 function IngestIllo() {
     const sources: IngestSource[] = [
-        { id: "figma",   label: "Figma frame",     cx: 200, cy: 50,  icon: <FigmaIcon /> },
+        { id: "screens", label: "Screenshot",      cx: 200, cy: 50,  icon: <ScreenshotIcon /> },
         { id: "github",  label: "GitHub issue",    cx: 332, cy: 86,  icon: <GitHubIcon /> },
         { id: "notion",  label: "API docs",        cx: 360, cy: 198, icon: <NotionIcon /> },
         { id: "loom",    label: "Loom walkthrough", cx: 282, cy: 268, icon: <LoomIcon />, stack: 2 },
-        { id: "slack",   label: "Slack thread",    cx: 118, cy: 268, icon: <SlackIcon /> },
+        { id: "thread",  label: "Issue thread",    cx: 118, cy: 268, icon: <CommentIcon /> },
         { id: "youtube", label: "Tutorial vid",    cx: 40,  cy: 198, icon: <YoutubeIcon /> },
         { id: "linear",  label: "Linear ticket",   cx: 68,  cy: 86,  icon: <LinearIcon /> },
     ];
@@ -201,7 +198,7 @@ export function MeetDevAsignSection() {
                             <span className="tile-tag">CHAPTER 01</span>
                             <h3>Read what the developer was given</h3>
                             <p>
-                                It reads what the developer read — ticket, Figma, Loom, the thread where the requirement got decided — and builds a model of <em>done</em>. Then it reviews every commit against that.
+                                It reads what the developer read — ticket, screenshots, Loom, the issue thread where the requirement got decided — and builds a model of <em>done</em>. Then it reviews every commit against that.
                             </p>
                         </div>
                         <div className="tile-illo"><IngestIllo /></div>

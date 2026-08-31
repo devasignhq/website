@@ -182,7 +182,7 @@ export function DocsPage() {
                         <br />
                         <h1 className="docs-title">DevAsign Documentation</h1>
                         <p className="docs-paragraph">
-                            DevAsign is a <strong>multimodal AI code review agent</strong> that reviews every pull request against what was actually asked, not just the diff in isolation. It pulls context from the ticket, linked issues, Slack/Linear/Discord threads, Figma frames, Loom walkthroughs, screenshots, and PDFs, then synthesizes a concrete End goal and checks the PR against it.
+                            DevAsign is a <strong>multimodal AI code review agent</strong> that reviews every pull request against what was actually asked, not just the diff in isolation. It pulls context from the ticket, linked issues and their comments, Linear tickets, video walkthroughs, screenshots, and PDFs, then synthesizes a concrete End goal and checks the PR against it.
                         </p>
                         <p className="docs-paragraph">
                             Every repository also gets its own editable <strong><a href="#workflow" className="docs-link">review workflow</a></strong>: toggle stages, steer each AI step with your own instructions, choose blocking or comment-only verdicts, and even dispatch a GitHub Action when a review finishes. On top of review, DevAsign also automates <strong><a href="#bounty-overview" className="docs-link">bounty payouts</a></strong>: put a price on a GitHub issue, and the payout settles from a Soroban escrow contract the moment you approve the work.
@@ -229,7 +229,11 @@ export function DocsPage() {
                             </li>
                             <li>
                                 <span className="stage-title">Output</span>
-                                <span className="stage-desc">Edit the progress comment into the verdict, refresh the Check Run, approve (or withdraw a stale approval), and broadcast to Slack/Discord.</span>
+                                <span className="stage-desc">Edit the run's comment into the verdict, refresh the Check Run, approve (or withdraw a stale approval), and broadcast to Slack/Discord.</span>
+                            </li>
+                            <li>
+                                <span className="stage-title">Follow-up <em>(on later pushes)</em></span>
+                                <span className="stage-desc">A push to a reviewed PR continues the same conversation with the agent instead of starting over: the new commits arrive as an update on the thread, the criteria stay fixed, and the agent reports what it addressed, what is still open, and what is new. There is no second-pass verification on a follow-up.</span>
                             </li>
                             <li>
                                 <span className="stage-title">Run GitHub Action <em>(optional)</em></span>
@@ -238,6 +242,10 @@ export function DocsPage() {
                         </ol>
                         <p className="docs-paragraph">
                             Every stage appends to a per-PR <strong>review log</strong>: an append-only timeline you can replay in the dashboard to see exactly what the agent ingested, synthesized, and decided. The optional checks (codebase-aware analysis, deferred-work, DEVASIGN.md guidance, the Action step) can be toggled and steered per repository in the <a href="#workflow" className="docs-link">review workflow</a>.
+                        </p>
+                        <h3 className="docs-subheading">Follow-up reviews</h3>
+                        <p className="docs-paragraph">
+                            The first review of a PR and its second-pass verification are kept as a conversation. When new commits land, DevAsign sends them to the agent as the next turn of that conversation, so the follow-up knows what it said before and judges the change against it. Each follow-up posts its <strong>own comment</strong> on the PR, opening with a "since the last review" section (addressed, still open, new, and any criterion verdict that flipped) above the full checklist, and the previous comment is edited to point at it. The <strong>acceptance criteria are never regenerated on a push</strong>; only a <a href="#steering" className="docs-link">Set intent</a> message does that. Add context messages ride the next follow-up. When the conversation outgrows its context budget, DevAsign compacts it: the next follow-up re-briefs the agent with its own last review, the pull request's diff as of that review, the new commits, and the code context it had gathered, then carries on from there, so nothing it published is lost. A review starts over, keeping the criteria, only when the branch is force-pushed or rebased or the AI provider changes; those runs are headed <em>AI Re-review</em>. The retry button on an errored review resumes whichever kind of run failed.
                         </p>
                     </section>
 
@@ -249,7 +257,7 @@ export function DocsPage() {
                         </p>
                         <h3 className="docs-subheading">Automatic</h3>
                         <p className="docs-paragraph">
-                            DevAsign reviews a PR whenever GitHub fires one of these <code className="docs-code">pull_request</code> actions: <code className="docs-code">opened</code>, <code className="docs-code">reopened</code>, <code className="docs-code">synchronize</code> (a new push), or <code className="docs-code">ready_for_review</code>. A push to an open PR re-runs the review so the verdict tracks the latest commit.
+                            DevAsign reviews a PR whenever GitHub fires one of these <code className="docs-code">pull_request</code> actions: <code className="docs-code">opened</code>, <code className="docs-code">reopened</code>, <code className="docs-code">synchronize</code> (a new push), or <code className="docs-code">ready_for_review</code>. A push to an open PR runs a <a href="#how-it-works" className="docs-link">follow-up review</a> that continues the earlier conversation, so the verdict tracks the latest commit without re-deriving the criteria.
                         </p>
                         <p className="docs-paragraph">
                             This is policy, not hard-coded. On <strong>Personal</strong> and <strong>Team</strong>, the repo's <a href="#workflow" className="docs-link">review workflow</a> controls the entry triggers: turn off re-review-on-push, skip draft PRs, or skip bot-authored PRs (Dependabot, Renovate, GitHub Apps). A draft marked "ready for review" is still reviewed; the skip applies only while it's a draft.
@@ -402,7 +410,7 @@ export function DocsPage() {
                                     <tr>
                                         <td><strong>Read</strong></td>
                                         <td><span className="docs-pill read">read</span></td>
-                                        <td>Ingest the ticket a PR implements: its description, comments, sub-issues, labels, parent and project, plus attachments (PDFs and images) and any embedded Loom / YouTube / Vimeo, all as the context a review is judged against.</td>
+                                        <td>Ingest the ticket a PR implements: its description, its parent, the first 20 sub-issues and the first 20 human comments, plus its attachment links (a video linked there is picked up like one in the description), all as the context a review is judged against.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Write</strong></td>
@@ -434,7 +442,7 @@ export function DocsPage() {
                     <section id="context-ingestion" className="docs-section">
                         <h2 className="docs-heading">Context ingestion</h2>
                         <p className="docs-paragraph">
-                            The first stage gathers every source the PR should be measured against. This is the multimodal layer: DevAsign reads code <em>and</em> watches video, parses designs, and reads documents.
+                            The first stage gathers every source the PR should be measured against. This is the multimodal layer: DevAsign reads code <em>and</em> watches video, reads screenshots, and reads documents.
                         </p>
                         <div className="docs-table-wrapper">
                             <table className="docs-table">
@@ -451,31 +459,23 @@ export function DocsPage() {
                                     </tr>
                                     <tr>
                                         <td><strong>Linked issues</strong></td>
-                                        <td><em>Primary</em> links (<code className="docs-code">closes</code> / <code className="docs-code">fixes</code> / <code className="docs-code">resolves #N</code>) are treated as the authoritative job-to-be-done; bare <code className="docs-code">#N</code> references are ingested as secondary background.</td>
+                                        <td><em>Primary</em> links (<code className="docs-code">closes</code> / <code className="docs-code">fixes</code> / <code className="docs-code">resolves #N</code>) are treated as the authoritative job-to-be-done: the issue's title, body, labels and its first 20 human comments (comments clarify the issue; they never add requirements on their own). Bare <code className="docs-code">#N</code> mentions are ignored.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Linear</strong></td>
-                                        <td>The linked issue's description, comments, sub-issues, and attachments, plus any embedded video. See <a href="#linear" className="docs-link">Linear integration</a>.</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Slack / Discord</strong></td>
-                                        <td>The thread or channel the task lives in.</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Figma</strong></td>
-                                        <td>Frame images plus design metadata.</td>
+                                        <td>The linked issue's description, its parent, the first 20 sub-issues and the first 20 human comments, plus its attachment links, any embedded video, and any image or PDF it links. See <a href="#linear" className="docs-link">Linear integration</a>.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Loom / YouTube / Vimeo</strong></td>
-                                        <td>Transcript and a visual walkthrough, summarized into acceptance signals (see below).</td>
+                                        <td>Loom, YouTube and Vimeo links are watched end to end and summarized into acceptance signals (see below). A video over 20 minutes, or one that is private or password-protected, is recorded as a link only.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Screenshots / PDF</strong></td>
-                                        <td>Images are read by a vision-capable model; PDFs are parsed to text.</td>
+                                        <td>Images are read by a vision-capable model. PDFs linked from the PR, a linked issue, the Linear ticket or a maintainer message are parsed to text (first 20 pages, up to 4 documents per review) and carry the authority of the source that linked them.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Maintainer messages</strong></td>
-                                        <td>Directives and notes sent from the dashboard's <strong>Steer review</strong> box, plus any video or image they link. See <a href="#steering" className="docs-link">Steering a review</a>.</td>
+                                        <td>Directives and notes sent from the dashboard's <strong>Steer review</strong> box, plus any video, image or PDF they link. See <a href="#steering" className="docs-link">Steering a review</a>.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>PR state</strong></td>
@@ -503,7 +503,7 @@ export function DocsPage() {
                     <section id="end-goal" className="docs-section">
                         <h2 className="docs-heading">End goal &amp; acceptance criteria</h2>
                         <p className="docs-paragraph">
-                            A single LLM pass distills all that raw context into a one-sentence <strong>End goal</strong> and a list of independently checkable <strong>acceptance criteria</strong>. The result is a structured object you can edit, not a black box. It's persisted on the review and shown in the dashboard, so you can correct it before or during a review.
+                            A single LLM pass distills all that raw context into a one-sentence <strong>End goal</strong> and a list of independently checkable <strong>acceptance criteria</strong>. It runs once per PR: later pushes are judged against the same criteria, and only a <a href="#steering" className="docs-link">Set intent</a> message regenerates them. The result is a structured object you can see in the dashboard, not a black box.
                         </p>
                         <CodeBlock lang="json" code={`{
   "endGoal": "Team members can be invited by email and land in the right workspace role.",

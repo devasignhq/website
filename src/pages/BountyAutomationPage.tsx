@@ -103,7 +103,7 @@ export function BountyAutomationPage() {
                         <div className="da-tl-event">
                             <span className="when">Day 1 · 19:48</span>
                             <h3>Contributor opens PR · ticket says <code style={{ fontSize: '0.85em', color: 'var(--info)' }}>closes #312</code></h3>
-                            <p>CI runs. DevAsign's goal-aware reviewer scores acceptance criteria 6/6 against the linked Figma. No gaps.</p>
+                            <p>CI runs. DevAsign's goal-aware reviewer scores acceptance criteria 6/6 against the linked ticket. No gaps.</p>
                         </div>
                         <div className="da-tl-event">
                             <span className="when">Day 1 · 20:11</span>

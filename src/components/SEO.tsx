@@ -13,7 +13,7 @@ interface SEOProps {
 
 export const SEO = ({
     title = "DevAsign - Review the goal. Audit the merge. Fund the fix.",
-    description = "The AI code reviewer that reads the ticket first. DevAsign ingests your tickets, screenshots, Figma, and Loom — then reviews every PR against what was actually asked. Catch what compiles, passes tests, and still ships the wrong thing.",
+    description = "The AI code reviewer that reads the ticket first. DevAsign ingests your tickets, screenshots, and Loom walkthroughs — then reviews every PR against what was actually asked. Catch what compiles, passes tests, and still ships the wrong thing.",
     ogTitle = "DevAsign | Review the goal. Audit the merge. Fund the fix.",
     ogDescription = "DevAsign reviews pull requests & audits your entire codebase for what an attacker can actually reach, then suggests a fix or helps you create a bounty (in USDC) for the fixes you'll never get to.",
     canonical,

@@ -77,7 +77,7 @@ export function PricingPage() {
                             <h1>
                                 Simple, transparent pricing.
                             </h1>
-                            <p className="da-p-hero-sub">One install. Goal-aware review on every PR — DevAsign pulls context from your tickets, designs, and Loom walkthroughs, then posts the verdict right on your GitHub pull requests.</p>
+                            <p className="da-p-hero-sub">One install. Goal-aware review on every PR — DevAsign pulls context from your tickets, screenshots, and Loom walkthroughs, then posts the verdict right on your GitHub pull requests.</p>
                         </div>
                         <div className="da-toggle-card">
                             <span className="label">// Billing</span>
@@ -135,7 +135,7 @@ export function PricingPage() {
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>30 PR reviews / month</strong></span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Standard model — managed by DevAsign</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Onchain bounty automation</strong> on GitHub</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Multimodal goal ingestion — ticket, Figma, Loom</span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Multimodal goal ingestion — ticket, screenshots, Loom</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Community support</span></div>
                             </div>
                         </article>
@@ -265,7 +265,7 @@ export function PricingPage() {
                                     <XCell /><XCell /><CheckCell max />
                                 </tr>
                                 <tr>
-                                    <td className="feat-name">Multimodal goal ingestion (ticket, Figma, Loom)</td>
+                                    <td className="feat-name">Multimodal goal ingestion (ticket, screenshots, Loom)</td>
                                     <CheckCell /><CheckCell /><CheckCell max />
                                 </tr>
                                 <tr>
