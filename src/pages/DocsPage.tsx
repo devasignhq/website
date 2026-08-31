@@ -271,7 +271,7 @@ export function DocsPage() {
                     <section id="installation" className="docs-section">
                         <h2 className="docs-heading">Installation</h2>
                         <p className="docs-paragraph">
-                            Sign up on <a href="https://app.devasign.com/authenticate/account" target="_blank" rel="noopener noreferrer" className="docs-link">DevAsign</a> with GitHub and install the app on a repository. Public repositories are reviewed on every plan; <strong>private repositories require Pro or Max</strong>. Plans meter <em>unique PRs per month</em> — re-reviews of a PR (new pushes, reruns) never consume quota. See <a href="/pricing" className="docs-link">Pricing</a> for the caps.
+                            Sign up on <a href="https://app.devasign.com/authenticate/account" target="_blank" rel="noopener noreferrer" className="docs-link">DevAsign</a> with GitHub and install the app on a repository. Public repositories are reviewed on every plan; <strong>private repositories require Personal or Team</strong>. Plans meter <em>unique PRs per month</em> — re-reviews of a PR (new pushes, reruns) never consume quota. See <a href="/pricing" className="docs-link">Pricing</a> for the caps.
                         </p>
                         <ol className="docs-ordered-list">
                             <li>Sign in with GitHub and install the DevAsign GitHub App on your repo.</li>
@@ -359,7 +359,7 @@ export function DocsPage() {
                         </p>
                         <h3 className="docs-subheading">Connecting</h3>
                         <p className="docs-paragraph">
-                            In the dashboard, open <strong>Settings → Integrations → Linear</strong> and click <strong>Connect</strong>. A popup hands you to Linear's OAuth screen to authorize your workspace; approve it and the workspace appears in your integration list. There are <strong>no tokens or API keys to paste</strong>, re-connecting simply refreshes the authorization, and one Linear workspace connects per account. The Linear integration is a <strong>Pro / Max</strong> feature.
+                            In the dashboard, open <strong>Settings → Integrations → Linear</strong> and click <strong>Connect</strong>. A popup hands you to Linear's OAuth screen to authorize your workspace; approve it and the workspace appears in your integration list. There are <strong>no tokens or API keys to paste</strong>, re-connecting simply refreshes the authorization, and one Linear workspace connects per account. The Linear integration is a <strong>Personal / Team</strong> feature.
                         </p>
                         <img
                             src={linearWorkflow}
@@ -610,7 +610,7 @@ Relevant diff:
                                 </tbody>
                             </table>
                         </div>
-                        <h3 className="docs-subheading">Advanced controls <span className="docs-pill write">Pro / Max</span></h3>
+                        <h3 className="docs-subheading">Advanced controls <span className="docs-pill write">Personal / Team</span></h3>
                         <ul className="docs-unordered-list">
                             <li><strong>Trigger policy</strong> — re-review on every push, skip draft PRs, skip bot-authored PRs (see <a href="#triggering" className="docs-link">Triggering reviews</a>).</li>
                             <li><strong>Verdict mode</strong> — blocking (default) or comment-only; see <a href="#severity" className="docs-link">Severity &amp; verdict</a>.</li>
@@ -954,7 +954,7 @@ violations are flagged as nits; they don't block the merge.
                                 <tbody>
                                     <tr>
                                         <td><strong>Claude Opus</strong></td>
-                                        <td>The reasoning passes on Pro and Max — criteria synthesis, diff review, the whole-repo holistic pass, deferred-work judgment, and DEVASIGN.md guidance.</td>
+                                        <td>The reasoning passes on Personal and Team — criteria synthesis, diff review, the whole-repo holistic pass, deferred-work judgment, and DEVASIGN.md guidance.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Claude Haiku</strong></td>
@@ -968,7 +968,7 @@ violations are flagged as nits; they don't block the merge.
                             </table>
                         </div>
                         <p className="docs-paragraph">
-                            The review model follows the repo owner's plan: <strong>Free</strong> reviews run end-to-end on Claude Haiku, while <strong>Pro</strong> and <strong>Max</strong> run the frontier reasoning model. System prompts are sent with <strong>prompt caching</strong> enabled, so the reused instruction blocks don't re-bill on every pass.
+                            The review model follows the repo owner's plan: <strong>Free</strong> reviews run end-to-end on Claude Haiku, while <strong>Personal</strong> and <strong>Team</strong> run the frontier reasoning model. System prompts are sent with <strong>prompt caching</strong> enabled, so the reused instruction blocks don't re-bill on every pass.
                         </p>
                     </section>
 
