@@ -262,7 +262,7 @@ export function PricingPage() {
                                 </tr>
                                 <tr>
                                     <td className="feat-name">Auto-review every PR in your GitHub org</td>
-                                    <XCell /><XCell /><CheckCell max />
+                                    <XCell /><CheckCell /><CheckCell max />
                                 </tr>
                                 <tr>
                                     <td className="feat-name">Multimodal goal ingestion (ticket, screenshots, Loom)</td>
