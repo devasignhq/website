@@ -466,8 +466,8 @@ export function DocsPage() {
                                         <td>The linked issue's description, its parent, the first 20 sub-issues and the first 20 human comments, plus its attachment links, any embedded video, and any image or PDF it links. See <a href="#linear" className="docs-link">Linear integration</a>.</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Loom / YouTube / Vimeo</strong></td>
-                                        <td>Loom, YouTube and Vimeo links are watched end to end and summarized into acceptance signals (see below). A video over 20 minutes, or one that is private or password-protected, is recorded as a link only.</td>
+                                        <td><strong>Loom / YouTube</strong></td>
+                                        <td>A <strong>public</strong> Loom link and any YouTube link are watched end to end and summarized into acceptance signals (see below). A private or password-protected Loom, or one over 20 minutes, is recorded as a link only. Other video hosts are not watched.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Screenshots / PDF</strong></td>
@@ -848,7 +848,7 @@ violations are flagged as nits; they don't block the merge.
                         </p>
                         <ul className="docs-unordered-list">
                             <li><strong>Text</strong>: a description of the intended behaviour and acceptance conditions.</li>
-                            <li><strong>A Loom / YouTube / Vimeo link</strong>: DevAsign watches it and extracts acceptance signals.</li>
+                            <li><strong>A public Loom or YouTube link</strong>: DevAsign watches it and extracts acceptance signals. Share the Loom publicly — a private recording cannot be watched.</li>
                             <li><strong>A screenshot + description</strong>: show the expected result and describe it.</li>
                         </ul>
                         <p className="docs-paragraph">

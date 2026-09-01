@@ -34,13 +34,6 @@ const LoomIcon = () => (
     </svg>
 );
 
-const NotionIcon = () => (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-        <rect x="2" y="2" width="20" height="20" rx="2" fill="#fff" stroke="#0a0a0a" strokeWidth="0.6" />
-        <text x="12" y="17.5" textAnchor="middle" fontFamily="Georgia, 'Times New Roman', serif" fontWeight="700" fontSize="15" fill="#0a0a0a">N</text>
-    </svg>
-);
-
 const CommentIcon = () => (
     <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-7l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" fill="#fff" />
@@ -66,12 +59,11 @@ const LinearIcon = () => (
 function IngestIllo() {
     const sources: IngestSource[] = [
         { id: "screens", label: "Screenshot",      cx: 200, cy: 50,  icon: <ScreenshotIcon /> },
-        { id: "github",  label: "GitHub issue",    cx: 332, cy: 86,  icon: <GitHubIcon /> },
-        { id: "notion",  label: "API docs",        cx: 360, cy: 198, icon: <NotionIcon /> },
-        { id: "loom",    label: "Loom walkthrough", cx: 282, cy: 268, icon: <LoomIcon />, stack: 2 },
-        { id: "thread",  label: "Issue thread",    cx: 118, cy: 268, icon: <CommentIcon /> },
-        { id: "youtube", label: "Tutorial vid",    cx: 40,  cy: 198, icon: <YoutubeIcon /> },
-        { id: "linear",  label: "Linear ticket",   cx: 68,  cy: 86,  icon: <LinearIcon /> },
+        { id: "github",  label: "GitHub issue",    cx: 339, cy: 105, icon: <GitHubIcon /> },
+        { id: "loom",    label: "Loom walkthrough", cx: 339, cy: 215, icon: <LoomIcon />, stack: 2 },
+        { id: "thread",  label: "Issue thread",    cx: 200, cy: 270, icon: <CommentIcon /> },
+        { id: "youtube", label: "Tutorial vid",    cx: 61,  cy: 215, icon: <YoutubeIcon /> },
+        { id: "linear",  label: "Linear ticket",   cx: 61,  cy: 105, icon: <LinearIcon /> },
     ];
 
     const cx = 200;
