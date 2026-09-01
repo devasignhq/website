@@ -284,7 +284,7 @@ export function DocsPage() {
                     <section id="installation" className="docs-section">
                         <h2 className="docs-heading">Installation</h2>
                         <p className="docs-paragraph">
-                            Sign up on <a href="https://app.devasign.com/authenticate/account" target="_blank" rel="noopener noreferrer" className="docs-link">DevAsign</a> with GitHub and install the app on a repository. Public repositories are reviewed on every plan; <strong>private repositories require Personal or Team</strong>. Plans meter <em>unique PRs per month</em>, so re-reviewing the same PR after a push doesn't spend another PR from your allowance. See <a href="/pricing" className="docs-link">Pricing</a> for the caps.
+                            Sign up on <a href="https://app.devasign.com/authenticate/account" target="_blank" rel="noopener noreferrer" className="docs-link">DevAsign</a> with GitHub and install the app on a repository. Public repositories are reviewed on every plan; <strong>private repositories require Personal or Team</strong>. Plans meter <em>unique PRs per month</em> — re-reviews of a PR (new pushes, reruns) never consume quota. See <a href="/pricing" className="docs-link">Pricing</a> for the caps.
                         </p>
                         <ol className="docs-ordered-list">
                             <li>Sign in with GitHub and install the DevAsign GitHub App on your repo.</li>
@@ -382,7 +382,7 @@ export function DocsPage() {
                         </p>
                         <h3 className="docs-subheading">Connecting</h3>
                         <p className="docs-paragraph">
-                            In the dashboard, open <strong>Settings → Integrations → Linear</strong> and click <strong>Connect</strong>. A popup hands you to Linear's OAuth screen to authorize your workspace; approve it and the workspace appears in your integration list. There are <strong>no tokens or API keys to paste</strong>, re-connecting just refreshes the authorization, and one Linear workspace connects per account. The Linear integration is a <strong>Personal / Team</strong> feature.
+                            In the dashboard, open <strong>Settings → Integrations → Linear</strong> and click <strong>Connect</strong>. A popup hands you to Linear's OAuth screen to authorize your workspace; approve it and the workspace appears in your integration list. There are <strong>no tokens or API keys to paste</strong>, re-connecting simply refreshes the authorization, and one Linear workspace connects per account. The Linear integration is a <strong>Personal / Team</strong> feature.
                         </p>
                         <img
                             src={linearWorkflow}
@@ -657,6 +657,14 @@ Relevant diff:
                                 </tbody>
                             </table>
                         </div>
+                        <h3 className="docs-subheading">Advanced controls <span className="docs-pill write">Personal / Team</span></h3>
+                        <ul className="docs-unordered-list">
+                            <li><strong>Trigger policy</strong> — re-review on every push, skip draft PRs, skip bot-authored PRs (see <a href="#triggering" className="docs-link">Triggering reviews</a>).</li>
+                            <li><strong>Verdict mode</strong> — blocking (default) or comment-only; see <a href="#severity" className="docs-link">Severity &amp; verdict</a>.</li>
+                            <li><strong>Per-stage prompts</strong> — steer each AI stage with your own instructions.</li>
+                            <li><strong>Run GitHub Action</strong> — dispatch a workflow when the review finishes.</li>
+                        </ul>
+                        <h3 className="docs-subheading">Per-stage prompts</h3>
                         <p className="docs-paragraph">
                             Edits save as you make them and apply from the next review onward. A control your plan doesn't cover is shown in its enforced state and locked instead of hidden, so you can always see what a repository is actually running. Your configuration is kept if a plan lapses: DevAsign falls back to the free behaviour while you're downgraded, and restores your settings when you upgrade again.
                         </p>
@@ -1074,8 +1082,8 @@ bounty-update-deadline decrease 2 days`} />
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><strong>Free</strong></td>
-                                        <td><strong>Standard</strong>: a fast, capable model that runs the same pipeline end to end: criteria synthesis, the review, and the verification pass.</td>
+                                        <td><strong>Claude Opus</strong></td>
+                                        <td>The reasoning passes on Personal and Team — criteria synthesis, diff review, the whole-repo holistic pass, deferred-work judgment, and DEVASIGN.md guidance.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Personal / Team</strong></td>
@@ -1108,18 +1116,7 @@ bounty-update-deadline decrease 2 days`} />
                             </table>
                         </div>
                         <p className="docs-paragraph">
-                            The allowance is per installation and meters <em>unique pull requests</em>: reviewing a PR for the first time spends one, and re-reviewing it after a push does not. Each PR then carries its own window of 6 re-reviews a month; past that a paid plan spends overage credits (150 a month on Personal, 650 on Team). See <a href="#triggering" className="docs-link">Triggering reviews</a>.
-                        </p>
-
-                        <h3 className="docs-subheading">Credits</h3>
-                        <p className="docs-paragraph">
-                            Credits cover reviews beyond your monthly allowance. Personal and Team include a fresh batch every month, and you can buy more at any time from <strong>Settings → Billing</strong> — a one-off purchase, not a subscription. Purchased credits never expire and are only spent once the month's included batch is gone.
-                        </p>
-                        <div className="docs-callout">
-                            <strong>When the allowance runs out:</strong> DevAsign pauses reviews for that installation and leaves a single comment on the pull request explaining why, with a link to your billing page. Nothing is lost — the paused PR is reviewed as soon as you buy credits or the allowance resets.
-                        </div>
-                        <p className="docs-paragraph">
-                            Credits are an add-on for paid plans. On Free, reaching the allowance means waiting for the next month or upgrading. If a credit purchase is refunded or charged back, the credits it bought are removed from the balance; if a chargeback is later resolved in your favour, they are returned.
+                            The review model follows the repo owner's plan: <strong>Free</strong> reviews run end-to-end on Claude Haiku, while <strong>Personal</strong> and <strong>Team</strong> run the frontier reasoning model. System prompts are sent with <strong>prompt caching</strong> enabled, so the reused instruction blocks don't re-bill on every pass.
                         </p>
                     </section>
 
