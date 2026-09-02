@@ -10,7 +10,7 @@ export function SiteFooter({ variant = "compact" }: SiteFooterProps) {
         return (
             <footer className="da-footer-compact">
                 <div className="inner">
-                    <span>© {new Date().getFullYear()} DevAsign Inc. · Pay contributors in USDC, on Stellar, on merge.</span>
+                    <span>© {new Date().getFullYear()} DevAsign Inc. · Code review against the goal, not just the diff.</span>
                     <span>
                         <Link to="/">← Back to home</Link>
                         {" · "}
@@ -25,7 +25,7 @@ export function SiteFooter({ variant = "compact" }: SiteFooterProps) {
         <footer className="da-footer-full">
             <div className="da-container">
                 <div className="da-footer-bounty">
-                    <div>Built on top of DevAsign's open-source bounty rails — pay contributors in USDC on Stellar with on-chain settlement in seconds.</div>
+                    <div>Funding an open-source issue? Put a bounty on it and the contributor is paid in USDC on Stellar, seconds after their fix merges.</div>
                     <Link to="/bounty-automation">Learn more →</Link>
                 </div>
                 <div className="da-footer-grid">

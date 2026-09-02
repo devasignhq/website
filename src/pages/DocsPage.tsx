@@ -185,7 +185,7 @@ export function DocsPage() {
                             DevAsign is a <strong>multimodal AI code review agent</strong> that reviews every pull request against what was actually asked, not just the diff in isolation. It pulls context from the ticket, linked issues and their comments, Linear tickets, video walkthroughs, screenshots, and PDFs, then synthesizes a concrete End goal and checks the PR against it.
                         </p>
                         <p className="docs-paragraph">
-                            Every repository also gets its own editable <strong><a href="#workflow" className="docs-link">review workflow</a></strong>: toggle stages, steer each AI step with your own instructions, choose blocking or comment-only verdicts, and even dispatch a GitHub Action when a review finishes. On top of review, DevAsign also automates <strong><a href="#bounty-overview" className="docs-link">bounty payouts</a></strong>: put a price on a GitHub issue, and the payout settles from a Soroban escrow contract the moment you approve the work.
+                            Every repository also gets its own editable <strong><a href="#workflow" className="docs-link">review workflow</a></strong>: toggle stages, steer each AI step with your own instructions, choose blocking or comment-only verdicts, and even dispatch a GitHub Action when a review finishes. On top of review, DevAsign automates <strong><a href="#bounty-overview" className="docs-link">bounty payouts</a></strong> for open-source projects: put a price on an issue in a public repository, and the payout settles from a Soroban escrow contract the moment you approve the work.
                         </p>
                         <div className="docs-callout">
                             <strong>Why it's different:</strong> traditional review bots grade style and surface lint. DevAsign judges the change against <em>intent</em> (the acceptance criteria distilled from the ticket and everything attached to it) and flags regressions across the wider codebase that the diff alone can't reveal.
@@ -887,8 +887,11 @@ violations are flagged as nits; they don't block the merge.
                         <div className="docs-callout">
                             <strong>Non-custodial by design:</strong> DevAsign never holds your funds and never holds your keys. A sponsor funds an escrow from their own Stellar wallet by signing the transaction themselves, and a contributor is paid directly at an address they registered. There is no DevAsign balance to top up and nothing to withdraw.
                         </div>
+                        <div className="docs-callout">
+                            <strong>Bounties are for open-source repositories.</strong> Post them on public repos, where an applicant can read the issue and the code and decide the work is worth taking on before they apply. Private repositories still get the full review pipeline on Personal and Team; they just aren't where bounties belong.
+                        </div>
                         <p className="docs-paragraph">
-                            The sections below cover both sides: posting a bounty as a maintainer, and claiming one as a contributor. Setup is the same GitHub App install described in <a href="#installation" className="docs-link">Installation</a>. Once it's on your repo, bounties are available immediately.
+                            The sections below cover both sides: posting a bounty as a maintainer, and claiming one as a contributor. Setup is the same GitHub App install described in <a href="#installation" className="docs-link">Installation</a>. Once it's on your repository, bounties are available immediately.
                         </p>
                         <p className="docs-paragraph">
                             You'll need a <strong>Stellar wallet</strong>: <a href="https://www.freighter.app/" target="_blank" rel="noopener noreferrer" className="docs-link">Freighter</a> to sponsor bounties, and any Stellar wallet with a USDC trustline to receive them.
@@ -899,7 +902,7 @@ violations are flagged as nits; they don't block the merge.
                     <section id="first-bounty" className="docs-section">
                         <h2 className="docs-heading">Your first bounty</h2>
                         <ol className="docs-ordered-list">
-                            <li>Install the DevAsign GitHub App on your repository. See <a href="#installation" className="docs-link">Installation</a>.</li>
+                            <li>Install the DevAsign GitHub App on the public repository you want to fund work on. See <a href="#installation" className="docs-link">Installation</a>.</li>
                             <li>Comment <code className="docs-code">bounty $150 1 week</code> on the issue. DevAsign replies with a funding link and the acceptance criteria it drafted from the issue.</li>
                             <li>Open the link, connect <strong>Freighter</strong>, and sign the funding transaction. The USDC moves from your wallet into the escrow contract, and the bounty goes live.</li>
                             <li>Developers apply. Pick one and sign the delegation, which locks the escrow to their payout address and starts the delivery clock.</li>
@@ -915,7 +918,7 @@ violations are flagged as nits; they don't block the merge.
                     <section id="bounties" className="docs-section">
                         <h2 className="docs-heading">Bounties</h2>
                         <p className="docs-paragraph">
-                            Create a bounty by commenting on any open issue with the amount in <strong>USDC</strong> and a delivery window:
+                            Create a bounty by commenting on any open issue in a public repository with the amount in <strong>USDC</strong> and a delivery window. Only the repository owner, a member of the owning organization, or a collaborator can post one; DevAsign reads that from GitHub and ignores the command from anyone else.
                         </p>
                         <CodeBlock lang="prompt" code={`bounty $150 1 week`} />
                         <p className="docs-paragraph">
@@ -1082,12 +1085,12 @@ bounty-update-deadline decrease 2 days`} />
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><strong>Claude Opus</strong></td>
-                                        <td>The reasoning passes on Personal and Team — criteria synthesis, diff review, the whole-repo holistic pass, deferred-work judgment, and DEVASIGN.md guidance.</td>
+                                        <td><strong>Free</strong></td>
+                                        <td><strong>Standard</strong>: a fast model that runs the whole pipeline, from criteria synthesis through to the verdict. Every stage works; it's simply less patient with a very large diff.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Personal / Team</strong></td>
-                                        <td><strong>Frontier</strong>: the most capable reasoning tier we offer, with extended reasoning enabled so the model works through a change before judging it. Noticeably stronger on large diffs, subtle regressions, and security analysis.</td>
+                                        <td><strong>Frontier</strong>: the most capable reasoning tier we offer, with extended reasoning enabled so the model works through a change before judging it. Noticeably stronger on large diffs, subtle regressions, and security analysis. It runs every reasoning pass: criteria synthesis, the diff review, the codebase-aware pass, deferred-work judgment, and DEVASIGN.md guidance.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1116,7 +1119,7 @@ bounty-update-deadline decrease 2 days`} />
                             </table>
                         </div>
                         <p className="docs-paragraph">
-                            The review model follows the repo owner's plan: <strong>Free</strong> reviews run end-to-end on Claude Haiku, while <strong>Personal</strong> and <strong>Team</strong> run the frontier reasoning model. System prompts are sent with <strong>prompt caching</strong> enabled, so the reused instruction blocks don't re-bill on every pass.
+                            The tier follows the <strong>repository owner's</strong> plan rather than the PR author's, so an outside contributor's pull request to a Team repository is reviewed on the frontier model too. System prompts are sent with <strong>prompt caching</strong> enabled, so the instruction blocks that don't change between passes aren't paid for twice.
                         </p>
                     </section>
 

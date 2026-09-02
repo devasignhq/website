@@ -42,7 +42,7 @@ export function NotFoundPage() {
                         </h1>
 
                         <p className="body-lg max-w-[480px] mx-auto mb-10" style={{ color: "var(--fg-muted)" }}>
-                            The page you're looking for doesn't exist. Let's get you back on to why you're here.
+                            This page doesn't exist. Let's get you back to what you came for.
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">

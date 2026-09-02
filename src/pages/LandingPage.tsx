@@ -37,7 +37,7 @@ export function LandingPage() {
                             Code review against the <span className="da-brand-text">goal</span> not just <span className="da-strike">diff</span>
                         </h1>
                         <p className="da-hero-sub">
-                            DevAsign reviews pull requests against the end-goal & audits entire codebase for what an attacker can actually reach, then suggests a fix or helps you create a bounty (in USDC) for the fixes you don't have the bandwidth to work on.
+                            DevAsign reads the ticket, the issue thread, the screenshots and the Loom before it ever reads your diff, then checks the pull request against what was actually asked for. It reads the code your change touches too, so the regressions and security holes a diff on its own can't show you get caught while there's still time to fix them.
                         </p>
                         <div className="da-hero-ctas">
                             <a href={URLS.SPONSOR_AUTH} className="btn btn-primary">Start reviewing →</a>
@@ -110,7 +110,7 @@ export function LandingPage() {
                         <div className="col-left">
                             <span className="chip chip-coral" style={{ marginBottom: 18, display: 'inline-flex' }}>OTHER REVIEWERS SEE</span>
                             <h3>The diff. The lint. The test status.</h3>
-                            <p>They approve if it compiles. They never met the ticket. They never read the issue thread. They've never watched the Loom. So they can't tell you what's missing — only what's there.</p>
+                            <p>Most of them approve anything that compiles. They never opened the ticket, never read the thread where the requirement actually got settled, never watched the Loom. That's why they can only tell you what's in the diff, and never what's missing from it.</p>
                         </div>
                         <div className="col-right">
                             <span className="chip chip-brand" style={{ marginBottom: 18, display: 'inline-flex' }}>THEY MISS</span>
@@ -120,7 +120,7 @@ export function LandingPage() {
                                 <div className="da-miss-item"><span className="circle-x" aria-hidden="true"><XSvg /></span><p><strong>The edge case</strong> called out in the issue thread that the diff silently skips.</p></div>
                                 <div className="da-miss-item"><span className="circle-x" aria-hidden="true"><XSvg /></span><p><strong>The breaking change</strong> that ships fine to staging and explodes in prod.</p></div>
                             </div>
-                            <div className="da-cap">This is the gap <span>DevAsign</span> closes.</div>
+                            <div className="da-cap">That's the gap we built <span>DevAsign</span> to close.</div>
                         </div>
                     </div>
                 </div>
@@ -324,7 +324,7 @@ export function LandingPage() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="da-shot-cap">Agent quotes the ticket back to the dev and shows the gap.</div>
+                            <div className="da-shot-cap">It quotes the ticket back to the author and points at the part that's missing.</div>
                         </div>
 
                         {/* Shot 2 */}
@@ -348,7 +348,7 @@ export function LandingPage() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="da-shot-cap">Agent references the attached screenshot and flags a missing empty state.</div>
+                            <div className="da-shot-cap">It reads the attached screenshot and notices the empty state never got built.</div>
                         </div>
 
                         {/* Shot 3 */}
@@ -375,7 +375,7 @@ export function LandingPage() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="da-shot-cap">Agent catches a breaking schema change the diff alone wouldn't.</div>
+                            <div className="da-shot-cap">It catches a breaking schema change that CI was never going to fail on.</div>
                         </div>
 
                         {/* Shot 4 */}
@@ -407,7 +407,7 @@ export function LandingPage() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="da-shot-cap">Agent re-reviews after each commit and tracks goal coverage.</div>
+                            <div className="da-shot-cap">Every push gets reviewed again, and the checklist moves with it.</div>
                         </div>
                     </div>
                 </div>
@@ -470,7 +470,7 @@ export function LandingPage() {
                         <div className="num">70<em>%</em></div>
                         <div className="divider" />
                         <div className="label">Reduction in review cycle time</div>
-                        <p className="sub">Faster merges. Fewer regressions. Contributors who actually feel reviewed — not just gated. PRs merged with the spec satisfied — not just the tests passing.</p>
+                        <p className="sub">Merges land sooner and fewer regressions come back. Contributors get a review that engages with what they built instead of a gate that only says no, and pull requests go in with the spec satisfied, not just the tests passing.</p>
                         <span className="circle-check stat-check" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={3.5}>
                                 <polyline points="4 12 10 18 20 6" />
@@ -497,7 +497,7 @@ export function LandingPage() {
                         </span>
                     </div>
                     <h2>We review the goal not just the diff</h2>
-                    <p>Install DevAsign on your repo and watch what your other reviewer missed.</p>
+                    <p>Put DevAsign on one repo and see what your current reviewer has been letting through.</p>
                     <div className="da-closing-ctas">
                         <a href={URLS.SPONSOR_AUTH} className="btn btn-primary" target="_blank" rel="noopener noreferrer">Get Started Now</a>
                         <a href="https://cal.com/devasign/30min" className="btn btn-secondary">Talk to founder</a>

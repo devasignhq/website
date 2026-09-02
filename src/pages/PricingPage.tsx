@@ -64,7 +64,7 @@ export function PricingPage() {
         <div className="da-root da-pricing">
             <SEO
                 title="Pricing — DevAsign"
-                description="Free for OSS. Flat-rate for teams. Pay for the review, not the seat. Goal-aware code review on every PR."
+                description="Free for open source, flat-rate for teams, and never per seat. Goal-aware code review on every pull request."
             />
             <SiteNav />
 
@@ -77,7 +77,7 @@ export function PricingPage() {
                             <h1>
                                 Simple, transparent pricing.
                             </h1>
-                            <p className="da-p-hero-sub">One install. Goal-aware review on every PR — DevAsign pulls context from your tickets, screenshots, and Loom walkthroughs, then posts the verdict right on your GitHub pull requests.</p>
+                            <p className="da-p-hero-sub">Install it once and every pull request gets reviewed against the ticket it came from. DevAsign reads your issues, screenshots and Loom walkthroughs, then posts what it found straight onto the PR. Priced per review, never per seat.</p>
                         </div>
                         <div className="da-toggle-card">
                             <span className="label">// Billing</span>
@@ -134,8 +134,8 @@ export function PricingPage() {
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Public repositories only</strong> — your project must be open-source</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>30 PR reviews / month</strong></span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Standard model — managed by DevAsign</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Onchain bounty automation</strong> on GitHub</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Multimodal goal ingestion — ticket, screenshots, Loom</span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Onchain bounty automation</strong> on your public repos</span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Multimodal goal ingestion: ticket, screenshots, Loom</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Community support</span></div>
                             </div>
                         </article>
@@ -144,7 +144,7 @@ export function PricingPage() {
                         <article className="da-plan da-plan-pro">
                             <div className="da-plan-head">
                                 <div className="da-plan-name">Personal</div>
-                                <div className="da-plan-tag">For developers shipping private code</div>
+                                <div className="da-plan-tag">For developers with private code to ship</div>
                                 <div className="da-plan-price">
                                     <span className="num">{proPrice}</span>
                                     <span className="per">/ month</span>
@@ -159,7 +159,7 @@ export function PricingPage() {
                                 data-placement="card"
                                 onClick={() => logCtaClick('pro', 'card', proPriceNum)}
                             >
-                                Start 14-day trial
+                                Start 7-day trial
                             </a>
                             <div className="da-plan-features">
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Auto-reviews your own PRs</strong> — every PR you open</span></div>
@@ -169,8 +169,8 @@ export function PricingPage() {
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>150 overage credits / month</strong> — keep reviewing past the cap</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Frontier model — managed by DevAsign</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Custom workflows</strong> — tailor the review pipeline per repository</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Onchain bounty automation</strong> on GitHub</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Linear sync — acceptance-criteria</span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Onchain bounty automation</strong> on your public repos</span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Linear sync for acceptance criteria</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Email support</span></div>
                             </div>
                         </article>
@@ -195,7 +195,7 @@ export function PricingPage() {
                                 data-placement="card"
                                 onClick={() => logCtaClick('max', 'card', maxPriceNum)}
                             >
-                                Start 14-day trial
+                                Start 7-day trial
                             </a>
                             <div className="da-plan-features">
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Auto-reviews every PR opened in your GitHub org</strong></span></div>
@@ -205,9 +205,9 @@ export function PricingPage() {
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>650 overage credits / month</strong> — keep reviewing past the cap</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Frontier model — managed by DevAsign</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Custom workflows</strong> — tailor the review pipeline per repository</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Onchain bounty automation</strong> on GitHub</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Custom review policies</strong> per repo &amp; team</span></div>
-                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Linear sync — acceptance-criteria</span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Onchain bounty automation</strong> on your public repos</span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span><strong>Custom review policies</strong> per repo and team</span></div>
+                                <div className="da-feat"><span className="circle-check"><Check /></span><span>Linear sync for acceptance criteria</span></div>
                                 <div className="da-feat"><span className="circle-check"><Check /></span><span>Priority Slack support · 24h response</span></div>
                             </div>
                         </article>
@@ -265,7 +265,7 @@ export function PricingPage() {
                                     <XCell /><CheckCell /><CheckCell max />
                                 </tr>
                                 <tr>
-                                    <td className="feat-name">Multimodal goal ingestion (ticket, screenshots, Loom)</td>
+                                    <td className="feat-name">Multimodal context (ticket, screenshots, Loom)</td>
                                     <CheckCell /><CheckCell /><CheckCell max />
                                 </tr>
                                 <tr>
@@ -287,15 +287,15 @@ export function PricingPage() {
 
                                 <tr className="section-row"><td>Integrations</td><td /><td /><td className="col-max" /></tr>
                                 <tr>
-                                    <td className="feat-name">GitHub — inline PR reviews &amp; checks</td>
+                                    <td className="feat-name">GitHub inline PR reviews and checks</td>
                                     <CheckCell /><CheckCell /><CheckCell max />
                                 </tr>
                                 <tr>
-                                    <td className="feat-name">GitHub — onchain bounty automation</td>
+                                    <td className="feat-name">GitHub bounty automation (public repos)</td>
                                     <CheckCell /><CheckCell /><CheckCell max />
                                 </tr>
                                 <tr>
-                                    <td className="feat-name">Linear — acceptance-criteria sync</td>
+                                    <td className="feat-name">Linear acceptance-criteria sync</td>
                                     <XCell /><CheckCell /><CheckCell max />
                                 </tr>
 
@@ -320,33 +320,33 @@ export function PricingPage() {
                             <span className="eyebrow">FAQ</span>
                             <h2 style={{ marginTop: 18 }}>Common questions, <span className="da-brand-text">honest answers</span></h2>
                             <p className="da-faq-note" style={{ marginTop: 18, maxWidth: '34ch' }}>
-                                Can't find it here? <a href="mailto:bethel@devasign.com">email CEO</a> — replies same day.
+                                Not answered here? <a href="mailto:bethel@devasign.com">Email our CEO</a>. He replies the same day.
                             </p>
                         </div>
                         <div className="da-faq-list">
                             <details className="da-faq" open>
                                 <summary>What counts as a "PR review"?</summary>
-                                <div className="da-faq-body"><p>One review run on one pull request. Re-reviews triggered automatically by new commits don't count against the limit — only the initial review per PR is metered. Human-triggered <code>@devasign re-review</code> calls also don't count.</p></div>
+                                <div className="da-faq-body"><p>One review run on one pull request. Only the first review of a PR is metered: pushing new commits re-runs the review for free, and so does asking for one by hand. Open ten PRs in a day and that's ten, however many times each one gets looked at again.</p></div>
                             </details>
                             <details className="da-faq">
                                 <summary>Why is Free public-repo only?</summary>
-                                <div className="da-faq-body"><p>Open source is where the community lives, and we want goal-aware review on every public PR forever — without billing friction. Private repositories carry compute, storage, and access-control overhead that the Personal tier exists to fund.</p></div>
+                                <div className="da-faq-body"><p>Open source is where most of this work happens in the open, and we'd rather it stayed reviewed than gated behind a card. Private repositories cost us real compute, storage and access-control work, and that's what the Personal tier pays for. Bounties are public-repo only for the same reason: a contributor can't decide a bounty is worth taking on if they can't read the code.</p></div>
                             </details>
                             <details className="da-faq">
                                 <summary>Which model reviews my PRs?</summary>
-                                <div className="da-faq-body"><p>DevAsign manages this for you — there's nothing to configure. On Personal and Team we automatically route each review to the best frontier model for the job (Claude, Gemini, Codex, or Grok). Free runs on a capable standard model.</p></div>
+                                <div className="da-faq-body"><p>We pick it, and there's nothing for you to configure. Personal and Team run on our strongest reasoning tier with extended thinking switched on, which shows on big diffs and subtle regressions. Free runs a fast standard model. As better models ship we move each tier onto them, so your reviews improve without you touching anything.</p></div>
                             </details>
                             <details className="da-faq">
                                 <summary>What are overage credits?</summary>
-                                <div className="da-faq-body"><p>They keep your reviews running once you pass your monthly PR-review cap — Personal includes 150 and Team includes 650. Reviews draw from your credits automatically, so a busy month never leaves a PR unreviewed.</p></div>
+                                <div className="da-faq-body"><p>They keep reviews running once you pass your monthly cap. Personal includes 150 and Team includes 650, and reviews draw on them automatically, so a busy month doesn't leave a pull request unlooked-at.</p></div>
                             </details>
                             <details className="da-faq">
                                 <summary>What if my team reviews far more than the cap?</summary>
-                                <div className="da-faq-body"><p>If you're consistently above Personal's 120 reviews a month, Team lifts you to 600 reviews plus 650 overage credits. Most teams that hit Personal's ceiling upgrade within 60 days.</p></div>
+                                <div className="da-faq-body"><p>If you're regularly over Personal's 120 a month, Team takes you to 600 plus 650 overage credits. Most teams that hit the Personal ceiling move up within a couple of months.</p></div>
                             </details>
                             <details className="da-faq">
                                 <summary>Can I cancel any time?</summary>
-                                <div className="da-faq-body"><p>Yes. Personal and Team are month-to-month with no commitment, and you can cancel whenever you like. Cancellations aren't refunded — your plan stays active through the period you've already paid for, then doesn't renew.</p></div>
+                                <div className="da-faq-body"><p>Yes. Personal and Team are month to month with no commitment. We don't refund the current period, so your plan stays live until the end of what you've already paid for and then simply doesn't renew.</p></div>
                             </details>
                         </div>
                     </div>
@@ -357,7 +357,7 @@ export function PricingPage() {
             <section className="da-closing">
                 <div className="da-container">
                     <h2><span className="da-brand-text">Goal-aware</span> from your first PR</h2>
-                    <p>Install on a public repo in 60 seconds. Upgrade only when you have private code that deserves the same review.</p>
+                    <p>Put it on a public repo in about a minute. Upgrade when you have private code that deserves the same review.</p>
                     <div className="da-closing-ctas">
                         <a
                             href={URLS.SPONSOR_AUTH}

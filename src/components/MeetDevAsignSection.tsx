@@ -190,7 +190,7 @@ export function MeetDevAsignSection() {
                             <span className="tile-tag">CHAPTER 01</span>
                             <h3>Read what the developer was given</h3>
                             <p>
-                                It reads what the developer read — ticket, screenshots, Loom, the issue thread where the requirement got decided — and builds a model of <em>done</em>. Then it reviews every commit against that.
+                                It reads what the developer read: the ticket, the screenshots, the Loom, the thread where the requirement actually got settled. Out of that it writes down what <em>done</em> means, and every commit after that is judged against the list.
                             </p>
                         </div>
                         <div className="tile-illo"><IngestIllo /></div>
@@ -202,16 +202,16 @@ export function MeetDevAsignSection() {
                         <h5>
                             “...the ticket asked for a per-org filter. Your diff filters by <code>userId</code> only.”
                         </h5>
-                        <p>Every comment names the requirement it is measuring against — so the feedback is arguable, not vague.</p>
+                        <p>Every comment names the requirement it's measuring against, so you can argue with it instead of guessing what it meant.</p>
                     </article>
 
                     {/* ── Chapter 02 ── */}
                     <article className="da-bento-tile chapter t-audit">
                         <div className="tile-copy">
                             <span className="tile-tag">CHAPTER 02</span>
-                            <h3>Audit the house, not the doorway</h3>
+                            <h3>Read the code the diff doesn&apos;t show you</h3>
                             <p>
-                                Every merge wakes a second agent that walks the whole repo&apos;s security surface — routes, tenant scoping, infra, secrets, deps — and never files what it can&apos;t prove.
+                                A change can be right on its own and still break a caller three files away. So the review reads the code around it too, hunting regressions and security holes, and never files what it can&apos;t prove against real code.
                             </p>
                         </div>
                         <div className="tile-illo"><AuditIllo /></div>
@@ -220,38 +220,37 @@ export function MeetDevAsignSection() {
                     {/* ── Accent: severity model ── */}
                     <article className="da-bento-tile accent t-blast">
                         {/* <span className="tile-kicker">SEVERITY MODEL</span> */}
-                        <h5>Ranked by blast radius, not likelihood.</h5>
-                        <p>A bug that leaks one tenant to another ends every enterprise contract at once. Priority follows the damage, not the odds.</p>
+                        <h5>Severity is about damage, not taste.</h5>
+                        <p>A finding only blocks when merging it would break a feature, corrupt data or expose it. A bug that leaks one tenant to another outranks anything stylistic, every time.</p>
                         <ul className="tile-matrix">
-                            <li><span className="s crit">CRITICAL</span><span className="act block">block</span></li>
-                            <li><span className="s high">HIGH</span><span className="act warn">warn</span></li>
-                            <li><span className="s med">MEDIUM</span><span className="act track">track</span></li>
-                            <li><span className="s low">LOW</span><span className="act track">track</span></li>
+                            <li><span className="s crit">BLOCKER</span><span className="act block">blocks</span></li>
+                            <li><span className="s high">WARN</span><span className="act warn">flags</span></li>
+                            <li><span className="s med">NIT</span><span className="act track">advisory</span></li>
                         </ul>
                     </article>
 
                     {/* ── Accent: the merge gate ── */}
                     <article className="da-bento-tile accent t-gate">
                         {/* <span className="tile-kicker">MERGE GATE</span> */}
-                        <div className="tile-check fail"><span className="mark">✗</span> devasign/security — blocked</div>
-                        <div className="tile-check pass"><span className="mark">✓</span> devasign/security — passed</div>
-                        <p>Mark the check required and an unresolved critical stops the queue — <strong>yours included</strong>.</p>
+                        <div className="tile-check fail"><span className="mark">✗</span> DevAsign · End goal — blocked</div>
+                        <div className="tile-check pass"><span className="mark">✓</span> DevAsign · End goal — passed</div>
+                        <p>We never gate your merge on our own. Make the check required in branch protection and an open blocker holds the queue, <strong>yours included</strong>.</p>
                     </article>
 
                     {/* ── Accent: settlement ── */}
                     <article className="da-bento-tile accent t-settle">
                         {/* <span className="tile-kicker">SETTLEMENT</span> */}
                         <div className="tile-stat">~4s</div>
-                        <p>USDC on Stellar. Sub-cent network fee. No invoice, no wire, no thirty-day net — the same speed to Lisbon and to Lagos.</p>
+                        <p>Paid in USDC on Stellar, so it clears in seconds for a fraction of a cent. Nobody raises an invoice, nobody waits thirty days, and Lagos gets paid as fast as Lisbon.</p>
                     </article>
 
                     {/* ── Chapter 03 ── */}
                     <article className="da-bento-tile chapter t-fund">
                         <div className="tile-copy">
-                            <span className="tile-tag">CHAPTER 03</span>
+                            <span className="tile-tag">CHAPTER 03 · OPEN SOURCE</span>
                             <h3>Put a bounty on the ones you can&apos;t get to</h3>
                             <p>
-                                You won&apos;t fix all of them. Create a GitHub issue in a click, then fund it <strong>USDC locked in escrow</strong> — a dev can verify before they apply. Once a fix is accepted and merged, the bounty is paid in seconds.
+                                You won&apos;t get to all of them. Open an issue on your public repo and fund it, and the <strong>USDC sits in escrow</strong> where any contributor can check it&apos;s real before they start. When their fix merges, they&apos;re paid in seconds.
                             </p>
                         </div>
                         <div className="tile-illo"><EscrowIllo /></div>

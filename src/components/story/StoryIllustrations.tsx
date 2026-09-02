@@ -1,20 +1,12 @@
-/**
- * Illustrations for the chapter tiles in MeetDevAsignSection.
- *
- *   AuditIllo  — the post-merge security audit: surface inventory → proven finding
- *   EscrowIllo — the finding turning into a funded, on-chain bounty
- *
- * Both are pure CSS/SVG (no images), themed off the brand tokens in theme.css
- * and styled there alongside the bento grid.
- */
+// Illustrations for the chapter tiles in MeetDevAsignSection: the codebase-aware
+// security pass, and a finding turning into a funded bounty. Pure CSS/SVG.
 
-/* ── Illustration: the post-merge audit ─────────────────────────────────── */
-
+// Code the review pulled in around the diff, keyed to the finding below.
 const SURFACES = [
-    { tag: "api/", files: 38, load: 0.86, flags: 3 },
-    { tag: "infra/", files: 12, load: 0.42, flags: 2 },
-    { tag: "frontend/", files: 61, load: 0.64, flags: 1 },
-    { tag: "secrets", files: 8, load: 0.18, flags: 1 },
+    { tag: "billing/", files: 9, load: 0.86, flags: 3 },
+    { tag: "auth/", files: 5, load: 0.42, flags: 2 },
+    { tag: "db/models/", files: 7, load: 0.64, flags: 1 },
+    { tag: "shared/", files: 3, load: 0.18, flags: 1 },
 ];
 
 export function AuditIllo() {
@@ -22,8 +14,8 @@ export function AuditIllo() {
         <div className="da-illo da-illo-audit">
             <div className="audit-surface">
                 <div className="head">
-                    <span className="name">SURFACE INVENTORY</span>
-                    <span className="count">142 files</span>
+                    <span className="name">RETRIEVED CONTEXT</span>
+                    <span className="count">24 files</span>
                 </div>
                 <div className="rows">
                     {SURFACES.map((s, i) => (
@@ -49,7 +41,7 @@ export function AuditIllo() {
 
             <div className="audit-finding">
                 <div className="head">
-                    <span className="sev">CRITICAL</span>
+                    <span className="sev">BLOCKER</span>
                     <span className="cwe">CWE-639 · IDOR</span>
                 </div>
                 <div className="loc">billing/routes.ts:88 — listInvoices()</div>
@@ -71,7 +63,7 @@ export function AuditIllo() {
     );
 }
 
-/* ── Illustration: finding → issue → escrow → payout ────────────────────── */
+// Illustration: finding to issue to escrow to payout.
 
 export function EscrowIllo() {
     return (
